@@ -70,6 +70,14 @@
           <span>Inventario & Stock</span>
         </button>
 
+        <button onclick="switchTab('optimizador')" id="nav-optimizador" class="nav-item w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all text-left">
+          <div class="flex items-center gap-3">
+            <i data-lucide="scissors" class="w-4 h-4 text-emerald-600"></i>
+            <span>Optimizador de Corte 2D</span>
+          </div>
+          <span class="bg-emerald-100 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-black">Taller</span>
+        </button>
+
         <button onclick="switchTab('cuentas')" id="nav-cuentas" class="nav-item w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-all text-left">
           <i data-lucide="landmark" class="w-4 h-4 text-slate-400"></i>
           <span>Cuentas Bancarias</span>
@@ -576,6 +584,358 @@
         </div>
       </div>
 
+      <!-- ==================== VISTA 6: OPTIMIZADOR DE CORTE 2D (TALLER) ==================== -->
+      <div id="view-optimizador" class="tab-view hidden space-y-6 fade-enter">
+        
+        <!-- Header & Order Selector -->
+        <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-md text-[10px] font-black uppercase tracking-wider">Módulo de Taller & Producción</span>
+              <span class="px-2.5 py-1 bg-blue-100 text-blue-800 rounded-md text-[10px] font-black uppercase tracking-wider">Algoritmo Nesting 2D v3.4</span>
+            </div>
+            <h2 class="text-xl font-black text-slate-950 mt-1">Optimizador de Planchas & Generador de Planos de Corte</h2>
+            <p class="text-xs text-slate-500 mt-0.5">Calcula el acomodo inteligente de piezas, espesor de disco de sierra y metros lineales de canto para operario de seccionadora.</p>
+          </div>
+
+          <div class="flex items-center gap-3 shrink-0">
+            <div class="text-right hidden sm:block">
+              <span class="block text-[10px] font-bold text-slate-400 uppercase">Cargar Orden Web:</span>
+              <select id="adminOptOrderSelect" onchange="loadAdminOrderPreset(this.value)" class="mt-0.5 text-xs font-bold text-slate-800 bg-slate-100 border border-slate-300 rounded-xl px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <option value="ord891">ORD-2026-891: Empresa Minera (10 piezas)</option>
+                <option value="ord890">ORD-2026-890: Mueblería Imperial (14 piezas)</option>
+                <option value="custom">-- Proyecto Manual / En Blanco --</option>
+              </select>
+            </div>
+            <button onclick="runAdminOptimizer()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-xs transition-all shadow-sm flex items-center gap-2">
+              <i data-lucide="zap" class="w-4 h-4"></i>
+              <span>Re-Optimizar</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2-Column Workshop Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+          <!-- Left Column: Settings & Pieces Table -->
+          <div class="lg:col-span-5 space-y-6">
+
+            <!-- Sheet & Blade Configuration -->
+            <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs space-y-4">
+              <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="sliders" class="w-4 h-4 text-emerald-600"></i>
+                  <h3 class="text-xs font-black uppercase text-slate-900">1. Parámetros de Plancha Madre & Sierra</h3>
+                </div>
+                <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">Melamina 18mm</span>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3 text-xs">
+                <div>
+                  <label class="block font-semibold text-slate-600 mb-1">Largo Plancha (mm):</label>
+                  <input type="number" id="admSheetW" value="2440" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl font-mono text-slate-900 font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                  <label class="block font-semibold text-slate-600 mb-1">Ancho Plancha (mm):</label>
+                  <input type="number" id="admSheetH" value="1830" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl font-mono text-slate-900 font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+                <div>
+                  <label class="block font-semibold text-slate-600 mb-1">Grosor de Sierra / Kerf:</label>
+                  <select id="admKerf" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl font-mono text-slate-900 font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <option value="4">4.0 mm (Estándar)</option>
+                    <option value="3.2">3.2 mm (Disco fino)</option>
+                    <option value="5">5.0 mm (Seccionadora pesada)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block font-semibold text-slate-600 mb-1">Refilado / Despunte:</label>
+                  <select id="admTrim" class="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl font-mono text-slate-900 font-bold focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    <option value="10">10 mm por borde</option>
+                    <option value="15">15 mm por borde</option>
+                    <option value="0">0 mm (Sin refilar)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between pt-2 text-xs">
+                <label class="flex items-center gap-2 text-slate-700 font-semibold cursor-pointer">
+                  <input type="checkbox" id="admCheckGrain" checked class="w-4 h-4 text-emerald-600 rounded">
+                  <span>Respetar Veta de Madera (Rotación 0°)</span>
+                </label>
+                <span class="text-[10px] text-slate-400">Fibra vertical</span>
+              </div>
+            </div>
+
+            <!-- Pieces List Table -->
+            <div class="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs space-y-4">
+              <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="list-ordered" class="w-4 h-4 text-emerald-600"></i>
+                  <h3 class="text-xs font-black uppercase text-slate-900">2. Lista de Despiece / Piezas a Cortar</h3>
+                </div>
+                <button onclick="addAdminPieceRow()" class="text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1 rounded-lg transition-colors flex items-center gap-1">
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                  <span>Agregar Fila</span>
+                </button>
+              </div>
+
+              <!-- Table Headers -->
+              <div class="overflow-x-auto">
+                <table class="w-full text-xs text-left">
+                  <thead>
+                    <tr class="text-[10px] uppercase font-bold text-slate-400 border-b border-slate-100">
+                      <th class="pb-2">Pieza / Módulo</th>
+                      <th class="pb-2 text-center">Largo (mm)</th>
+                      <th class="pb-2 text-center">Ancho (mm)</th>
+                      <th class="pb-2 text-center">Cant.</th>
+                      <th class="pb-2 text-center">Canto (L/A)</th>
+                      <th class="pb-2 text-right"></th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminPiecesTableBody" class="divide-y divide-slate-100">
+                    <!-- Row 1 -->
+                    <tr>
+                      <td class="py-2.5 pr-2 font-medium">
+                        <input type="text" value="Lateral Izq/Der" class="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-800">
+                      </td>
+                      <td class="py-2.5 px-1 text-center">
+                        <input type="number" value="800" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold">
+                      </td>
+                      <td class="py-2.5 px-1 text-center">
+                        <input type="number" value="500" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold">
+                      </td>
+                      <td class="py-2.5 px-1 text-center">
+                        <input type="number" value="2" class="w-10 px-1 py-1 text-center bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-lg font-mono text-xs font-bold">
+                      </td>
+                      <td class="py-2.5 px-1 text-center">
+                        <span class="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-mono font-bold">2L-1A</span>
+                      </td>
+                      <td class="py-2.5 pl-1 text-right">
+                        <button onclick="this.closest('tr').remove(); calculateAdminStats();" class="text-slate-300 hover:text-rose-500 transition-colors">
+                          <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                        </button>
+                      </td>
+                    </tr>
+
+                    <!-- Row 2 -->
+                    <tr>
+                      <td class="py-2.5 pr-2 font-medium">
+                        <input type="text" value="Repisas Interiores" class="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-800">
+                      </td>
+                      <td class="py-2.5 px-1 text-center">
+                        <input type="number" value="600" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold">
+                      </td>
+                      <td class="py-2.5 px-1 text-center">
+                        <input type="number" value="450" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold">
+                      </td>
+                      <td class="py-2.5 px-1 text-center">
+                        <input type="number" value="4" class="w-10 px-1 py-1 text-center bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-lg font-mono text-xs font-bold">
+                      </td>
+                      <td class="py-2.5 px-1 text-center">
+                        <span class="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-mono font-bold">1L-0A</span>
+                      </td>
+                      <td class="py-2.5 pl-1 text-right">
+                        <button onclick="this.closest('tr').remove(); calculateAdminStats();" class="text-slate-300 hover:text-rose-500 transition-colors">
+                          <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                        </button>
+                      </td>
+                    </tr>
+
+                    <!-- Row 3 -->
+                    <tr>
+                      <td class="py-2.5 pr-2 font-medium">
+                        <input type="text" value="Puertas Batientes" class="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-800">
+                      </td>
+                      <td class="py-2.5 px-1 text-center">
+                        <input type="number" value="750" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold">
+                      </td>
+                      <td class="py-2.5 px-1 text-center">
+                        <input type="number" value="380" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold">
+                      </td>
+                      <td class="py-2.5 px-1 text-center">
+                        <input type="number" value="4" class="w-10 px-1 py-1 text-center bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-lg font-mono text-xs font-bold">
+                      </td>
+                      <td class="py-2.5 px-1 text-center">
+                        <span class="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-mono font-bold">4 Canto G.</span>
+                      </td>
+                      <td class="py-2.5 pl-1 text-right">
+                        <button onclick="this.closest('tr').remove(); calculateAdminStats();" class="text-slate-300 hover:text-rose-500 transition-colors">
+                          <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                        </button>
+                      </td>
+                    </tr>
+
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200 flex items-center justify-between text-xs">
+                <span class="text-slate-500 font-medium">Total Piezas a Cortar:</span>
+                <span id="admTotalPiecesCount" class="font-bold text-slate-900 font-mono">10 piezas (1 Plancha requerida)</span>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Visual Cutting Map & Production Export -->
+          <div class="lg:col-span-7 space-y-6">
+
+            <!-- Visual Cutting Board SVG -->
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-4">
+              <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <div class="flex items-center gap-2">
+                  <i data-lucide="layout" class="w-4 h-4 text-emerald-600"></i>
+                  <h3 class="text-xs font-black uppercase text-slate-900">Mapa Visual de Corte & Secuencia de Seccionado</h3>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded-full font-bold">Plancha 1 de 1</span>
+                  <button onclick="zoomAdminSvg()" title="Expandir vista" class="p-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-600">
+                    <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Graphic SVG Plan -->
+              <div class="relative w-full aspect-[4/3] bg-slate-100 rounded-2xl border-2 border-slate-300 overflow-hidden p-2">
+                <svg viewBox="0 0 2440 1830" class="w-full h-full rounded-xl bg-white border border-slate-300 shadow-inner">
+                  
+                  <!-- Plancha Madre -->
+                  <rect x="0" y="0" width="2440" height="1830" fill="#f8fafc" stroke="#94a3b8" stroke-width="10" />
+
+                  <!-- Guías de corte de sierra (Kerf lines) -->
+                  <line x1="1620" y1="0" x2="1620" y2="1830" stroke="#ef4444" stroke-width="4" stroke-dasharray="16,8" />
+                  <line x1="0" y1="1440" x2="1620" y2="1440" stroke="#ef4444" stroke-width="4" stroke-dasharray="16,8" />
+                  <line x1="0" y1="520" x2="1620" y2="520" stroke="#ef4444" stroke-width="4" stroke-dasharray="16,8" />
+
+                  <!-- Laterales (800x500 x2) -->
+                  <g class="cursor-pointer">
+                    <rect x="20" y="20" width="800" height="500" fill="#d1fae5" stroke="#059669" stroke-width="6" rx="8"/>
+                    <text x="420" y="250" fill="#065f46" font-size="58" font-weight="bold" text-anchor="middle" font-family="sans-serif">#01 Lateral</text>
+                    <text x="420" y="320" fill="#047857" font-size="44" text-anchor="middle" font-family="sans-serif">800 x 500 mm</text>
+                  </g>
+                  <g class="cursor-pointer">
+                    <rect x="830" y="20" width="800" height="500" fill="#d1fae5" stroke="#059669" stroke-width="6" rx="8"/>
+                    <text x="1230" y="250" fill="#065f46" font-size="58" font-weight="bold" text-anchor="middle" font-family="sans-serif">#02 Lateral</text>
+                    <text x="1230" y="320" fill="#047857" font-size="44" text-anchor="middle" font-family="sans-serif">800 x 500 mm</text>
+                  </g>
+
+                  <!-- Repisas (600x450 x4) -->
+                  <g class="cursor-pointer">
+                    <rect x="20" y="530" width="600" height="450" fill="#e0e7ff" stroke="#4f46e5" stroke-width="6" rx="8"/>
+                    <text x="320" y="745" fill="#3730a3" font-size="50" font-weight="bold" text-anchor="middle" font-family="sans-serif">#03 Repisa</text>
+                    <text x="320" y="805" fill="#4338ca" font-size="40" text-anchor="middle" font-family="sans-serif">600 x 450 mm</text>
+                  </g>
+                  <g class="cursor-pointer">
+                    <rect x="630" y="530" width="600" height="450" fill="#e0e7ff" stroke="#4f46e5" stroke-width="6" rx="8"/>
+                    <text x="930" y="745" fill="#3730a3" font-size="50" font-weight="bold" text-anchor="middle" font-family="sans-serif">#04 Repisa</text>
+                    <text x="930" y="805" fill="#4338ca" font-size="40" text-anchor="middle" font-family="sans-serif">600 x 450 mm</text>
+                  </g>
+                  <g class="cursor-pointer">
+                    <rect x="20" y="990" width="600" height="450" fill="#e0e7ff" stroke="#4f46e5" stroke-width="6" rx="8"/>
+                    <text x="320" y="1205" fill="#3730a3" font-size="50" font-weight="bold" text-anchor="middle" font-family="sans-serif">#05 Repisa</text>
+                    <text x="320" y="1265" fill="#4338ca" font-size="40" text-anchor="middle" font-family="sans-serif">600 x 450 mm</text>
+                  </g>
+                  <g class="cursor-pointer">
+                    <rect x="630" y="990" width="600" height="450" fill="#e0e7ff" stroke="#4f46e5" stroke-width="6" rx="8"/>
+                    <text x="930" y="1205" fill="#3730a3" font-size="50" font-weight="bold" text-anchor="middle" font-family="sans-serif">#06 Repisa</text>
+                    <text x="930" y="1265" fill="#4338ca" font-size="40" text-anchor="middle" font-family="sans-serif">600 x 450 mm</text>
+                  </g>
+
+                  <!-- Puertas (750x380 x4) -->
+                  <g class="cursor-pointer">
+                    <rect x="1640" y="20" width="750" height="380" fill="#fef3c7" stroke="#d97706" stroke-width="6" rx="8"/>
+                    <text x="2015" y="200" fill="#92400e" font-size="50" font-weight="bold" text-anchor="middle" font-family="sans-serif">#07 Puerta</text>
+                    <text x="2015" y="260" fill="#b45309" font-size="40" text-anchor="middle" font-family="sans-serif">750 x 380 mm</text>
+                  </g>
+                  <g class="cursor-pointer">
+                    <rect x="1640" y="410" width="750" height="380" fill="#fef3c7" stroke="#d97706" stroke-width="6" rx="8"/>
+                    <text x="2015" y="590" fill="#92400e" font-size="50" font-weight="bold" text-anchor="middle" font-family="sans-serif">#08 Puerta</text>
+                    <text x="2015" y="650" fill="#b45309" font-size="40" text-anchor="middle" font-family="sans-serif">750 x 380 mm</text>
+                  </g>
+                  <g class="cursor-pointer">
+                    <rect x="1640" y="800" width="750" height="380" fill="#fef3c7" stroke="#d97706" stroke-width="6" rx="8"/>
+                    <text x="2015" y="980" fill="#92400e" font-size="50" font-weight="bold" text-anchor="middle" font-family="sans-serif">#09 Puerta</text>
+                    <text x="2015" y="1040" fill="#b45309" font-size="40" text-anchor="middle" font-family="sans-serif">750 x 380 mm</text>
+                  </g>
+                  <g class="cursor-pointer">
+                    <rect x="1640" y="1190" width="750" height="380" fill="#fef3c7" stroke="#d97706" stroke-width="6" rx="8"/>
+                    <text x="2015" y="1370" fill="#92400e" font-size="50" font-weight="bold" text-anchor="middle" font-family="sans-serif">#10 Puerta</text>
+                    <text x="2015" y="1430" fill="#b45309" font-size="40" text-anchor="middle" font-family="sans-serif">750 x 380 mm</text>
+                  </g>
+
+                  <!-- Retazo Sobrante Reutilizable -->
+                  <g>
+                    <rect x="20" y="1450" width="1600" height="350" fill="#e2e8f0" stroke="#64748b" stroke-width="4" stroke-dasharray="16,12" />
+                    <text x="820" y="1640" fill="#475569" font-size="48" font-weight="bold" text-anchor="middle" font-family="sans-serif">♻️ Retazo Útil Almacenable: 1600 x 350 mm (0.56 m²)</text>
+                  </g>
+
+                </svg>
+              </div>
+
+              <!-- Workshop Legend & Cut Lines -->
+              <div class="flex flex-wrap items-center justify-between text-xs font-semibold text-slate-600 pt-1">
+                <div class="flex items-center gap-4">
+                  <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-200 border border-emerald-600"></span> Laterales (x2)</span>
+                  <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-indigo-200 border border-indigo-600"></span> Repisas (x4)</span>
+                  <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-amber-200 border border-amber-600"></span> Puertas (x4)</span>
+                  <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-slate-200 border border-dashed border-slate-500"></span> Retazo Útil</span>
+                </div>
+                <span class="text-[11px] text-rose-600 font-mono font-bold flex items-center gap-1">
+                  <span class="w-3 h-0.5 bg-rose-500 inline-block"></span> Líneas de corte guía
+                </span>
+              </div>
+            </div>
+
+            <!-- Workshop Production & Material Metrics -->
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-4">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xs font-black uppercase text-slate-900">3. Ficha Técnica de Producción & Taller</h3>
+                <span class="text-[11px] text-slate-500 font-bold">Orden: <strong class="text-emerald-700">ORD-2026-891</strong></span>
+              </div>
+
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div class="p-3 bg-emerald-50 rounded-2xl border border-emerald-200 text-center">
+                  <span class="text-2xl font-black text-emerald-700" id="admMetricYield">88.4%</span>
+                  <span class="text-[10px] font-bold text-slate-500 block uppercase mt-0.5">Aprovechamiento</span>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-center">
+                  <span class="text-2xl font-black text-slate-900" id="admMetricWaste">11.6%</span>
+                  <span class="text-[10px] font-bold text-slate-500 block uppercase mt-0.5">Merma Total</span>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-center">
+                  <span class="text-2xl font-black text-slate-900" id="admMetricEdge">28.4 m</span>
+                  <span class="text-[10px] font-bold text-slate-500 block uppercase mt-0.5">Tapacanto Total</span>
+                </div>
+                <div class="p-3 bg-slate-50 rounded-2xl border border-slate-200 text-center">
+                  <span class="text-2xl font-black text-slate-900">18 min</span>
+                  <span class="text-[10px] font-bold text-slate-500 block uppercase mt-0.5">Tiempo Máquina</span>
+                </div>
+              </div>
+
+              <!-- Production & Operator Action Bar -->
+              <div class="pt-2 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <button onclick="printWorkshopJobSheet()" class="py-3 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs transition-all shadow-md flex items-center justify-center gap-2">
+                  <i data-lucide="printer" class="w-4 h-4"></i>
+                  <span>Imprimir para Taller</span>
+                </button>
+                <button onclick="exportGCodeCutFile()" class="py-3 px-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl text-xs transition-all flex items-center justify-center gap-2">
+                  <i data-lucide="file-code" class="w-4 h-4 text-emerald-400"></i>
+                  <span>Exportar CNC / CSV</span>
+                </button>
+                <button onclick="markJobAsCutAndReady()" class="py-3 px-3 bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-200 font-bold rounded-xl text-xs transition-all flex items-center justify-center gap-2">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-blue-600"></i>
+                  <span>Corte Listo & Avisar</span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
     </main>
   </div>
 
@@ -698,6 +1058,7 @@
       transferencias: { breadcrumb: "Panel de Control / Transferencias", title: "Gestión de Transferencias & Pedidos" },
       cargamasiva: { breadcrumb: "Panel de Control / Catálogo", title: "Módulo de Carga Masiva (Excel/CSV)" },
       inventario: { breadcrumb: "Panel de Control / Almacén", title: "Inventario & Control de Stock" },
+      optimizador: { breadcrumb: "Panel de Control / Taller & Seccionado", title: "Optimizador de Corte 2D & Planos de Taller" },
       cuentas: { breadcrumb: "Panel de Control / Ajustes", title: "Configuración de Cuentas Bancarias" }
     };
 
@@ -820,6 +1181,150 @@
         status.innerText = '✅ ¡350 productos sincronizados exitosamente en la tienda!';
         showToast('✅ ¡350 productos sincronizados exitosamente en la tienda!');
       }, 1500);
+    }
+
+    function addAdminPieceRow() {
+      const tbody = document.getElementById('adminPiecesTableBody');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="py-2.5 pr-2 font-medium">
+          <input type="text" value="Nueva Pieza" class="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-800">
+        </td>
+        <td class="py-2.5 px-1 text-center">
+          <input type="number" value="500" onchange="calculateAdminStats()" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold">
+        </td>
+        <td class="py-2.5 px-1 text-center">
+          <input type="number" value="300" onchange="calculateAdminStats()" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold">
+        </td>
+        <td class="py-2.5 px-1 text-center">
+          <input type="number" value="2" onchange="calculateAdminStats()" class="w-10 px-1 py-1 text-center bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-lg font-mono text-xs font-bold">
+        </td>
+        <td class="py-2.5 px-1 text-center">
+          <span class="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-mono font-bold">2L-0A</span>
+        </td>
+        <td class="py-2.5 pl-1 text-right">
+          <button onclick="this.closest('tr').remove(); calculateAdminStats();" class="text-slate-300 hover:text-rose-500 transition-colors">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+          </button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+      lucide.createIcons();
+      calculateAdminStats();
+      showToast('Nueva pieza añadida a la lista de despiece');
+    }
+
+    function calculateAdminStats() {
+      const rows = document.querySelectorAll('#adminPiecesTableBody tr');
+      let totalPieces = 0;
+      rows.forEach(r => {
+        const qtyInput = r.querySelectorAll('input[type="number"]')[2];
+        if (qtyInput) totalPieces += parseInt(qtyInput.value) || 0;
+      });
+      document.getElementById('admTotalPiecesCount').innerText = `${totalPieces} piezas (1 Plancha requerida)`;
+    }
+
+    function loadAdminOrderPreset(presetKey) {
+      const tbody = document.getElementById('adminPiecesTableBody');
+      if (presetKey === 'ord891') {
+        tbody.innerHTML = `
+          <tr>
+            <td class="py-2.5 pr-2 font-medium"><input type="text" value="Lateral Izq/Der" class="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-800"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="800" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="500" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="2" class="w-10 px-1 py-1 text-center bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><span class="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-mono font-bold">2L-1A</span></td>
+            <td class="py-2.5 pl-1 text-right"><button onclick="this.closest('tr').remove(); calculateAdminStats();" class="text-slate-300 hover:text-rose-500 transition-colors"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button></td>
+          </tr>
+          <tr>
+            <td class="py-2.5 pr-2 font-medium"><input type="text" value="Repisas Interiores" class="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-800"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="600" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="450" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="4" class="w-10 px-1 py-1 text-center bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><span class="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-mono font-bold">1L-0A</span></td>
+            <td class="py-2.5 pl-1 text-right"><button onclick="this.closest('tr').remove(); calculateAdminStats();" class="text-slate-300 hover:text-rose-500 transition-colors"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button></td>
+          </tr>
+          <tr>
+            <td class="py-2.5 pr-2 font-medium"><input type="text" value="Puertas Batientes" class="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-800"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="750" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="380" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="4" class="w-10 px-1 py-1 text-center bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><span class="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-mono font-bold">4 Canto G.</span></td>
+            <td class="py-2.5 pl-1 text-right"><button onclick="this.closest('tr').remove(); calculateAdminStats();" class="text-slate-300 hover:text-rose-500 transition-colors"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button></td>
+          </tr>
+        `;
+        document.getElementById('admMetricYield').innerText = '88.4%';
+        document.getElementById('admMetricWaste').innerText = '11.6%';
+        document.getElementById('admMetricEdge').innerText = '28.4 m';
+      } else if (presetKey === 'ord890') {
+        tbody.innerHTML = `
+          <tr>
+            <td class="py-2.5 pr-2 font-medium"><input type="text" value="Fondos de Cajón" class="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-800"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="550" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="400" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="8" class="w-10 px-1 py-1 text-center bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><span class="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-mono font-bold">Sin Canto</span></td>
+            <td class="py-2.5 pl-1 text-right"><button onclick="this.closest('tr').remove(); calculateAdminStats();" class="text-slate-300 hover:text-rose-500 transition-colors"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button></td>
+          </tr>
+          <tr>
+            <td class="py-2.5 pr-2 font-medium"><input type="text" value="Tapa Superior" class="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-800"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="1200" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="600" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="2" class="w-10 px-1 py-1 text-center bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><span class="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-mono font-bold">4 Canto G.</span></td>
+            <td class="py-2.5 pl-1 text-right"><button onclick="this.closest('tr').remove(); calculateAdminStats();" class="text-slate-300 hover:text-rose-500 transition-colors"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button></td>
+          </tr>
+        `;
+        document.getElementById('admMetricYield').innerText = '92.1%';
+        document.getElementById('admMetricWaste').innerText = '7.9%';
+        document.getElementById('admMetricEdge').innerText = '19.2 m';
+      } else {
+        tbody.innerHTML = `
+          <tr>
+            <td class="py-2.5 pr-2 font-medium"><input type="text" value="Pieza A" class="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-800"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="600" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="400" class="w-16 px-1.5 py-1 text-center bg-slate-50 border border-slate-200 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><input type="number" value="1" class="w-10 px-1 py-1 text-center bg-emerald-50 border border-emerald-300 text-emerald-800 rounded-lg font-mono text-xs font-bold"></td>
+            <td class="py-2.5 px-1 text-center"><span class="text-[10px] bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded font-mono font-bold">2L-2A</span></td>
+            <td class="py-2.5 pl-1 text-right"><button onclick="this.closest('tr').remove(); calculateAdminStats();" class="text-slate-300 hover:text-rose-500 transition-colors"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button></td>
+          </tr>
+        `;
+        document.getElementById('admMetricYield').innerText = '64.5%';
+        document.getElementById('admMetricWaste').innerText = '35.5%';
+        document.getElementById('admMetricEdge').innerText = '4.0 m';
+      }
+      lucide.createIcons();
+      calculateAdminStats();
+      showToast(`Despiece cargado: ${presetKey.toUpperCase()}`);
+    }
+
+    function runAdminOptimizer() {
+      showToast('⚙️ Ejecutando algoritmo de nesting para operario...');
+      setTimeout(() => {
+        showToast('✅ ¡Plano de corte re-optimizado con 88.4% de aprovechamiento!');
+      }, 500);
+    }
+
+    function printWorkshopJobSheet() {
+      showToast('🖨️ Generando Hoja de Ruta de Taller para seccionadora (PDF listo para imprimir)...');
+    }
+
+    function exportGCodeCutFile() {
+      showToast('📥 Exportando archivo de corte (.CSV / .DXF para CNC Seccionadora)...');
+    }
+
+    function markJobAsCutAndReady() {
+      showToast('✅ Piezas marcadas como CORTADAS. Notificación WhatsApp enviada al cliente.');
+      const badge = document.getElementById('badge-ORD-891');
+      if (badge) {
+        badge.className = "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-purple-50 text-purple-800 border border-purple-200";
+        badge.innerHTML = `<i data-lucide="check-circle" class="w-3 h-3"></i> Corte Listo`;
+        lucide.createIcons();
+      }
+    }
+
+    function zoomAdminSvg() {
+      showToast('Plano ampliado a resolución completa de taller');
     }
 
     function closeAppModal(id) {

@@ -18,6 +18,12 @@
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
+    .sheet-pattern {
+      background-size: 20px 20px;
+      background-image: 
+        linear-gradient(to right, rgba(226, 232, 240, 0.6) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(226, 232, 240, 0.6) 1px, transparent 1px);
+    }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-emerald-600 selection:text-white flex flex-col min-h-screen">
@@ -28,6 +34,9 @@
       <div class="flex items-center gap-2">
         <span class="bg-emerald-500 text-slate-950 font-black px-2 py-0.5 rounded text-[10px] uppercase tracking-wider">Plan $850</span>
         <span class="font-semibold text-white">Así se vería esta opción: Tienda Online del Cliente</span>
+        <span class="bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded text-[10px] font-bold border border-emerald-500/30 hidden sm:inline">
+          ✨ Incluye Módulo Optimizador de Corte 2D
+        </span>
       </div>
       <div class="flex items-center gap-3">
         <a href="admin.html" class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black rounded-lg text-xs transition-all shadow-sm">
@@ -42,8 +51,9 @@
   </div>
 
   <!-- Announcement Bar -->
-  <div class="bg-emerald-50 border-b border-emerald-100 text-emerald-900 text-xs py-2 px-4 text-center font-bold">
-    📦 Despacho directo a nivel nacional con transferencias directas sin comisiones bancarias adicionales
+  <div class="bg-emerald-50 border-b border-emerald-100 text-emerald-900 text-xs py-2 px-4 text-center font-bold flex items-center justify-center gap-2">
+    <span>📐 ¡NUEVO! Prueba el Optimizador de Corte 2D interactivo para planchas de melamina y tableros</span>
+    <button onclick="switchStoreView('optimizador')" class="underline hover:text-emerald-700 font-extrabold ml-1">Probar Optimizador →</button>
   </div>
 
   <!-- Main Store Header (SPA View Switcher) -->
@@ -58,26 +68,31 @@
           </div>
           <div>
             <span class="text-xl font-black text-slate-950 tracking-tight">OMNI<span class="text-emerald-600">STORE</span></span>
-            <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-widest -mt-1">Industrial & Technology</span>
+            <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-widest -mt-1">Industrial & Melaminas</span>
           </div>
         </button>
 
         <!-- Nav Tabs -->
         <nav class="hidden lg:flex items-center gap-1 text-xs font-bold p-1 bg-slate-100 rounded-2xl border border-slate-200">
-          <button onclick="switchStoreView('inicio')" id="snav-inicio" class="store-nav-btn px-4 py-2 rounded-xl bg-white text-emerald-700 shadow-xs font-black transition-all">
+          <button onclick="switchStoreView('inicio')" id="snav-inicio" class="store-nav-btn px-3.5 py-2 rounded-xl bg-white text-emerald-700 shadow-xs font-black transition-all">
             Inicio
           </button>
-          <button onclick="switchStoreView('catalogo')" id="snav-catalogo" class="store-nav-btn px-4 py-2 rounded-xl text-slate-600 hover:text-slate-950 transition-all font-bold">
+          <button onclick="switchStoreView('catalogo')" id="snav-catalogo" class="store-nav-btn px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-950 transition-all font-bold">
             Catálogo de Productos
           </button>
-          <button onclick="switchStoreView('seguimiento')" id="snav-seguimiento" class="store-nav-btn px-4 py-2 rounded-xl text-slate-600 hover:text-slate-950 transition-all font-bold flex items-center gap-1.5">
+          <button onclick="switchStoreView('optimizador')" id="snav-optimizador" class="store-nav-btn px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-950 transition-all font-bold flex items-center gap-1.5">
+            <i data-lucide="scissors" class="w-3.5 h-3.5 text-emerald-600"></i>
+            <span class="text-emerald-700 font-black">Optimizador de Corte</span>
+            <span class="bg-emerald-500 text-white text-[9px] px-1.5 py-0.5 rounded-full uppercase">Pro</span>
+          </button>
+          <button onclick="switchStoreView('seguimiento')" id="snav-seguimiento" class="store-nav-btn px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-950 transition-all font-bold flex items-center gap-1.5">
             <i data-lucide="truck" class="w-3.5 h-3.5 text-emerald-600"></i>
             <span>Rastrear Pedido</span>
           </button>
-          <button onclick="switchStoreView('cargamasiva')" id="snav-cargamasiva" class="store-nav-btn px-4 py-2 rounded-xl text-slate-600 hover:text-slate-950 transition-all font-bold">
+          <button onclick="switchStoreView('cargamasiva')" id="snav-cargamasiva" class="store-nav-btn px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-950 transition-all font-bold">
             Carga Masiva (Excel)
           </button>
-          <button onclick="switchStoreView('soporte')" id="snav-soporte" class="store-nav-btn px-4 py-2 rounded-xl text-slate-600 hover:text-slate-950 transition-all font-bold">
+          <button onclick="switchStoreView('soporte')" id="snav-soporte" class="store-nav-btn px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-950 transition-all font-bold">
             Garantía 365
           </button>
         </nav>
@@ -102,11 +117,11 @@
 
   <!-- Mobile Bar -->
   <div class="lg:hidden bg-white border-b border-slate-200 p-2 overflow-x-auto flex gap-1.5 justify-center text-xs font-bold">
-    <button onclick="switchStoreView('inicio')" class="mobile-snav px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-700">Inicio</button>
-    <button onclick="switchStoreView('catalogo')" class="mobile-snav px-3 py-1.5 rounded-lg text-slate-600">Catálogo</button>
-    <button onclick="switchStoreView('seguimiento')" class="mobile-snav px-3 py-1.5 rounded-lg text-slate-600">Rastrear</button>
-    <button onclick="switchStoreView('cargamasiva')" class="mobile-snav px-3 py-1.5 rounded-lg text-slate-600">Carga Masiva</button>
-    <button onclick="switchStoreView('soporte')" class="mobile-snav px-3 py-1.5 rounded-lg text-slate-600">Garantía</button>
+    <button onclick="switchStoreView('inicio')" class="mobile-snav px-2.5 py-1.5 rounded-lg bg-emerald-50 text-emerald-700">Inicio</button>
+    <button onclick="switchStoreView('catalogo')" class="mobile-snav px-2.5 py-1.5 rounded-lg text-slate-600">Catálogo</button>
+    <button onclick="switchStoreView('optimizador')" class="mobile-snav px-2.5 py-1.5 rounded-lg text-emerald-700 font-black">Optimizador ⚡</button>
+    <button onclick="switchStoreView('seguimiento')" class="mobile-snav px-2.5 py-1.5 rounded-lg text-slate-600">Rastrear</button>
+    <button onclick="switchStoreView('cargamasiva')" class="mobile-snav px-2.5 py-1.5 rounded-lg text-slate-600">Carga Masiva</button>
   </div>
 
   <!-- MAIN DYNAMIC STORE VIEWS -->
@@ -120,63 +135,310 @@
         <div class="lg:col-span-7">
           <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100 border border-emerald-200 text-emerald-800 text-xs font-bold mb-6">
             <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
-            Plataforma E-Commerce B2B / B2C
+            Plataforma E-Commerce B2B / B2C + Cálculo Industrial
           </div>
 
           <h1 class="text-4xl sm:text-5xl font-black text-slate-950 tracking-tight leading-[1.15]">
-            Equipamiento industrial con <br>
-            <span class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">rastreo de pedidos</span> en vivo.
+            Vende materiales, <br>
+            <span class="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">optimiza cortes</span> y despacha en vivo.
           </h1>
 
           <p class="mt-6 text-base text-slate-600 max-w-xl leading-relaxed">
-            Compra online, abona vía transferencia directa sin comisiones y haz el seguimiento en tiempo real de tu despacho.
+            Permite a carpinteros y clientes calcular el despiece exacto de planchas madre, reducir desperdicios al mínimo y comprar tableros con validación de transferencias.
           </p>
 
           <div class="mt-8 flex flex-wrap gap-4">
-            <button onclick="switchStoreView('catalogo')" class="px-7 py-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm transition-all shadow-lg shadow-emerald-600/25 flex items-center gap-2">
-              <span>Ver Catálogo de Productos</span>
-              <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            <button onclick="switchStoreView('optimizador')" class="px-7 py-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm transition-all shadow-lg shadow-emerald-600/25 flex items-center gap-2">
+              <i data-lucide="scissors" class="w-4 h-4"></i>
+              <span>Probar Optimizador de Corte 2D</span>
             </button>
-            <button onclick="switchStoreView('seguimiento')" class="px-6 py-4 rounded-xl bg-white hover:bg-slate-50 text-slate-900 font-bold text-sm border border-slate-300 transition-all flex items-center gap-2">
-              <i data-lucide="truck" class="w-4 h-4 text-emerald-600"></i>
-              <span>Rastrear Pedido</span>
+            <button onclick="switchStoreView('catalogo')" class="px-6 py-4 rounded-xl bg-white hover:bg-slate-50 text-slate-900 font-bold text-sm border border-slate-300 transition-all flex items-center gap-2">
+              <i data-lucide="shopping-bag" class="w-4 h-4 text-emerald-600"></i>
+              <span>Ver Catálogo de Tableros</span>
             </button>
           </div>
         </div>
 
         <div class="lg:col-span-5">
           <div class="bg-white rounded-3xl p-6 shadow-xl border border-slate-200">
-            <span class="text-[10px] font-bold uppercase text-emerald-600 tracking-wider">Acceso a los 2 Módulos</span>
-            <h3 class="text-lg font-black text-slate-900 mt-1 mb-4">Experiencia Separada del Plan $850</h3>
-            <div class="space-y-3 text-xs">
-              <div onclick="switchStoreView('catalogo')" class="p-3 rounded-2xl bg-slate-50 border border-slate-200 cursor-pointer hover:border-emerald-500 transition-colors flex items-center justify-between">
-                <div>
-                  <p class="font-bold text-slate-900">🛍️ Tienda Pública del Cliente</p>
-                  <p class="text-slate-500 text-[11px]">Catálogo, checkout bancario y rastreo</p>
-                </div>
-                <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400"></i>
+            <span class="text-[10px] font-bold uppercase text-emerald-600 tracking-wider">Módulo Destacado de Producción</span>
+            <h3 class="text-lg font-black text-slate-900 mt-1 mb-3">Optimizador Tipo "Corte Certo"</h3>
+            <p class="text-xs text-slate-500 mb-4 leading-relaxed">Cálculo matemático de despiece en planchas de 2440x1830 mm con mapa visual de cortes.</p>
+            
+            <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 space-y-2 text-xs font-mono">
+              <div class="flex justify-between">
+                <span class="text-slate-500">Aprovechamiento:</span>
+                <span class="text-emerald-700 font-bold">88.4% útil</span>
               </div>
-              <a href="admin.html" class="p-3 rounded-2xl bg-emerald-50 border border-emerald-200 block hover:bg-emerald-100 transition-colors flex items-center justify-between">
-                <div>
-                  <p class="font-bold text-emerald-900">🔐 Panel Admin del Dueño</p>
-                  <p class="text-emerald-700 text-[11px]">Validar vouchers, despachar y subir Excel</p>
-                </div>
-                <i data-lucide="arrow-right" class="w-4 h-4 text-emerald-600"></i>
-              </a>
+              <div class="flex justify-between">
+                <span class="text-slate-500">Merma reducida a:</span>
+                <span class="text-slate-900 font-bold">&lt; 11.6%</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-500">Planchas requeridas:</span>
+                <span class="text-emerald-700 font-bold">1 Plancha madre</span>
+              </div>
             </div>
+
+            <button onclick="switchStoreView('optimizador')" class="w-full mt-4 py-2.5 bg-slate-900 hover:bg-emerald-600 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-2">
+              <span>Abrir Demostración Interactiva →</span>
+            </button>
           </div>
         </div>
       </div>
 
     </div>
 
-    <!-- ==================== VISTA 2: CATÁLOGO DE PRODUCTOS ==================== -->
+    <!-- ==================== VISTA NUEVA: OPTIMIZADOR DE CORTE 2D (TIPO CORTE CERTO) ==================== -->
+    <div id="sview-optimizador" class="store-view hidden fade-view space-y-8">
+      
+      <!-- Header Module -->
+      <div class="bg-white p-8 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mb-2">
+            <i data-lucide="cpu" class="w-3.5 h-3.5 text-emerald-600"></i>
+            Algoritmo de Optimización 2D (Corte Certo Web)
+          </div>
+          <h2 class="text-3xl font-black text-slate-950">Optimizador de Corte de Tableros</h2>
+          <p class="text-slate-500 text-xs sm:text-sm mt-1">Ingresa las medidas de tus piezas y el sistema calculará la distribución óptima para minimizar el desperdicio.</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="resetOptimizerDemo()" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-all border border-slate-200 flex items-center gap-1.5">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+            <span>Restablecer Ejemplo</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Optimizer Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left Column: Settings & Input Table -->
+        <div class="lg:col-span-5 space-y-6">
+          
+          <!-- Card: Plancha Madre Config -->
+          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+              <span class="text-xs font-bold uppercase text-slate-500">1. Dimensiones de la Plancha Base</span>
+              <span class="text-[10px] font-bold bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded">Melamina 18mm</span>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 text-xs">
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Largo Plancha (mm)</label>
+                <input type="number" id="sheetLength" value="2440" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold text-slate-900 focus:ring-2 focus:ring-emerald-500 outline-none">
+              </div>
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">Ancho Plancha (mm)</label>
+                <input type="number" id="sheetWidth" value="1830" class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl font-mono font-bold text-slate-900 focus:ring-2 focus:ring-emerald-500 outline-none">
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 text-xs pt-1">
+              <div>
+                <label class="block font-semibold text-slate-600 mb-1">Grosor de Sierra (Kerf)</label>
+                <input type="number" id="kerfSize" value="4" class="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl font-mono text-slate-900">
+              </div>
+              <div class="flex items-end pb-1">
+                <label class="flex items-center gap-2 cursor-pointer text-[11px] font-bold text-slate-700">
+                  <input type="checkbox" id="allowRotation" checked class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500">
+                  <span>Permitir rotar piezas</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card: Lista de Piezas (Despiece) -->
+          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+              <span class="text-xs font-bold uppercase text-slate-500">2. Lista de Piezas Solicitadas</span>
+              <button onclick="addPieceRow()" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-lg text-xs font-bold flex items-center gap-1">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i> Agregar Pieza
+              </button>
+            </div>
+
+            <div class="overflow-x-auto max-h-64 overflow-y-auto">
+              <table class="w-full text-left text-xs" id="piecesTable">
+                <thead class="bg-slate-50 text-slate-500 font-bold uppercase text-[10px]">
+                  <tr>
+                    <th class="p-2">Descripción</th>
+                    <th class="p-2">Largo (mm)</th>
+                    <th class="p-2">Ancho (mm)</th>
+                    <th class="p-2">Cant.</th>
+                    <th class="p-2 text-right"></th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 text-slate-800 font-medium font-mono text-[11px]" id="piecesListBody">
+                  <tr data-id="1">
+                    <td class="p-2 font-sans font-bold text-slate-900">Lateral Mueble</td>
+                    <td class="p-2"><input type="number" value="800" class="p-largo w-16 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold"></td>
+                    <td class="p-2"><input type="number" value="500" class="p-ancho w-16 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold"></td>
+                    <td class="p-2"><input type="number" value="2" class="p-cant w-12 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold text-emerald-700"></td>
+                    <td class="p-2 text-right"><button onclick="deletePieceRow(this)" class="text-rose-400 hover:text-rose-600 font-bold">✕</button></td>
+                  </tr>
+                  <tr data-id="2">
+                    <td class="p-2 font-sans font-bold text-slate-900">Repisas Interiores</td>
+                    <td class="p-2"><input type="number" value="600" class="p-largo w-16 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold"></td>
+                    <td class="p-2"><input type="number" value="450" class="p-ancho w-16 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold"></td>
+                    <td class="p-2"><input type="number" value="4" class="p-cant w-12 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold text-emerald-700"></td>
+                    <td class="p-2 text-right"><button onclick="deletePieceRow(this)" class="text-rose-400 hover:text-rose-600 font-bold">✕</button></td>
+                  </tr>
+                  <tr data-id="3">
+                    <td class="p-2 font-sans font-bold text-slate-900">Puertas Frontales</td>
+                    <td class="p-2"><input type="number" value="750" class="p-largo w-16 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold"></td>
+                    <td class="p-2"><input type="number" value="380" class="p-ancho w-16 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold"></td>
+                    <td class="p-2"><input type="number" value="4" class="p-cant w-12 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold text-emerald-700"></td>
+                    <td class="p-2 text-right"><button onclick="deletePieceRow(this)" class="text-rose-400 hover:text-rose-600 font-bold">✕</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Botón Optimizar -->
+            <button onclick="calculateCuttingLayout()" class="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-2xl text-xs sm:text-sm transition-all shadow-lg shadow-emerald-600/25 flex items-center justify-center gap-2">
+              <i data-lucide="zap" class="w-4 h-4 fill-white"></i>
+              <span>⚡ Optimizar y Generar Mapa de Corte</span>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Visual Diagram & Metrics -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- Visual Cutting Map Card -->
+          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div class="flex items-center gap-2">
+                <i data-lucide="layout" class="w-4 h-4 text-emerald-600"></i>
+                <h4 class="text-xs font-black uppercase text-slate-900">Plano de Despiece en Plancha (2440 x 1830 mm)</h4>
+              </div>
+              <span class="text-[11px] font-mono font-bold text-slate-500">Plancha 1 de 1</span>
+            </div>
+
+            <!-- Visual Cutting Board (Graphic Container) -->
+            <div class="relative w-full aspect-[4/3] bg-slate-100 rounded-2xl border-2 border-slate-300 overflow-hidden sheet-pattern p-2" id="cuttingBoardVisual">
+              
+              <!-- SVG Interactive Layout -->
+              <svg viewBox="0 0 2440 1830" class="w-full h-full rounded-xl bg-white border border-slate-300 shadow-inner">
+                
+                <!-- Plancha Madre Background -->
+                <rect x="0" y="0" width="2440" height="1830" fill="#f8fafc" stroke="#94a3b8" stroke-width="8" />
+
+                <!-- Piezas 1: Laterales (800x500 x2) -->
+                <g class="cursor-pointer group">
+                  <rect x="20" y="20" width="800" height="500" fill="#d1fae5" stroke="#059669" stroke-width="6" rx="8"/>
+                  <text x="420" y="270" fill="#065f46" font-size="64" font-weight="bold" text-anchor="middle" font-family="sans-serif">Lateral 800x500</text>
+                </g>
+                <g class="cursor-pointer group">
+                  <rect x="830" y="20" width="800" height="500" fill="#d1fae5" stroke="#059669" stroke-width="6" rx="8"/>
+                  <text x="1230" y="270" fill="#065f46" font-size="64" font-weight="bold" text-anchor="middle" font-family="sans-serif">Lateral 800x500</text>
+                </g>
+
+                <!-- Piezas 2: Repisas (600x450 x4) -->
+                <g class="cursor-pointer group">
+                  <rect x="20" y="530" width="600" height="450" fill="#e0e7ff" stroke="#4f46e5" stroke-width="6" rx="8"/>
+                  <text x="320" y="765" fill="#3730a3" font-size="54" font-weight="bold" text-anchor="middle" font-family="sans-serif">Repisa 600x450</text>
+                </g>
+                <g class="cursor-pointer group">
+                  <rect x="630" y="530" width="600" height="450" fill="#e0e7ff" stroke="#4f46e5" stroke-width="6" rx="8"/>
+                  <text x="930" y="765" fill="#3730a3" font-size="54" font-weight="bold" text-anchor="middle" font-family="sans-serif">Repisa 600x450</text>
+                </g>
+                <g class="cursor-pointer group">
+                  <rect x="20" y="990" width="600" height="450" fill="#e0e7ff" stroke="#4f46e5" stroke-width="6" rx="8"/>
+                  <text x="320" y="1225" fill="#3730a3" font-size="54" font-weight="bold" text-anchor="middle" font-family="sans-serif">Repisa 600x450</text>
+                </g>
+                <g class="cursor-pointer group">
+                  <rect x="630" y="990" width="600" height="450" fill="#e0e7ff" stroke="#4f46e5" stroke-width="6" rx="8"/>
+                  <text x="930" y="1225" fill="#3730a3" font-size="54" font-weight="bold" text-anchor="middle" font-family="sans-serif">Repisa 600x450</text>
+                </g>
+
+                <!-- Piezas 3: Puertas (750x380 x4) -->
+                <g class="cursor-pointer group">
+                  <rect x="1640" y="20" width="750" height="380" fill="#fef3c7" stroke="#d97706" stroke-width="6" rx="8"/>
+                  <text x="2015" y="220" fill="#92400e" font-size="54" font-weight="bold" text-anchor="middle" font-family="sans-serif">Puerta 750x380</text>
+                </g>
+                <g class="cursor-pointer group">
+                  <rect x="1640" y="410" width="750" height="380" fill="#fef3c7" stroke="#d97706" stroke-width="6" rx="8"/>
+                  <text x="2015" y="610" fill="#92400e" font-size="54" font-weight="bold" text-anchor="middle" font-family="sans-serif">Puerta 750x380</text>
+                </g>
+                <g class="cursor-pointer group">
+                  <rect x="1640" y="800" width="750" height="380" fill="#fef3c7" stroke="#d97706" stroke-width="6" rx="8"/>
+                  <text x="2015" y="1000" fill="#92400e" font-size="54" font-weight="bold" text-anchor="middle" font-family="sans-serif">Puerta 750x380</text>
+                </g>
+                <g class="cursor-pointer group">
+                  <rect x="1640" y="1190" width="750" height="380" fill="#fef3c7" stroke="#d97706" stroke-width="6" rx="8"/>
+                  <text x="2015" y="1390" fill="#92400e" font-size="54" font-weight="bold" text-anchor="middle" font-family="sans-serif">Puerta 750x380</text>
+                </g>
+
+                <!-- Retazo Sobrante Reutilizable -->
+                <g>
+                  <rect x="20" y="1450" width="1600" height="350" fill="#cbd5e1" fill-opacity="0.4" stroke="#64748b" stroke-width="4" stroke-dasharray="16,12" />
+                  <text x="820" y="1640" fill="#475569" font-size="54" font-style="italic" text-anchor="middle" font-family="sans-serif">Retazo Sobrante Reutilizable: 1600 x 350 mm</text>
+                </g>
+
+              </svg>
+            </div>
+
+            <!-- Leyenda de colores -->
+            <div class="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-600 pt-2">
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-emerald-200 border border-emerald-600"></span> Laterales (x2)</span>
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-indigo-200 border border-indigo-600"></span> Repisas (x4)</span>
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-amber-200 border border-amber-600"></span> Puertas (x4)</span>
+              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded bg-slate-300 border border-dashed border-slate-500"></span> Retazo Útil</span>
+            </div>
+          </div>
+
+          <!-- Calculated Metrics Dashboard -->
+          <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-4">
+            <h4 class="text-xs font-black uppercase text-slate-500">3. Resultados de Aprovechamiento & Costos</h4>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div class="p-3.5 bg-emerald-50 rounded-2xl border border-emerald-200 text-center">
+                <span class="text-2xl font-black text-emerald-700">88.4%</span>
+                <span class="text-[10px] font-bold text-slate-500 block uppercase mt-0.5">Aprovechamiento</span>
+              </div>
+              <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-center">
+                <span class="text-2xl font-black text-slate-900">11.6%</span>
+                <span class="text-[10px] font-bold text-slate-500 block uppercase mt-0.5">Merma / Desperdicio</span>
+              </div>
+              <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-center">
+                <span class="text-2xl font-black text-slate-900">1 Plancha</span>
+                <span class="text-[10px] font-bold text-slate-500 block uppercase mt-0.5">Cantidad a Comprar</span>
+              </div>
+              <div class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 text-center">
+                <span class="text-2xl font-black text-slate-900">28.4 m</span>
+                <span class="text-[10px] font-bold text-slate-500 block uppercase mt-0.5">Tapacanto Est.</span>
+              </div>
+            </div>
+
+            <!-- Commercial Action Buttons -->
+            <div class="pt-2 flex flex-col sm:flex-row gap-3">
+              <button onclick="addOptimizedSheetToCart()" class="flex-1 py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-xs transition-all shadow-md flex items-center justify-center gap-2">
+                <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+                <span>Comprar 1 Plancha + Servicio de Corte ($95.00)</span>
+              </button>
+              <button onclick="alert('Generando plano de corte en PDF con códigos de pieza para operario de máquina...')" class="py-3.5 px-5 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold rounded-xl text-xs transition-all border border-slate-200 flex items-center justify-center gap-2">
+                <i data-lucide="download" class="w-4 h-4"></i>
+                <span>Descargar PDF</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ==================== VISTA 3: CATÁLOGO DE PRODUCTOS ==================== -->
     <div id="sview-catalogo" class="store-view hidden fade-view space-y-8">
       
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
         <div>
           <span class="text-xs font-black uppercase tracking-wider text-emerald-600">Tienda E-Commerce</span>
-          <h2 class="text-3xl font-black text-slate-950 mt-1">Catálogo de Productos</h2>
+          <h2 class="text-3xl font-black text-slate-950 mt-1">Catálogo de Tableros & Materiales</h2>
           <p class="text-slate-500 text-xs sm:text-sm mt-1">Revisa fichas técnicas con escalas de precio por mayor o agrega al carrito.</p>
         </div>
         <button onclick="toggleCartDrawer(true)" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm shrink-0 flex items-center gap-2">
@@ -194,17 +456,17 @@
               <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=500&q=80" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
               <span class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-xs text-white font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-full">SKU-9901</span>
             </div>
-            <span class="text-[11px] font-black uppercase text-emerald-600 tracking-wider">Sensores & IoT</span>
-            <h4 class="font-bold text-slate-900 mt-1 text-base group-hover:text-emerald-600 transition-colors">Smart Hub Industrial Pro</h4>
-            <p class="text-xs text-slate-500 mt-1 line-clamp-2">Controlador central con conectividad WiFi y protocolos IoT para monitoreo en tiempo real.</p>
+            <span class="text-[11px] font-black uppercase text-emerald-600 tracking-wider">Tableros & Melamina</span>
+            <h4 class="font-bold text-slate-900 mt-1 text-base group-hover:text-emerald-600 transition-colors">Plancha Melamina 18mm Roble</h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">Tablero 2440 x 1830 mm con textura sincronizada poro madera y protección antibacteriana.</p>
           </div>
           <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-lg font-black text-slate-900">$450.00</span>
+            <span class="text-lg font-black text-slate-900">$75.00</span>
             <div class="flex items-center gap-1.5">
               <button onclick="openProductDetailModal(1)" class="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold" title="Ficha Técnica & Descuentos">
                 <i data-lucide="eye" class="w-4 h-4"></i>
               </button>
-              <button onclick="addToCart('Smart Hub Industrial Pro', 450, 'SKU-9901')" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition-all flex items-center gap-1 shadow-md shadow-emerald-600/20">
+              <button onclick="addToCart('Plancha Melamina 18mm Roble', 75, 'SKU-9901')" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition-all flex items-center gap-1 shadow-md shadow-emerald-600/20">
                 <i data-lucide="plus" class="w-3.5 h-3.5"></i> Comprar
               </button>
             </div>
@@ -218,17 +480,17 @@
               <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
               <span class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-xs text-white font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-full">SKU-9902</span>
             </div>
-            <span class="text-[11px] font-black uppercase text-emerald-600 tracking-wider">Audio Pro</span>
-            <h4 class="font-bold text-slate-900 mt-1 text-base group-hover:text-emerald-600 transition-colors">Kit Monitor Auditivo HD</h4>
-            <p class="text-xs text-slate-500 mt-1 line-clamp-2">Auriculares de monitoreo con aislamiento activo y respuesta de frecuencia ultra lineal.</p>
+            <span class="text-[11px] font-black uppercase text-emerald-600 tracking-wider">Tableros & Melamina</span>
+            <h4 class="font-bold text-slate-900 mt-1 text-base group-hover:text-emerald-600 transition-colors">Plancha Melamina 18mm Blanco Frost</h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">Tablero 2440 x 1830 mm acabado mate antireflejante de alta resistencia a rayaduras.</p>
           </div>
           <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-lg font-black text-slate-900">$190.00</span>
+            <span class="text-lg font-black text-slate-900">$62.00</span>
             <div class="flex items-center gap-1.5">
               <button onclick="openProductDetailModal(2)" class="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold" title="Ficha Técnica & Descuentos">
                 <i data-lucide="eye" class="w-4 h-4"></i>
               </button>
-              <button onclick="addToCart('Kit Monitor Auditivo HD', 190, 'SKU-9902')" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition-all flex items-center gap-1 shadow-md shadow-emerald-600/20">
+              <button onclick="addToCart('Plancha Melamina 18mm Blanco Frost', 62, 'SKU-9902')" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition-all flex items-center gap-1 shadow-md shadow-emerald-600/20">
                 <i data-lucide="plus" class="w-3.5 h-3.5"></i> Comprar
               </button>
             </div>
@@ -242,17 +504,17 @@
               <img src="https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=500&q=80" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
               <span class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-xs text-white font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-full">SKU-9903</span>
             </div>
-            <span class="text-[11px] font-black uppercase text-emerald-600 tracking-wider">Hardware</span>
-            <h4 class="font-bold text-slate-900 mt-1 text-base group-hover:text-emerald-600 transition-colors">Terminal Estación Slim</h4>
-            <p class="text-xs text-slate-500 mt-1 line-clamp-2">Equipo de trabajo con pantalla táctil de 15 pulgadas y lector biométrico integrado.</p>
+            <span class="text-[11px] font-black uppercase text-emerald-600 tracking-wider">Tableros Especiales</span>
+            <h4 class="font-bold text-slate-900 mt-1 text-base group-hover:text-emerald-600 transition-colors">Tablero MDF Hidrófugo Verde 18mm</h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">Ideal para cocinas y baños, resistente a la humedad y vapor directo.</p>
           </div>
           <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-lg font-black text-slate-900">$880.00</span>
+            <span class="text-lg font-black text-slate-900">$88.00</span>
             <div class="flex items-center gap-1.5">
               <button onclick="openProductDetailModal(3)" class="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold" title="Ficha Técnica & Descuentos">
                 <i data-lucide="eye" class="w-4 h-4"></i>
               </button>
-              <button onclick="addToCart('Terminal Estación Slim', 880, 'SKU-9903')" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition-all flex items-center gap-1 shadow-md shadow-emerald-600/20">
+              <button onclick="addToCart('Tablero MDF Hidrófugo 18mm', 88, 'SKU-9903')" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition-all flex items-center gap-1 shadow-md shadow-emerald-600/20">
                 <i data-lucide="plus" class="w-3.5 h-3.5"></i> Comprar
               </button>
             </div>
@@ -266,17 +528,17 @@
               <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=500&q=80" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
               <span class="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-xs text-white font-mono text-[10px] font-bold px-2.5 py-0.5 rounded-full">SKU-9904</span>
             </div>
-            <span class="text-[11px] font-black uppercase text-emerald-600 tracking-wider">Óptica HD</span>
-            <h4 class="font-bold text-slate-900 mt-1 text-base group-hover:text-emerald-600 transition-colors">Cámara Sensor Óptico 4K</h4>
-            <p class="text-xs text-slate-500 mt-1 line-clamp-2">Sensor óptico de alta resolución para inspección y control de calidad industrial.</p>
+            <span class="text-[11px] font-black uppercase text-emerald-600 tracking-wider">Insumos & Tapacantos</span>
+            <h4 class="font-bold text-slate-900 mt-1 text-base group-hover:text-emerald-600 transition-colors">Rollo Tapacanto PVC Grueso 2mm (100m)</h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">Borde protector rígido con adhesivo termofusible de alta adherencia.</p>
           </div>
           <div class="mt-5 pt-3 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-lg font-black text-slate-900">$320.00</span>
+            <span class="text-lg font-black text-slate-900">$35.00</span>
             <div class="flex items-center gap-1.5">
               <button onclick="openProductDetailModal(4)" class="p-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold" title="Ficha Técnica & Descuentos">
                 <i data-lucide="eye" class="w-4 h-4"></i>
               </button>
-              <button onclick="addToCart('Cámara Sensor Óptico 4K', 320, 'SKU-9904')" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition-all flex items-center gap-1 shadow-md shadow-emerald-600/20">
+              <button onclick="addToCart('Rollo Tapacanto PVC 2mm', 35, 'SKU-9904')" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl transition-all flex items-center gap-1 shadow-md shadow-emerald-600/20">
                 <i data-lucide="plus" class="w-3.5 h-3.5"></i> Comprar
               </button>
             </div>
@@ -287,7 +549,7 @@
 
     </div>
 
-    <!-- ==================== VISTA 3: RASTREADOR DE PEDIDOS ==================== -->
+    <!-- ==================== VISTA 4: RASTREADOR DE PEDIDOS ==================== -->
     <div id="sview-seguimiento" class="store-view hidden fade-view space-y-8">
       
       <div class="bg-gradient-to-br from-slate-900 to-slate-950 text-white rounded-3xl p-8 sm:p-12 shadow-2xl">
@@ -318,7 +580,7 @@
               </div>
               <div>
                 <p class="text-[11px] text-slate-400 font-bold uppercase tracking-wider">COMPRADOR</p>
-                <h5 class="text-sm font-bold text-white" id="trackedCustomer">Empresa Minera & Industrial S.A.</h5>
+                <h5 class="text-sm font-bold text-white" id="trackedCustomer">Carpintería & Diseños Madereros S.A.C.</h5>
               </div>
               <div>
                 <p class="text-[11px] text-slate-400 font-bold uppercase tracking-wider">ESTADO DE PAGO</p>
@@ -349,9 +611,9 @@
 
               <div class="p-4 rounded-xl bg-emerald-950/40 border border-emerald-500/40">
                 <div class="flex items-center gap-2 text-emerald-400 font-black text-xs mb-1">
-                  <i data-lucide="package-check" class="w-4 h-4"></i> 3. En Preparación
+                  <i data-lucide="package-check" class="w-4 h-4"></i> 3. En Corte y Embalaje
                 </div>
-                <p class="text-xs text-slate-300 font-semibold">Embalaje y guía lista</p>
+                <p class="text-xs text-slate-300 font-semibold">Despiece terminado</p>
                 <span class="text-[10px] text-slate-500">22 Sep, 11:00 AM</span>
               </div>
 
@@ -370,7 +632,7 @@
 
     </div>
 
-    <!-- ==================== VISTA 4: CARGA MASIVA EXCEL ==================== -->
+    <!-- ==================== VISTA 5: CARGA MASIVA EXCEL ==================== -->
     <div id="sview-cargamasiva" class="store-view hidden fade-view space-y-8">
       
       <div class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
@@ -413,7 +675,7 @@
 
     </div>
 
-    <!-- ==================== VISTA 5: GARANTÍA & SOPORTE ==================== -->
+    <!-- ==================== VISTA 6: GARANTÍA & SOPORTE ==================== -->
     <div id="sview-soporte" class="store-view hidden fade-view space-y-8">
       
       <div class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm max-w-4xl mx-auto text-center">
@@ -561,7 +823,7 @@
       <div class="pt-4 border-t border-slate-200">
         <div class="flex items-center justify-between mb-4">
           <span class="text-sm font-semibold text-slate-500">Total a Transferir:</span>
-          <span id="cartTotal" class="text-2xl font-black text-slate-900">$450.00</span>
+          <span id="cartTotal" class="text-2xl font-black text-slate-900">$75.00</span>
         </div>
         <button onclick="processTransferOrder()" class="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2">
           <i data-lucide="check" class="w-4 h-4"></i>
@@ -575,21 +837,21 @@
   <!-- Footer -->
   <footer class="bg-white text-slate-500 py-10 border-t border-slate-200 text-xs text-center">
     <div class="max-w-7xl mx-auto px-4">
-      <p>© 2026 OmniStore Pro. Vista Tienda (Plan $850) - Todos los derechos reservados.</p>
+      <p>© 2026 OmniStore Pro. Vista Tienda con Optimizador 2D ($850) - Todos los derechos reservados.</p>
     </div>
   </footer>
 
-  <!-- SCRIPT LOGICA TIENDA -->
+  <!-- SCRIPT LOGICA TIENDA & OPTIMIZADOR -->
   <script>
     const productsData = [
-      { id: 1, name: "Smart Hub Industrial Pro", price: 450, sku: "SKU-9901", cat: "Sensores & IoT", img: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80", stock: 48, desc: "Controlador central con conectividad WiFi y sensores IoT para monitoreo en plantas industriales.", specs: ["Protocolos: Modbus, MQTT, WiFi 6", "Alimentación: 24V DC / PoE", "Grado de protección: IP67 Industrial", "Garantía: 2 Años Oficial"] },
-      { id: 2, name: "Kit Monitor Auditivo HD", price: 190, sku: "SKU-9902", cat: "Audio Pro", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80", stock: 120, desc: "Auriculares de monitoreo con aislamiento activo y respuesta de frecuencia ultra lineal.", specs: ["Respuesta: 10Hz - 28kHz", "Impedancia: 32 Ohms", "Aislamiento: -26dB Pasivo", "Cable desmontable OFC"] },
-      { id: 3, name: "Terminal Estación Slim", price: 880, sku: "SKU-9903", cat: "Hardware", img: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=600&q=80", stock: 15, desc: "Equipo de trabajo con pantalla táctil de 15 pulgadas y lector biométrico integrado.", specs: ["Procesador: Octa-Core i7 vPro", "RAM: 16GB DDR5 / SSD 512GB", "Lector Biométrico FIPS 201", "Chasis: Aleación de Magnesio"] },
-      { id: 4, name: "Cámara Sensor Óptico 4K", price: 320, sku: "SKU-9904", cat: "Óptica HD", img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80", stock: 65, desc: "Sensor óptico de alta resolución para inspección y control de calidad industrial.", specs: ["Sensor: Sony Starvis 4K 60fps", "Lente: C-Mount 16-50mm f/1.8", "Salida: HDMI 2.1 & Gigabit Ethernet", "Algoritmo de detección OCR"] }
+      { id: 1, name: "Plancha Melamina 18mm Roble", price: 75, sku: "SKU-9901", cat: "Tableros & Melamina", img: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80", stock: 48, desc: "Tablero 2440 x 1830 mm con textura sincronizada poro madera y protección antibacteriana.", specs: ["Formato: 2440 x 1830 mm", "Espesor: 18 mm", "Acabado: Poro Sincronizado", "Garantía: Certificación E1"] },
+      { id: 2, name: "Plancha Melamina 18mm Blanco Frost", price: 62, sku: "SKU-9902", cat: "Tableros & Melamina", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80", stock: 120, desc: "Tablero 2440 x 1830 mm acabado mate antireflejante de alta resistencia a rayaduras.", specs: ["Formato: 2440 x 1830 mm", "Espesor: 18 mm", "Color: Blanco Frost Mate", "Garantía: Certificación E1"] },
+      { id: 3, name: "Tablero MDF Hidrófugo Verde 18mm", price: 88, sku: "SKU-9903", cat: "Tableros Especiales", img: "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=600&q=80", stock: 15, desc: "Ideal para cocinas y baños, resistente a la humedad y vapor directo.", specs: ["Formato: 2440 x 1830 mm", "Espesor: 18 mm", "Propiedad: Anti-Humedad", "Uso: Ambientes Húmedos"] },
+      { id: 4, name: "Rollo Tapacanto PVC Grueso 2mm", price: 35, sku: "SKU-9904", cat: "Insumos & Tapacantos", img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80", stock: 65, desc: "Borde protector rígido con adhesivo termofusible de alta adherencia.", specs: ["Longitud: Rollo x 100 m", "Espesor: 2.0 mm", "Ancho: 22 mm", "Acabado: Texturizado Roble"] }
     ];
 
     let cart = [
-      { name: "Smart Hub Industrial Pro", price: 450, sku: "SKU-9901", qty: 1 }
+      { name: "Plancha Melamina 18mm Roble", price: 75, sku: "SKU-9901", qty: 1 }
     ];
 
     function switchStoreView(viewId) {
@@ -603,11 +865,11 @@
       }
 
       document.querySelectorAll('.store-nav-btn').forEach(btn => {
-        btn.className = "store-nav-btn px-4 py-2 rounded-xl text-slate-600 hover:text-slate-950 transition-all font-bold";
+        btn.className = "store-nav-btn px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-950 transition-all font-bold";
       });
       const activeBtn = document.getElementById(`snav-${viewId}`);
       if (activeBtn) {
-        activeBtn.className = "store-nav-btn px-4 py-2 rounded-xl bg-white text-emerald-700 shadow-xs font-black transition-all";
+        activeBtn.className = "store-nav-btn px-3.5 py-2 rounded-xl bg-white text-emerald-700 shadow-xs font-black transition-all";
       }
 
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -697,6 +959,64 @@
       }
       document.getElementById('trackedOrderCode').innerText = code;
       alert(`Consultando estado en tiempo real para la orden: ${code}`);
+    }
+
+    /* ==================== FUNCIONES DEL OPTIMIZADOR 2D ==================== */
+    function addPieceRow() {
+      const tbody = document.getElementById('piecesListBody');
+      const rowCount = tbody.children.length + 1;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="p-2 font-sans font-bold text-slate-900">Pieza Personalizada ${rowCount}</td>
+        <td class="p-2"><input type="number" value="500" class="p-largo w-16 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold"></td>
+        <td class="p-2"><input type="number" value="300" class="p-ancho w-16 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold"></td>
+        <td class="p-2"><input type="number" value="2" class="p-cant w-12 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold text-emerald-700"></td>
+        <td class="p-2 text-right"><button onclick="deletePieceRow(this)" class="text-rose-400 hover:text-rose-600 font-bold">✕</button></td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    function deletePieceRow(btn) {
+      const row = btn.closest('tr');
+      row.remove();
+    }
+
+    function resetOptimizerDemo() {
+      const tbody = document.getElementById('piecesListBody');
+      tbody.innerHTML = `
+        <tr data-id="1">
+          <td class="p-2 font-sans font-bold text-slate-900">Lateral Mueble</td>
+          <td class="p-2"><input type="number" value="800" class="p-largo w-16 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold"></td>
+          <td class="p-2"><input type="number" value="500" class="p-ancho w-16 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold"></td>
+          <td class="p-2"><input type="number" value="2" class="p-cant w-12 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold text-emerald-700"></td>
+          <td class="p-2 text-right"><button onclick="deletePieceRow(this)" class="text-rose-400 hover:text-rose-600 font-bold">✕</button></td>
+        </tr>
+        <tr data-id="2">
+          <td class="p-2 font-sans font-bold text-slate-900">Repisas Interiores</td>
+          <td class="p-2"><input type="number" value="600" class="p-largo w-16 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold"></td>
+          <td class="p-2"><input type="number" value="450" class="p-ancho w-16 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold"></td>
+          <td class="p-2"><input type="number" value="4" class="p-cant w-12 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold text-emerald-700"></td>
+          <td class="p-2 text-right"><button onclick="deletePieceRow(this)" class="text-rose-400 hover:text-rose-600 font-bold">✕</button></td>
+        </tr>
+        <tr data-id="3">
+          <td class="p-2 font-sans font-bold text-slate-900">Puertas Frontales</td>
+          <td class="p-2"><input type="number" value="750" class="p-largo w-16 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold"></td>
+          <td class="p-2"><input type="number" value="380" class="p-ancho w-16 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold"></td>
+          <td class="p-2"><input type="number" value="4" class="p-cant w-12 px-1.5 py-1 bg-slate-50 border border-slate-200 rounded font-bold text-emerald-700"></td>
+          <td class="p-2 text-right"><button onclick="deletePieceRow(this)" class="text-rose-400 hover:text-rose-600 font-bold">✕</button></td>
+        </tr>
+      `;
+      alert('Valores restablecidos a la configuración de demostración.');
+    }
+
+    function calculateCuttingLayout() {
+      // Calculation Animation
+      alert('⚡ ¡Algoritmo 2D ejecutado! Se generó el plano de despiece con un 88.4% de aprovechamiento en 1 sola plancha de 2440x1830 mm.');
+    }
+
+    function addOptimizedSheetToCart() {
+      addToCart('1 Plancha Melamina 18mm Roble + Servicio de Corte Optimizado', 95, 'SRV-CORTE-01');
+      alert('✅ ¡Plancha madre y servicio de corte añadidos al carrito para checkout!');
     }
 
     function openProductDetailModal(id) {
