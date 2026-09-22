@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Winhouse Design & Showroom | Plan Catálogo $550</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .whatsapp-glow {
+      box-shadow: 0 0 25px rgba(37, 211, 102, 0.55);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased selection:bg-amber-600 selection:text-white">
+
+  <!-- Top Demo Notice Bar -->
+  <div class="bg-slate-950 text-slate-200 text-xs py-2.5 px-4 text-center flex items-center justify-between border-b border-slate-800 sticky top-0 z-50">
+    <div class="flex items-center gap-2 max-w-7xl mx-auto w-full justify-between">
+      <div class="flex items-center gap-2">
+        <span class="bg-amber-500 text-slate-950 font-extrabold px-2 py-0.5 rounded text-[10px] uppercase tracking-wider">Plan $550</span>
+        <span class="hidden sm:inline font-medium">Sitio Web Completo Estilo Winhouse: Catálogo 100+ Productos, Showroom, Cotizador y WhatsApp</span>
+      </div>
+      <a href="../index.html" class="inline-flex items-center gap-1 text-amber-400 hover:text-amber-300 font-semibold underline text-xs">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Volver a Comparativa
+      </a>
+    </div>
+  </div>
+
+  <!-- Announcement Bar -->
+  <div class="bg-amber-500 text-slate-950 text-xs py-1.5 px-4 font-bold text-center tracking-wide">
+    ✨ CATÁLOGO DE TEMPORADA 2026 — Precios especiales en pedidos corporativos y por volumen
+  </div>
+
+  <!-- Main Navigation Header -->
+  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-9 z-40 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20 gap-4">
+        
+        <!-- Logo -->
+        <a href="#inicio" class="flex items-center gap-3 shrink-0">
+          <div class="w-11 h-11 bg-slate-950 rounded-xl flex items-center justify-center text-amber-400 font-black text-2xl shadow-md">
+            W
+          </div>
+          <div>
+            <span class="text-xl font-black text-slate-950 tracking-tight">WIN<span class="text-amber-600">HOUSE</span></span>
+            <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-widest -mt-1">Concept & Living</span>
+          </div>
+        </a>
+
+        <!-- Navigation Links -->
+        <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-slate-600">
+          <a href="#inicio" class="hover:text-amber-600 transition-colors">Inicio</a>
+          <a href="#colecciones" class="hover:text-amber-600 transition-colors">Colecciones</a>
+          <a href="#catalogo" class="hover:text-amber-600 transition-colors">Catálogo Digital</a>
+          <a href="#proceso" class="hover:text-amber-600 transition-colors">¿Cómo Cotizar?</a>
+          <a href="#showroom" class="hover:text-amber-600 transition-colors">Showroom</a>
+          <a href="#contacto" class="hover:text-amber-600 transition-colors">Contacto</a>
+        </nav>
+
+        <!-- Header Actions -->
+        <div class="flex items-center gap-3">
+          <a href="#catalogo" class="hidden sm:flex items-center gap-2 px-4 py-2.5 rounded-full border border-slate-200 bg-slate-50 hover:bg-slate-100 text-xs font-semibold text-slate-700">
+            <i data-lucide="search" class="w-4 h-4 text-slate-400"></i>
+            <span>Buscar Producto</span>
+          </a>
+
+          <!-- Quote Drawer Button -->
+          <button onclick="toggleQuoteDrawer()" class="relative flex items-center gap-2 px-4 py-2.5 rounded-full bg-slate-950 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold transition-all shadow-md">
+            <i data-lucide="clipboard-list" class="w-4 h-4 text-amber-400"></i>
+            <span class="hidden sm:inline">Mi Cotización</span>
+            <span id="quoteCountBadge" class="bg-amber-500 text-slate-950 text-[11px] font-black w-5 h-5 rounded-full flex items-center justify-center">0</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- 1. HERO SECTION PREMIUM -->
+  <section id="inicio" class="relative bg-slate-950 text-white overflow-hidden py-20 lg:py-28">
+    <!-- Background glow / pattern -->
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent"></div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div class="lg:col-span-7">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold mb-6">
+          <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
+          Diseño de Interiores & Mobiliario de Alta Gama
+        </div>
+        
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.15] text-white">
+          Espacios que inspiran, <br class="hidden sm:inline">
+          <span class="bg-gradient-to-r from-amber-400 via-orange-300 to-amber-200 bg-clip-text text-transparent">calidad que perdura.</span>
+        </h1>
+        
+        <p class="mt-6 text-base sm:text-lg text-slate-300 max-w-xl leading-relaxed">
+          Explora más de 100 piezas exclusivas de mobiliario, iluminación y acabados arquitectónicos. Cotiza directamente con nuestros asesores vía WhatsApp.
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <a href="#catalogo" class="px-7 py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm transition-all shadow-xl shadow-amber-500/20 flex items-center gap-2">
+            <span>Explorar Catálogo</span>
+            <i data-lucide="arrow-down" class="w-4 h-4"></i>
+          </a>
+          <a href="https://wa.me/51987654321?text=Hola%20Winhouse,%20quisiera%20asesoría%20personalizada" target="_blank" class="px-6 py-4 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm border border-slate-700 transition-all flex items-center gap-2">
+            <i data-lucide="message-circle" class="w-4 h-4 text-[#25D366]"></i>
+            <span>Hablar con Asesor</span>
+          </a>
+        </div>
+
+        <!-- Trust Stats -->
+        <div class="mt-12 pt-8 border-t border-slate-800 grid grid-cols-3 gap-6">
+          <div>
+            <span class="text-2xl sm:text-3xl font-black text-amber-400">+100</span>
+            <p class="text-xs text-slate-400 mt-0.5 font-medium">Modelos en Catálogo</p>
+          </div>
+          <div>
+            <span class="text-2xl sm:text-3xl font-black text-amber-400">24/7</span>
+            <p class="text-xs text-slate-400 mt-0.5 font-medium">Atención WhatsApp</p>
+          </div>
+          <div>
+            <span class="text-2xl sm:text-3xl font-black text-amber-400">100%</span>
+            <p class="text-xs text-slate-400 mt-0.5 font-medium">Garantía Certificada</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Visual Grid -->
+      <div class="lg:col-span-5 grid grid-cols-2 gap-4 relative">
+        <div class="space-y-4">
+          <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80" alt="Sillón de diseño" class="rounded-2xl shadow-2xl h-56 w-full object-cover border border-slate-800">
+          <img src="https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80" alt="Lámpara minimalista" class="rounded-2xl shadow-2xl h-44 w-full object-cover border border-slate-800">
+        </div>
+        <div class="space-y-4 pt-6">
+          <img src="https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=600&q=80" alt="Mesa de mármol" class="rounded-2xl shadow-2xl h-44 w-full object-cover border border-slate-800">
+          <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80" alt="Ambiente showroom" class="rounded-2xl shadow-2xl h-56 w-full object-cover border border-slate-800">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. SECCIÓN COLECCIONES DESTACADAS -->
+  <section id="colecciones" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12">
+        <div>
+          <span class="text-xs font-black uppercase tracking-wider text-amber-600">Líneas Exclusivas</span>
+          <h2 class="text-3xl sm:text-4xl font-black text-slate-950 mt-1">Explora por Categoría</h2>
+        </div>
+        <p class="text-sm text-slate-500 max-w-md">Diseños seleccionados minuciosamente para proyectos residenciales, comerciales e inmobiliarios.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <div onclick="setCategory('muebles')" class="group relative rounded-2xl overflow-hidden cursor-pointer shadow-md h-80">
+          <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent flex flex-col justify-end p-6">
+            <span class="text-xs text-amber-400 font-bold uppercase">45 Modelos</span>
+            <h3 class="text-xl font-black text-white mt-1">Mobiliario & Living</h3>
+            <span class="text-xs text-slate-300 mt-2 flex items-center gap-1 group-hover:text-amber-400 transition-colors">
+              Ver colección <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </span>
+          </div>
+        </div>
+
+        <div onclick="setCategory('iluminacion')" class="group relative rounded-2xl overflow-hidden cursor-pointer shadow-md h-80">
+          <img src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent flex flex-col justify-end p-6">
+            <span class="text-xs text-amber-400 font-bold uppercase">28 Modelos</span>
+            <h3 class="text-xl font-black text-white mt-1">Iluminación de Diseño</h3>
+            <span class="text-xs text-slate-300 mt-2 flex items-center gap-1 group-hover:text-amber-400 transition-colors">
+              Ver colección <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </span>
+          </div>
+        </div>
+
+        <div onclick="setCategory('oficina')" class="group relative rounded-2xl overflow-hidden cursor-pointer shadow-md h-80">
+          <img src="https://images.unsplash.com/photo-1580481077190-7361346d1800?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent flex flex-col justify-end p-6">
+            <span class="text-xs text-amber-400 font-bold uppercase">20 Modelos</span>
+            <h3 class="text-xl font-black text-white mt-1">Oficina & Ergonomía</h3>
+            <span class="text-xs text-slate-300 mt-2 flex items-center gap-1 group-hover:text-amber-400 transition-colors">
+              Ver colección <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </span>
+          </div>
+        </div>
+
+        <div onclick="setCategory('accesorios')" class="group relative rounded-2xl overflow-hidden cursor-pointer shadow-md h-80">
+          <img src="https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent flex flex-col justify-end p-6">
+            <span class="text-xs text-amber-400 font-bold uppercase">15 Modelos</span>
+            <h3 class="text-xl font-black text-white mt-1">Decoración & Arte</h3>
+            <span class="text-xs text-slate-300 mt-2 flex items-center gap-1 group-hover:text-amber-400 transition-colors">
+              Ver colección <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. SECCIÓN CATÁLOGO INTERACTIVO (100 PRODUCTOS) -->
+  <section id="catalogo" class="py-20 bg-slate-50 border-t border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Catalog Header -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+        <div>
+          <span class="text-xs font-black uppercase tracking-wider text-amber-600">Buscador & Filtros en Vivo</span>
+          <h2 class="text-3xl sm:text-4xl font-black text-slate-950 mt-1">Catálogo de Productos Winhouse</h2>
+          <p class="text-slate-500 text-sm mt-1">Selecciona los productos y arma tu lista de cotización directa por WhatsApp.</p>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="relative w-full md:w-80">
+          <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Buscar por nombre o código..." class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+        </div>
+      </div>
+
+      <!-- Category Filter Tabs -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-4 mb-8 scrollbar-none">
+        <button onclick="setCategory('all')" class="cat-btn active-cat px-5 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all bg-slate-950 text-white shadow-sm" data-category="all">
+          Todos los Productos
+        </button>
+        <button onclick="setCategory('muebles')" class="cat-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white border border-slate-200 text-slate-700 hover:bg-slate-100" data-category="muebles">
+          Mobiliario
+        </button>
+        <button onclick="setCategory('iluminacion')" class="cat-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white border border-slate-200 text-slate-700 hover:bg-slate-100" data-category="iluminacion">
+          Iluminación
+        </button>
+        <button onclick="setCategory('oficina')" class="cat-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white border border-slate-200 text-slate-700 hover:bg-slate-100" data-category="oficina">
+          Línea Oficina
+        </button>
+        <button onclick="setCategory('accesorios')" class="cat-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white border border-slate-200 text-slate-700 hover:bg-slate-100" data-category="accesorios">
+          Decoración
+        </button>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- Injected via JavaScript -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 4. SECCIÓN CÓMO COTIZAR (3 PASOS FÁCILES) -->
+  <section id="proceso" class="py-20 bg-white border-t border-slate-200/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="text-xs font-black uppercase tracking-wider text-amber-600">Proceso Ágil</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-slate-950 mt-1">¿Cómo funciona la cotización?</h2>
+        <p class="text-slate-500 text-sm mt-3">Sin pasarelas engorrosas ni comisiones extra. Trato directo y personalizado con tu asesor de ventas.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        
+        <div class="bg-slate-50 border border-slate-200 rounded-3xl p-8 relative">
+          <div class="w-12 h-12 bg-amber-500 text-slate-950 rounded-2xl flex items-center justify-center font-black text-xl mb-6 shadow-md shadow-amber-500/20">
+            1
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2">Explora y Agrega</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Navega por nuestro catálogo de más de 100 productos y añade los que te interesen a tu lista con el botón "Cotizar".
+          </p>
+        </div>
+
+        <div class="bg-slate-50 border border-slate-200 rounded-3xl p-8 relative">
+          <div class="w-12 h-12 bg-amber-500 text-slate-950 rounded-2xl flex items-center justify-center font-black text-xl mb-6 shadow-md shadow-amber-500/20">
+            2
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2">Envía por WhatsApp</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Al hacer clic en "Enviar Cotización", se generará un mensaje automático con los códigos y cantidades exactas.
+          </p>
+        </div>
+
+        <div class="bg-slate-50 border border-slate-200 rounded-3xl p-8 relative">
+          <div class="w-12 h-12 bg-amber-500 text-slate-950 rounded-2xl flex items-center justify-center font-black text-xl mb-6 shadow-md shadow-amber-500/20">
+            3
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2">Recibe Oferta Formal</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">
+            Nuestro equipo te responderá en minutos con stock disponible, tiempos de entrega y descuentos por volumen.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. SECCIÓN SHOWROOM & PRESENCIA FÍSICA -->
+  <section id="showroom" class="py-20 bg-slate-950 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="text-xs font-black uppercase tracking-wider text-amber-400">Experiencia Sensorial</span>
+          <h2 class="text-3xl sm:text-4xl font-black mt-2 mb-6">Visita Nuestro Showroom Principal</h2>
+          <p class="text-slate-300 leading-relaxed mb-8">
+            Conoce de cerca la textura de las maderas, la calidez de nuestras telas y la ergonomía de cada diseño. Contamos con estacionamiento exclusivo y atención guiada por diseñadores de interiores.
+          </p>
+
+          <div class="space-y-4">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/20">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <p class="text-xs text-slate-400 font-semibold">DIRECCIÓN SHOWROOM</p>
+                <p class="text-sm font-bold text-white">Av. Conquistadores 1040, San Isidro</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0 border border-amber-500/20">
+                <i data-lucide="clock" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <p class="text-xs text-slate-400 font-semibold">HORARIO DE ATENCIÓN</p>
+                <p class="text-sm font-bold text-white">Lunes a Sábado: 9:00 AM - 8:00 PM</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8">
+            <a href="https://wa.me/51987654321?text=Hola%20Winhouse,%20quisiera%20agendar%20una%20visita%20al%20showroom" target="_blank" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm transition-all shadow-lg shadow-amber-500/20">
+              <i data-lucide="calendar" class="w-4 h-4"></i>
+              <span>Agendar Visita Guiada</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="rounded-3xl overflow-hidden shadow-2xl border border-slate-800">
+            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80" alt="Showroom Winhouse" class="w-full h-96 object-cover">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. SECCIÓN TESTIMONIOS & MARCAS -->
+  <section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-xs font-black uppercase tracking-wider text-amber-600">Clientes Satisfechos</span>
+        <h2 class="text-3xl font-black text-slate-950 mt-1">Confían en Winhouse</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200">
+          <div class="flex text-amber-500 mb-3">★★★★★</div>
+          <p class="text-xs sm:text-sm text-slate-700 italic leading-relaxed mb-4">
+            "Amoblamos 3 salas de conferencias y 12 oficinas directivas. La atención por WhatsApp para cotizar fue inmediata y la entrega impecable."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-slate-800 text-white font-bold flex items-center justify-center text-xs">CR</div>
+            <div>
+              <h4 class="text-xs font-bold text-slate-900">Carlos Rodriguez</h4>
+              <p class="text-[11px] text-slate-500">Gerente de Operaciones, Nexo Corp</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200">
+          <div class="flex text-amber-500 mb-3">★★★★★</div>
+          <p class="text-xs sm:text-sm text-slate-700 italic leading-relaxed mb-4">
+            "El catálogo digital es sumamente ágil. Envié mi lista de 15 ítems y me respondieron con ficha técnica y precios en menos de 10 minutos."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-slate-800 text-white font-bold flex items-center justify-center text-xs">MV</div>
+            <div>
+              <h4 class="text-xs font-bold text-slate-900">Mariana Vargas</h4>
+              <p class="text-[11px] text-slate-500">Arquitecta de Interiores</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200">
+          <div class="flex text-amber-500 mb-3">★★★★★</div>
+          <p class="text-xs sm:text-sm text-slate-700 italic leading-relaxed mb-4">
+            "Excelente relación calidad-precio. Las sillas ergonómicas y las mesas de mármol superaron nuestras expectativas en diseño."
+          </p>
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-full bg-slate-800 text-white font-bold flex items-center justify-center text-xs">FR</div>
+            <div>
+              <h4 class="text-xs font-bold text-slate-900">Fernando Ríos</h4>
+              <p class="text-[11px] text-slate-500">Director Creativo</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. SECCIÓN PREGUNTAS FRECUENTES (FAQ) -->
+  <section class="py-16 bg-slate-50 border-t border-slate-200/80">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <span class="text-xs font-black uppercase tracking-wider text-amber-600">Dudas Comunes</span>
+        <h2 class="text-3xl font-black text-slate-950 mt-1">Preguntas Frecuentes</h2>
+      </div>
+
+      <div class="space-y-4">
+        
+        <details class="bg-white border border-slate-200 rounded-2xl p-5 group cursor-pointer">
+          <summary class="font-bold text-sm text-slate-900 flex items-center justify-between">
+            ¿Cómo solicito una cotización con descuento por volumen?
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">
+            Puedes agregar los productos a tu lista de cotización en esta web y especificar en el mensaje de WhatsApp que requieres precio para proyecto o por volumen (+5 o +10 unidades).
+          </p>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-2xl p-5 group cursor-pointer">
+          <summary class="font-bold text-sm text-slate-900 flex items-center justify-between">
+            ¿Hacen envíos a nivel nacional?
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">
+            Sí, despachamos a Lima y todas las provincias del país a través de agencias de carga certificadas con seguro de transporte.
+          </p>
+        </details>
+
+        <details class="bg-white border border-slate-200 rounded-2xl p-5 group cursor-pointer">
+          <summary class="font-bold text-sm text-slate-900 flex items-center justify-between">
+            ¿Los precios incluyen IGV y garantía?
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="text-xs sm:text-sm text-slate-600 mt-3 leading-relaxed">
+            Todas nuestras cotizaciones formales se entregan con desglose de factura y cuentan con garantía de 1 a 2 años según el tipo de producto.
+          </p>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. SECCIÓN CONTACTO DIRECTO -->
+  <section id="contacto" class="py-20 bg-white border-t border-slate-200/80">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-slate-950 text-white rounded-3xl p-8 sm:p-12 shadow-2xl relative overflow-hidden">
+        
+        <div class="max-w-2xl mx-auto text-center mb-8">
+          <span class="text-xs font-black uppercase tracking-wider text-amber-400">Atención Personalizada</span>
+          <h3 class="text-2xl sm:text-3xl font-black mt-1">¿Tienes un proyecto especial en mente?</h3>
+          <p class="text-slate-400 text-sm mt-2">Envíanos un mensaje o déjanos tus datos para enviarte el catálogo PDF completo.</p>
+        </div>
+
+        <form onsubmit="alert('¡Mensaje enviado con éxito! Nos comunicaremos a la brevedad.'); return false;" class="space-y-4 max-w-xl mx-auto">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">Nombre o Empresa *</label>
+              <input type="text" required placeholder="Ej. Constructora San Martín" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">WhatsApp / Teléfono *</label>
+              <input type="tel" required placeholder="+51 987 654 321" class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">Detalle del requerimiento</label>
+            <textarea rows="3" placeholder="Indícanos los modelos o cantidad de unidades que deseas cotizar..." class="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+          </div>
+          <button type="submit" class="w-full py-3.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-xl text-sm transition-all shadow-lg shadow-amber-500/20">
+            Enviar Solicitud de Cotización
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTÓN FLOTANTE DE WHATSAPP -->
+  <a href="https://wa.me/51987654321?text=Hola%20Winhouse,%20quisiera%20cotizar%20información%20de%20su%20catálogo" target="_blank" class="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-[#25D366] hover:bg-[#20ba59] text-white py-3.5 px-5 rounded-full shadow-2xl whatsapp-glow transition-all transform hover:scale-105">
+    <i data-lucide="message-circle" class="w-6 h-6 fill-white"></i>
+    <div class="text-left hidden sm:block">
+      <span class="block text-[10px] font-medium opacity-90 leading-tight">¿Consultas en línea?</span>
+      <span class="block text-xs font-extrabold leading-tight">Cotizar por WhatsApp</span>
+    </div>
+  </a>
+
+  <!-- DRAWER LATERAL DE COTIZACIÓN -->
+  <div id="quoteDrawer" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs hidden transition-opacity">
+    <div class="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white shadow-2xl p-6 flex flex-col justify-between overflow-y-auto">
+      <div>
+        <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+          <div class="flex items-center gap-2">
+            <i data-lucide="clipboard-list" class="w-5 h-5 text-amber-600"></i>
+            <h3 class="font-bold text-slate-900 text-lg">Mi Lista de Cotización</h3>
+          </div>
+          <button onclick="toggleQuoteDrawer()" class="p-1 rounded-lg hover:bg-slate-100 text-slate-500">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <div id="quoteItemsList" class="py-4 space-y-3">
+          <!-- Items injected via JS -->
+        </div>
+      </div>
+
+      <div class="pt-4 border-t border-slate-200 space-y-3">
+        <button onclick="sendQuoteWhatsApp()" class="w-full py-3.5 bg-[#25D366] hover:bg-[#20ba59] text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2 shadow-md">
+          <i data-lucide="message-circle" class="w-5 h-5"></i>
+          <span>Enviar Lista Completa a WhatsApp</span>
+        </button>
+        <button onclick="clearQuote()" class="w-full py-2 text-xs text-slate-500 hover:text-rose-600 font-semibold">
+          Vaciar Lista
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL FICHA TÉCNICA -->
+  <div id="productModal" class="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 relative shadow-2xl">
+      <button onclick="closeModal()" class="absolute top-4 right-4 p-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- Footer Completo -->
+  <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800 text-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <div class="flex items-center gap-2 mb-4">
+          <div class="w-8 h-8 bg-amber-500 rounded-lg flex items-center justify-center text-slate-950 font-black">W</div>
+          <span class="text-lg font-black text-white">WIN<span class="text-amber-500">HOUSE</span></span>
+        </div>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          Especialistas en mobiliario, iluminación y diseño de interiores contemporáneo.
+        </p>
+      </div>
+
+      <div>
+        <h5 class="text-xs font-bold uppercase tracking-wider text-white mb-3">Enlaces Rápidos</h5>
+        <ul class="space-y-2 text-xs">
+          <li><a href="#inicio" class="hover:text-amber-400">Inicio</a></li>
+          <li><a href="#colecciones" class="hover:text-amber-400">Colecciones</a></li>
+          <li><a href="#catalogo" class="hover:text-amber-400">Catálogo Digital</a></li>
+          <li><a href="#showroom" class="hover:text-amber-400">Showroom San Isidro</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="text-xs font-bold uppercase tracking-wider text-white mb-3">Atención & Ventas</h5>
+        <ul class="space-y-2 text-xs">
+          <li>ventas@winhouse-demo.com</li>
+          <li>+51 987 654 321</li>
+          <li>Av. Conquistadores 1040, Lima</li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="text-xs font-bold uppercase tracking-wider text-white mb-3">Catálogo PDF</h5>
+        <p class="text-xs text-slate-400 mb-3">Descarga nuestro brochure de especificaciones técnicas.</p>
+        <button onclick="alert('Descargando catálogo PDF 2026 (Demo)...')" class="px-4 py-2 bg-slate-900 border border-slate-700 hover:border-amber-500 text-xs font-semibold rounded-lg text-white transition-all">
+          📥 Descargar Catálogo PDF
+        </button>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-6 border-t border-slate-900 text-center text-xs text-slate-500">
+      © 2026 Winhouse Living. Demo Modelo Plan $550 - Todos los derechos reservados.
+    </div>
+  </footer>
+
+  <!-- Script Lógica -->
+  <script>
+    const sampleProducts = [
+      { id: 1, name: "Sillón Nórdico Velvet Gold", category: "muebles", code: "WIN-101", price: "Ref. $240", img: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=600&q=80", desc: "Tapizado en terciopelo italiano con estructura de madera maciza tratada." },
+      { id: 2, name: "Mesa Centro Mármol Carrara", category: "muebles", code: "WIN-102", price: "Ref. $320", img: "https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&w=600&q=80", desc: "Superficie de mármol pulido con vetas naturales y base en electroestático negro." },
+      { id: 3, name: "Lámpara de Pie Arco Gold", category: "iluminacion", code: "WIN-103", price: "Ref. $160", img: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80", desc: "Diseño curvado moderno de 2.10m de altura, pantalla orientable dimerizable." },
+      { id: 4, name: "Silla Gerencial ErgoTech Pro", category: "oficina", code: "WIN-104", price: "Ref. $290", img: "https://images.unsplash.com/photo-1580481077190-7361346d1800?auto=format&fit=crop&w=600&q=80", desc: "Malla alemana transpirable, soporte lumbar 3D y reposabrazos regulables." },
+      { id: 5, name: "Escritorio Ejecutivo Roble & Acero", category: "oficina", code: "WIN-105", price: "Ref. $380", img: "https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd?auto=format&fit=crop&w=600&q=80", desc: "Superficie de roble macizo con cajonería oculta y pasacables magnético." },
+      { id: 6, name: "Lámpara Colgante Industrial Edison", category: "iluminacion", code: "WIN-106", price: "Ref. $110", img: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=600&q=80", desc: "Acabado en bronce envejecido y cable textil trenzado para espacios cálidos." },
+      { id: 7, name: "Trío de Jarrones Cerámica Zen", category: "accesorios", code: "WIN-107", price: "Ref. $85", img: "https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?auto=format&fit=crop&w=600&q=80", desc: "Elaborados artesanalmente en arcilla natural con acabado mate texturizado." },
+      { id: 8, name: "Espejo Orgánico con Halo Led", category: "accesorios", code: "WIN-108", price: "Ref. $195", img: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=600&q=80", desc: "Forma libre contemporánea con marco invisible y luz cálida 3000K." }
+    ];
+
+    let quoteCart = [];
+    let currentCategory = 'all';
+
+    function renderProducts(list) {
+      const grid = document.getElementById('productsGrid');
+      if (list.length === 0) {
+        grid.innerHTML = `<div class="col-span-4 text-center py-12 text-slate-400 font-medium">No se encontraron productos con ese criterio.</div>`;
+        return;
+      }
+
+      grid.innerHTML = list.map(p => `
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group">
+          <div class="relative overflow-hidden">
+            <img src="${p.img}" alt="${p.name}" class="w-full h-52 object-cover group-hover:scale-105 transition-transform duration-500">
+            <span class="absolute top-3 left-3 bg-slate-950/80 backdrop-blur-xs text-amber-400 text-[10px] font-mono font-bold px-2.5 py-1 rounded-full uppercase">
+              ${p.code}
+            </span>
+          </div>
+
+          <div class="p-5 flex flex-col flex-1 justify-between">
+            <div>
+              <span class="text-[11px] font-black uppercase tracking-wider text-amber-600">${p.category}</span>
+              <h4 class="font-bold text-slate-900 mt-1 text-base group-hover:text-amber-600 transition-colors">${p.name}</h4>
+              <p class="text-xs text-slate-500 mt-1 line-clamp-2">${p.desc}</p>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+              <span class="font-extrabold text-slate-900 text-sm">${p.price}</span>
+              <div class="flex items-center gap-1.5">
+                <button onclick="openModal(${p.id})" class="p-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold" title="Ficha Técnica">
+                  <i data-lucide="eye" class="w-4 h-4"></i>
+                </button>
+                <button onclick="addToQuote(${p.id})" class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-slate-950 hover:bg-amber-500 hover:text-slate-950 text-white text-xs font-bold transition-all">
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                  <span>Cotizar</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function filterProducts() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = sampleProducts.filter(p => {
+        const matchCat = currentCategory === 'all' || p.category === currentCategory;
+        const matchSearch = p.name.toLowerCase().includes(q) || p.code.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q);
+        return matchCat && matchSearch;
+      });
+      renderProducts(filtered);
+    }
+
+    function setCategory(cat) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        if (btn.dataset.category === cat) {
+          btn.className = "cat-btn active-cat px-5 py-2.5 rounded-xl text-xs sm:text-sm font-black transition-all bg-slate-950 text-white shadow-sm";
+        } else {
+          btn.className = "cat-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white border border-slate-200 text-slate-700 hover:bg-slate-100";
+        }
+      });
+      filterProducts();
+    }
+
+    function addToQuote(id) {
+      const prod = sampleProducts.find(p => p.id === id);
+      const existing = quoteCart.find(item => item.id === id);
+      if (existing) {
+        existing.qty++;
+      } else {
+        quoteCart.push({ ...prod, qty: 1 });
+      }
+      updateQuoteUI();
+      toggleQuoteDrawer(true);
+    }
+
+    function updateQuoteUI() {
+      const count = quoteCart.reduce((sum, i) => sum + i.qty, 0);
+      document.getElementById('quoteCountBadge').innerText = count;
+
+      const container = document.getElementById('quoteItemsList');
+      if (quoteCart.length === 0) {
+        container.innerHTML = `<div class="text-center py-8 text-slate-400 text-sm">Tu lista de cotización está vacía.</div>`;
+        return;
+      }
+
+      container.innerHTML = quoteCart.map(item => `
+        <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200">
+          <img src="${item.img}" class="w-12 h-12 rounded-lg object-cover">
+          <div class="flex-1 min-w-0">
+            <h5 class="text-xs font-bold text-slate-900 truncate">${item.name}</h5>
+            <p class="text-[11px] text-slate-500">${item.code} - Cant: ${item.qty}</p>
+          </div>
+          <button onclick="removeFromQuote(${item.id})" class="text-rose-500 hover:text-rose-700 p-1">
+            <i data-lucide="trash-2" class="w-4 h-4"></i>
+          </button>
+        </div>
+      `).join('');
+      lucide.createIcons();
+    }
+
+    function removeFromQuote(id) {
+      quoteCart = quoteCart.filter(i => i.id !== id);
+      updateQuoteUI();
+    }
+
+    function clearQuote() {
+      quoteCart = [];
+      updateQuoteUI();
+    }
+
+    function toggleQuoteDrawer(forceOpen = false) {
+      const drawer = document.getElementById('quoteDrawer');
+      if (forceOpen || drawer.classList.contains('hidden')) {
+        drawer.classList.remove('hidden');
+      } else {
+        drawer.classList.add('hidden');
+      }
+    }
+
+    function sendQuoteWhatsApp() {
+      if (quoteCart.length === 0) {
+        alert('Agrega al menos un producto a la lista.');
+        return;
+      }
+      let text = "Hola Winhouse, quiero solicitar una cotización formal para los siguientes productos:%0A";
+      quoteCart.forEach(i => {
+        text += `- ${i.name} (${i.code}) x ${i.qty} unidad(es)%0A`;
+      });
+      text += "%0A¿Me podrían brindar disponibilidad y precio?";
+      window.open(`https://wa.me/51987654321?text=${text}`, '_blank');
+    }
+
+    function openModal(id) {
+      const prod = sampleProducts.find(p => p.id === id);
+      document.getElementById('modalContent').innerHTML = `
+        <img src="${prod.img}" class="w-full h-56 object-cover rounded-2xl mb-4">
+        <span class="text-xs font-black uppercase text-amber-600">${prod.category} | ${prod.code}</span>
+        <h3 class="text-xl font-extrabold text-slate-900 mt-1">${prod.name}</h3>
+        <p class="text-slate-600 text-sm mt-2 leading-relaxed">${prod.desc}</p>
+        <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-lg font-black text-slate-900">${prod.price}</span>
+          <button onclick="addToQuote(${prod.id}); closeModal();" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black rounded-xl text-sm transition-all shadow-md">
+            Agregar a Cotización
+          </button>
+        </div>
+      `;
+      document.getElementById('productModal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeModal() {
+      document.getElementById('productModal').classList.add('hidden');
+    }
+
+    // Initialize
+    renderProducts(sampleProducts);
+    updateQuoteUI();
+    lucide.createIcons();
+  </script>
+</body>
+</html>
