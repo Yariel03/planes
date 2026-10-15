@@ -1819,35 +1819,58 @@
         }
       }
 
+      let lastWidth = window.innerWidth;
       syncStickyPosition();
       window.addEventListener('scroll', updateScrollTarget, { passive: true });
       window.addEventListener('resize', () => {
+        // On mobile, ignore height-only resize events fired when the URL bar collapses or expands
+        if (isMobile && window.innerWidth === lastWidth) return;
+        lastWidth = window.innerWidth;
         syncStickyPosition();
         updateScrollTarget();
       }, { passive: true });
+      window.addEventListener('orientationchange', () => {
+        setTimeout(() => {
+          syncStickyPosition();
+          updateScrollTarget();
+        }, 100);
+      });
 
       // High-performance RAF lerp loop (Scroll-World engine algorithm)
-      const eps = isMobile ? 0.015 : 0.008;
+      const eps = isMobile ? 0.035 : 0.008;
+      const lerpSpeed = isMobile ? 0.35 : (reduceMotion ? 1 : 0.20);
+      let isSeeking = false;
+
+      heroVid.addEventListener('seeking', () => { isSeeking = true; });
+      heroVid.addEventListener('seeked', () => { isSeeking = false; });
+
       function scrubLoop() {
         if (videoReady && heroVid && heroVid.duration) {
           // Always ensure the video is paused so it never advances currentTime on its own clock
-          if (!heroVid.paused) {
+          if (!heroVid.paused && userPrimed) {
             heroVid.pause();
           }
 
-          if (!heroVid.seeking) {
+          const isDecoderBusy = heroVid.seeking || isSeeking;
+          if (!isDecoderBusy) {
             const diff = targetProgress - currentProgress;
-            if (Math.abs(diff) < 0.0003) {
+            if (Math.abs(diff) < 0.0004) {
               currentProgress = targetProgress;
             } else {
-              currentProgress += diff * (reduceMotion ? 1 : 0.18);
+              currentProgress += diff * lerpSpeed;
             }
 
-            const targetTime = currentProgress * heroVid.duration;
+            const targetTime = Math.min(Math.max(currentProgress * heroVid.duration, 0), heroVid.duration - 0.01);
             if (Math.abs(heroVid.currentTime - targetTime) > eps) {
               try {
-                heroVid.currentTime = targetTime;
-              } catch (e) {}
+                if ('fastSeek' in heroVid) {
+                  heroVid.fastSeek(targetTime);
+                } else {
+                  heroVid.currentTime = targetTime;
+                }
+              } catch (e) {
+                try { heroVid.currentTime = targetTime; } catch (err) {}
+              }
             }
           }
         }
