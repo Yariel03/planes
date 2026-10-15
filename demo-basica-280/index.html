@@ -126,6 +126,7 @@
       overflow: hidden;
       user-select: none;
       -webkit-user-select: none;
+      touch-action: pan-y;
     }
 
     .slider-before-image {
@@ -135,6 +136,9 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
+      clip-path: inset(0 50% 0 0);
+      -webkit-clip-path: inset(0 50% 0 0);
+      pointer-events: none;
     }
 
     .slider-handle {
@@ -146,6 +150,7 @@
       transform: translateX(-50%);
       cursor: ew-resize;
       z-index: 20;
+      pointer-events: none;
     }
 
     .slider-circle {
@@ -261,7 +266,7 @@
         
         <!-- Background Hero Video: Obra Gris to Completed Building (Scrubbed by Scroll) -->
         <div class="absolute inset-0 z-0 overflow-hidden">
-          <video id="heroBannerVideo" muted playsinline preload="auto" class="w-full h-full object-cover object-center" poster="../public/videos/start_frame_obra_gris.png">
+          <video id="heroBannerVideo" muted playsinline preload="auto" class="w-full h-full object-cover object-center" style="transform: translateZ(0); will-change: transform; backface-visibility: hidden;" poster="../public/videos/start_frame_obra_gris.png">
             <source src="../public/videos/obra_gris_reversed_to_finished.mp4" type="video/mp4">
             <source src="../public/videos/obra_gris_forward_clean.mp4" type="video/mp4">
             <!-- Fallback image -->
@@ -400,18 +405,18 @@
             <div id="beforeAfterSlider" class="slider-container relative rounded-2xl h-[380px] sm:h-[480px] w-full overflow-hidden cursor-ew-resize">
               
               <!-- After Image (Background) -->
-              <img src="../public/banner3_clean.png" alt="Después: Edificio corporativo con fachada terminada en alucubón y vidrio" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
+              <img src="../public/despues.jpg" alt="Después: Obra terminada con ventanería y aluminio arquitectónico" class="absolute inset-0 w-full h-full object-cover pointer-events-none select-none">
               
               <!-- Badge "Después" -->
-              <span class="absolute bottom-4 right-4 z-10 px-3 py-1 rounded-md bg-emerald-500 text-slate-950 font-black text-[11px] uppercase tracking-wider shadow-md pointer-events-none">
+              <span class="absolute bottom-4 right-4 z-10 px-3 py-1 rounded-md bg-emerald-500 text-slate-950 font-black text-[11px] uppercase tracking-wider shadow-md pointer-events-none select-none">
                 Después
               </span>
 
-              <!-- Before Image (Overlay with dynamic clip width) -->
-              <div id="sliderBeforeWrapper" class="slider-before-image" style="width: 50%;">
-                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80" alt="Antes: Obra gris en estructura de concreto y ladrillo" class="absolute inset-0 w-full h-full object-cover pointer-events-none" style="width: 100%; min-width: 100%;">
+              <!-- Before Image (Overlay with dynamic clip-path) -->
+              <div id="sliderBeforeWrapper" class="slider-before-image">
+                <img src="../public/antes.jpg" alt="Antes: Estructura previa y obra gris" class="absolute inset-0 w-full h-full object-cover pointer-events-none select-none">
                 <!-- Badge "Antes" -->
-                <span class="absolute bottom-4 left-4 z-10 px-3 py-1 rounded-md bg-slate-950/80 backdrop-blur-md text-white font-black text-[11px] uppercase tracking-wider border border-white/20 shadow-md pointer-events-none">
+                <span class="absolute bottom-4 left-4 z-10 px-3 py-1 rounded-md bg-slate-950/80 backdrop-blur-md text-white font-black text-[11px] uppercase tracking-wider border border-white/20 shadow-md pointer-events-none select-none">
                   Antes
                 </span>
               </div>
@@ -583,7 +588,7 @@
             <div id="fabPreviewCard" class="relative bg-slate-950 text-white rounded-3xl overflow-hidden shadow-2xl border border-slate-800 transition-all">
               
               <div class="relative h-72 sm:h-96 overflow-hidden">
-                <img id="fabPreviewImg" src="https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1000&q=85" alt="Vista previa de producto" class="w-full h-full object-cover">
+                <img id="fabPreviewImg" src="../public/quehacemos/fachadas.png" alt="Vista previa de producto" class="w-full h-full object-cover">
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
                 <div class="absolute top-4 left-4">
                   <span id="fabPreviewNumber" class="text-3xl font-black text-white/40 tracking-wider">01</span>
@@ -803,7 +808,7 @@
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-8 rounded-3xl bg-slate-50 border border-slate-200 blur-reveal">
             <div class="lg:col-span-7">
               <div class="rounded-2xl overflow-hidden shadow-lg h-64 sm:h-80">
-                <img src="https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1000&q=80" alt="Puertas de aluminio y vidrio templado" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                <img src="../public/quehacemos/puertas.png" alt="Puertas de aluminio y vidrio templado" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
               </div>
             </div>
 
@@ -862,7 +867,7 @@
 
             <div class="lg:col-span-7 order-1 lg:order-2">
               <div class="rounded-2xl overflow-hidden shadow-lg h-64 sm:h-80">
-                <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1000&q=80" alt="Pasamanos de acero inoxidable y cristal templado" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                <img src="../public/quehacemos/pasamanos.png" alt="Pasamanos de acero inoxidable y cristal templado" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
               </div>
             </div>
           </div>
@@ -894,7 +899,7 @@
             </div>
 
             <div class="relative rounded-2xl overflow-hidden border border-white/10 group">
-              <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=600&q=80" alt="Revestimiento en alucubón plateado muestra" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-700">
+              <img src="../public/quehacemos/alucubon.png" alt="Revestimiento en alucubón plateado muestra" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-700">
               <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
               <span class="absolute bottom-4 left-4 text-xs font-black uppercase tracking-wider text-emerald-400">
                 REVESTIMIENTO EN ALUCUBÓN
@@ -1036,7 +1041,7 @@
         <div class="catalog-card blur-reveal delay-100 group bg-slate-900 border border-white/10 rounded-3xl p-4 flex flex-col justify-between hover:border-emerald-500/50 transition-all duration-300 shadow-xl" data-category="fachadas">
           <div>
             <div class="relative rounded-2xl overflow-hidden h-56 mb-4">
-              <img src="https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=600&q=80" alt="Fachada comercial en vidrio templado" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <img src="../public/quehacemos/vidrio.png" alt="Fachada comercial en vidrio templado" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
               <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-wider border border-white/20">
                 Fachada
               </span>
@@ -1099,7 +1104,7 @@
         <div class="catalog-card blur-reveal delay-100 group bg-slate-900 border border-white/10 rounded-3xl p-4 flex flex-col justify-between hover:border-emerald-500/50 transition-all duration-300 shadow-xl" data-category="puertas">
           <div>
             <div class="relative rounded-2xl overflow-hidden h-56 mb-4">
-              <img src="https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=600&q=80" alt="Puerta batiente de aluminio negro" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <img src="../public/quehacemos/puertas.png" alt="Puerta batiente de aluminio negro" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
               <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-wider border border-white/20">
                 Puerta
               </span>
@@ -1120,7 +1125,7 @@
         <div class="catalog-card blur-reveal delay-200 group bg-slate-900 border border-white/10 rounded-3xl p-4 flex flex-col justify-between hover:border-emerald-500/50 transition-all duration-300 shadow-xl" data-category="pasamanos">
           <div>
             <div class="relative rounded-2xl overflow-hidden h-56 mb-4">
-              <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80" alt="Pasamanos en vidrio templado" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <img src="../public/quehacemos/pasamanos.png" alt="Pasamanos en vidrio templado" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
               <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-wider border border-white/20">
                 Pasamanos
               </span>
@@ -1411,24 +1416,117 @@
       });
     }
 
-    // 2. BEFORE / AFTER COMPARISON SLIDER DRAGGING
+    // 2. BEFORE / AFTER COMPARISON SLIDER DRAGGING & ON-REVEAL DEMO ANIMATION
     const sliderContainer = document.getElementById('beforeAfterSlider');
     const sliderBeforeWrapper = document.getElementById('sliderBeforeWrapper');
     const sliderHandle = document.getElementById('sliderHandle');
     let isSliding = false;
+    let isAutoAnimating = false;
+    let autoAnimFrameId = null;
+    let hasAutoAnimated = false;
+    let userHasManuallySlid = false;
+
+    function setSliderPercentage(percent) {
+      percent = Math.max(0, Math.min(100, percent));
+      if (sliderBeforeWrapper) {
+        const rightInset = (100 - percent).toFixed(2);
+        sliderBeforeWrapper.style.clipPath = `inset(0 ${rightInset}% 0 0)`;
+        sliderBeforeWrapper.style.webkitClipPath = `inset(0 ${rightInset}% 0 0)`;
+      }
+      if (sliderHandle) {
+        sliderHandle.style.left = `${percent.toFixed(2)}%`;
+      }
+    }
+
+    function cancelAutoAnimation() {
+      if (isAutoAnimating) {
+        isAutoAnimating = false;
+        if (autoAnimFrameId) {
+          cancelAnimationFrame(autoAnimFrameId);
+          autoAnimFrameId = null;
+        }
+      }
+    }
+
+    function playSliderRevealAnimation() {
+      if (isAutoAnimating || userHasManuallySlid) return;
+      isAutoAnimating = true;
+
+      const duration = 2800; // ~2.8 seconds smooth demo
+      const startTime = performance.now();
+
+      function animate(now) {
+        if (!isAutoAnimating) return;
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        // Multi-stage sinusoidal easing:
+        // 0.00 - 0.10: brief hold at 50%
+        // 0.10 - 0.40: glide to 22% (reveals 'Después')
+        // 0.40 - 0.75: glide to 78% (reveals 'Antes')
+        // 0.75 - 1.00: glide back to 50% (settles at center)
+        let targetPercent = 50;
+
+        if (progress < 0.10) {
+          targetPercent = 50;
+        } else if (progress < 0.40) {
+          const t = (progress - 0.10) / (0.40 - 0.10);
+          const ease = 0.5 - 0.5 * Math.cos(t * Math.PI);
+          targetPercent = 50 - ease * 28;
+        } else if (progress < 0.75) {
+          const t = (progress - 0.40) / (0.75 - 0.40);
+          const ease = 0.5 - 0.5 * Math.cos(t * Math.PI);
+          targetPercent = 22 + ease * 56;
+        } else {
+          const t = (progress - 0.75) / (1.00 - 0.75);
+          const ease = 0.5 - 0.5 * Math.cos(t * Math.PI);
+          targetPercent = 78 - ease * 28;
+        }
+
+        setSliderPercentage(targetPercent);
+
+        if (progress < 1) {
+          autoAnimFrameId = requestAnimationFrame(animate);
+        } else {
+          isAutoAnimating = false;
+          autoAnimFrameId = null;
+          setSliderPercentage(50);
+        }
+      }
+
+      autoAnimFrameId = requestAnimationFrame(animate);
+    }
 
     function updateSliderPosition(clientX) {
       if (!sliderContainer) return;
+      cancelAutoAnimation();
+      userHasManuallySlid = true;
       const rect = sliderContainer.getBoundingClientRect();
       let position = ((clientX - rect.left) / rect.width) * 100;
-      if (position < 0) position = 0;
-      if (position > 100) position = 100;
-
-      sliderBeforeWrapper.style.width = `${position}%`;
-      sliderHandle.style.left = `${position}%`;
+      setSliderPercentage(position);
     }
 
     if (sliderContainer) {
+      // IntersectionObserver: trigger auto-animation when scrolled into view
+      const sliderRevealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !hasAutoAnimated && !userHasManuallySlid) {
+            hasAutoAnimated = true;
+            setTimeout(() => {
+              if (!userHasManuallySlid) {
+                playSliderRevealAnimation();
+              }
+            }, 450);
+          }
+        });
+      }, {
+        root: null,
+        threshold: 0.25
+      });
+
+      sliderRevealObserver.observe(sliderContainer);
+
+      // Desktop Mouse events
       sliderContainer.addEventListener('mousedown', (e) => {
         isSliding = true;
         updateSliderPosition(e.clientX);
@@ -1443,15 +1541,17 @@
         isSliding = false;
       });
 
-      // Touch events for mobile
+      // Mobile Touch events
       sliderContainer.addEventListener('touchstart', (e) => {
         isSliding = true;
-        if (e.touches[0]) updateSliderPosition(e.touches[0].clientX);
+        cancelAutoAnimation();
+        userHasManuallySlid = true;
+        if (e.touches && e.touches[0]) updateSliderPosition(e.touches[0].clientX);
       }, { passive: true });
 
       window.addEventListener('touchmove', (e) => {
         if (!isSliding) return;
-        if (e.touches[0]) updateSliderPosition(e.touches[0].clientX);
+        if (e.touches && e.touches[0]) updateSliderPosition(e.touches[0].clientX);
       }, { passive: true });
 
       window.addEventListener('touchend', () => {
@@ -1466,7 +1566,7 @@
         cat: "FACHADAS Y ESTRUCTURAS",
         title: "Revestimiento en Alucubón y Vidrio",
         desc: "Solución integral con subestructura metálica sismorresistente, panel de aluminio compuesto de 4mm y ventanería con control solar.",
-        img: "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1000&q=85",
+        img: "../public/quehacemos/fachadas.png",
         price: "Cotización según medidas"
       },
       {
@@ -1474,7 +1574,7 @@
         cat: "ALUCUBÓN ARQUITECTÓNICO",
         title: "Panel de Aluminio Compuesto",
         desc: "Transformación total de fachadas viejas a edificaciones modernas. Variedad de tonos metalizados, maderas y colores sólidos.",
-        img: "https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=1000&q=85",
+        img: "../public/quehacemos/alucubon.png",
         price: "Desde $85 / m² instalado"
       },
       {
@@ -1482,7 +1582,7 @@
         cat: "VIDRIO TEMPLADO & LAMINADO",
         title: "Vitrinas y Fachadas Comerciales",
         desc: "Sistemas suspendidos spider o con perfilería perimetral oculta para máxima visibilidad y luminosidad.",
-        img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=85",
+        img: "../public/quehacemos/vidrio.png",
         price: "Cotización por caso"
       },
       {
@@ -1498,7 +1598,7 @@
         cat: "PUERTAS DE ALTA GAMA",
         title: "Puertas Pivotantes y Batientes",
         desc: "Cerraduras multipunto, manijones de acero y pivotes hidráulicos de piso para pasos de alto tráfico.",
-        img: "https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1000&q=85",
+        img: "../public/quehacemos/puertas.png",
         price: "Desde $120"
       },
       {
@@ -1506,7 +1606,7 @@
         cat: "PASAMANOS DE SEGURIDAD",
         title: "Pasamanos en Cristal y Acero",
         desc: "Cumplimiento de normas de resistencia y seguridad para balcones, gradas y áreas públicas.",
-        img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1000&q=85",
+        img: "../public/quehacemos/pasamanos.png",
         price: "Cotización por caso"
       },
       {
@@ -1632,8 +1732,11 @@
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       let targetProgress = 0;
       let currentProgress = 0;
-      let videoReady = false;
+      let videoReady = heroVid.readyState >= 1;
       let userPrimed = false;
+
+      // Ensure video is initially paused so it never autoplays against scroll scrubbing
+      try { heroVid.pause(); } catch (e) {}
 
       // Prime video playback for iOS/Safari gesture requirements
       function primeHeroVideo() {
@@ -1650,25 +1753,19 @@
       window.addEventListener('touchstart', primeHeroVideo, { once: true, passive: true });
       window.addEventListener('click', primeHeroVideo, { once: true, passive: true });
 
-      // Fetch video as Blob for instant, non-blocking seek scrubbing (Scroll-World standard)
-      const primarySource = heroVid.querySelector('source');
-      if (primarySource && primarySource.src && !reduceMotion) {
-        fetch(primarySource.src)
-          .then(res => res.ok ? res.blob() : Promise.reject())
-          .then(blob => {
-            const blobUrl = URL.createObjectURL(blob);
-            heroVid.src = blobUrl;
-            heroVid.load();
-          })
-          .catch(() => {});
-      }
-
       heroVid.addEventListener('loadedmetadata', () => {
         videoReady = true;
+        heroVid.pause();
         updateScrollTarget();
       });
 
+      if (heroVid.readyState >= 1) {
+        videoReady = true;
+      }
+
       const stickyEl = document.getElementById('heroStickyContainer');
+      let lastStickyTop = -1;
+      let lastStickyHeight = -1;
 
       function syncStickyPosition() {
         if (!stickyEl) return 100;
@@ -1684,23 +1781,35 @@
           bottom = 60;
         }
 
-        // Align the banner exactly at the bottom of the nav bar so it's already resting at its sticky point
+        // Round to whole pixels to prevent subpixel layout oscillation in Firefox/Zen
         const stickyTop = Math.max(Math.round(bottom + 2), 48);
-        stickyEl.style.top = stickyTop + 'px';
-        stickyEl.style.height = `calc(100vh - ${stickyTop + 14}px)`;
+        const stickyHeight = Math.round(window.innerHeight - stickyTop - 14);
+
+        if (stickyTop !== lastStickyTop || stickyHeight !== lastStickyHeight) {
+          lastStickyTop = stickyTop;
+          lastStickyHeight = stickyHeight;
+          stickyEl.style.top = stickyTop + 'px';
+          stickyEl.style.height = stickyHeight + 'px';
+        }
         return stickyTop;
       }
 
       function updateScrollTarget() {
         if (!heroSection || !stickyEl) return;
-        const rect = heroSection.getBoundingClientRect();
         const stickyTop = syncStickyPosition();
+        
+        // Exact 0 when sitting at the top of the page to eliminate initial jitter
+        if (window.scrollY <= 2) {
+          targetProgress = 0;
+          if (scrollHint) scrollHint.style.opacity = '1';
+          return;
+        }
+
+        const rect = heroSection.getBoundingClientRect();
         const stickyHeight = stickyEl.offsetHeight || (window.innerHeight - stickyTop);
         const totalScrollable = heroSection.offsetHeight - stickyHeight;
         if (totalScrollable <= 0) return;
         
-        // At scroll = 0, rect.top is equal to stickyTop, so scrolled is 0.
-        // As soon as user scrolls 1px, scrolled becomes positive and video immediately starts scrubbing!
         const scrolled = stickyTop - rect.top;
         targetProgress = Math.min(Math.max(scrolled / totalScrollable, 0), 0.999);
 
@@ -1718,12 +1827,22 @@
       }, { passive: true });
 
       // High-performance RAF lerp loop (Scroll-World engine algorithm)
-      const eps = isMobile ? 0.015 : 0.005;
+      const eps = isMobile ? 0.015 : 0.008;
       function scrubLoop() {
         if (videoReady && heroVid && heroVid.duration) {
-          // Never issue a seek while previous seek is pending (coalescing)
+          // Always ensure the video is paused so it never advances currentTime on its own clock
+          if (!heroVid.paused) {
+            heroVid.pause();
+          }
+
           if (!heroVid.seeking) {
-            currentProgress += (targetProgress - currentProgress) * (reduceMotion ? 1 : 0.18);
+            const diff = targetProgress - currentProgress;
+            if (Math.abs(diff) < 0.0003) {
+              currentProgress = targetProgress;
+            } else {
+              currentProgress += diff * (reduceMotion ? 1 : 0.18);
+            }
+
             const targetTime = currentProgress * heroVid.duration;
             if (Math.abs(heroVid.currentTime - targetTime) > eps) {
               try {
@@ -1738,15 +1857,11 @@
     }
 
     function replayHeroVideo() {
-      if (heroSection) {
-        heroSection.scrollIntoView({ behavior: 'smooth' });
-      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       if (heroVid) {
-        heroVid.currentTime = 0;
         try {
-          heroVid.play().then(() => {
-            setTimeout(() => { heroVid.pause(); }, 4900);
-          }).catch(() => {});
+          heroVid.pause();
+          heroVid.currentTime = 0;
         } catch (e) {}
       }
     }
@@ -1816,16 +1931,13 @@
       // 5. Refresh lucide icons in the revealed view
       lucide.createIcons();
 
-      // 6. Replay 3D video from start whenever 'inicio' is visited
+      // 6. Reset 3D video to start whenever 'inicio' is visited
       if (sectionId === 'inicio') {
         const vid = document.getElementById('heroBannerVideo');
         if (vid) {
           try {
+            vid.pause();
             vid.currentTime = 0;
-            const playPromise = vid.play();
-            if (playPromise !== undefined) {
-              playPromise.catch(() => {});
-            }
           } catch (e) {}
         }
       }
@@ -1849,6 +1961,9 @@
           const activeSec = document.querySelector('.section-view:not(.hidden)');
           if (activeSec) {
             setupBlurObserver(activeSec);
+          }
+          if (!userHasManuallySlid) {
+            hasAutoAnimated = false;
           }
         }
       }, 150);
