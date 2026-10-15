@@ -178,20 +178,25 @@
 <body class="bg-[#0b0e13] text-slate-100 antialiased selection:bg-emerald-500 selection:text-white flex flex-col min-h-screen">
 
   <!-- ==================== TOP DEMO BANNER (COMPARISON SWITCHER) ==================== -->
-  <div class="bg-black/95 text-slate-300 text-xs py-2.5 px-4 sticky top-0 z-50 border-b border-white/10 backdrop-blur-md">
+  <div id="topDemoBanner" class="bg-black/95 text-slate-300 text-xs py-2.5 px-4 sticky top-0 z-50 border-b border-white/10 backdrop-blur-md transition-all duration-300">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
-      <div class="flex items-center gap-2">
-        <span class="bg-emerald-500 text-slate-950 font-black px-2.5 py-0.5 rounded text-[10px] uppercase tracking-wider">Plan $280</span>
-        <span class="font-medium text-slate-200">Así se vería esta opción: Estilo corporativo premium con animaciones blur</span>
+      <div class="flex items-center gap-2 overflow-hidden text-ellipsis">
+        <span class="bg-emerald-500 text-slate-950 font-black px-2.5 py-0.5 rounded text-[10px] uppercase tracking-wider shrink-0">Plan $280</span>
+        <span class="font-medium text-slate-200 truncate">Así se vería esta opción: Estilo corporativo premium con animaciones blur</span>
       </div>
-      <a href="../index.html" class="inline-flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 font-bold underline text-xs transition-colors">
-        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Volver a Comparativa
-      </a>
+      <div class="flex items-center gap-3 shrink-0">
+        <a href="../index.html" class="inline-flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 font-bold underline text-xs transition-colors">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Volver a Comparativa
+        </a>
+        <button onclick="closeTopDemoBanner()" title="Cerrar banner informativo" class="text-slate-400 hover:text-white p-1 rounded-md hover:bg-white/10 transition-colors cursor-pointer flex items-center justify-center">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
     </div>
   </div>
 
   <!-- ==================== FLOATING PILL NAVBAR (ANCHO AMPLIO ALINEADO CON BANNER Y CARDS) ==================== -->
-  <div class="sticky top-11 z-40 mx-2 sm:mx-6 pt-3 pb-1">
+  <div id="floatingNavbarContainer" class="sticky top-11 z-40 mx-2 sm:mx-6 pt-3 pb-1 transition-all duration-300">
     <header class="w-full glass-nav rounded-2xl sm:rounded-full px-5 sm:px-8 py-3 flex items-center justify-between shadow-2xl transition-all">
       
       <!-- Brand Logo -->
@@ -233,7 +238,7 @@
   </div>
 
   <!-- Mobile Section Switcher Bar -->
-  <div class="md:hidden sticky top-[76px] z-30 mx-2 pt-1 pb-2">
+  <div id="mobileNavContainer" class="md:hidden sticky top-[76px] z-30 mx-2 pt-1 pb-2">
     <div class="glass-nav rounded-2xl p-1 flex items-center justify-between gap-1 border border-white/10 text-xs shadow-lg">
       <button onclick="switchSection('inicio')" id="mobile-btn-inicio" class="mobile-nav-btn flex-1 py-2 px-2 text-center rounded-xl bg-white text-slate-950 font-black transition-all shadow-sm">Inicio</button>
       <button onclick="switchSection('servicios')" id="mobile-btn-servicios" class="mobile-nav-btn flex-1 py-2 px-2 text-center rounded-xl text-slate-300 font-bold transition-all">Servicios</button>
@@ -243,84 +248,87 @@
   </div>
 
   <!-- MAIN WRAPPER: 4 SECCIONES INDEPENDIENTES -->
-  <main class="flex-1 w-full pb-24 overflow-hidden pt-2">
+  <main class="flex-1 w-full pb-24 pt-0">
 
     <!-- ==================== VISTA 1: INICIO ==================== -->
     <div id="section-inicio" class="section-view space-y-24 sm:space-y-32">
 
-      <!-- HERO BANNER -->
-      <section id="inicio" class="relative pt-2 sm:pt-4 mx-2 sm:mx-6">
+      <!-- HERO BANNER CON SCROLL-WORLD ENGINE (100% FULL WIDTH) -->
+      <section id="inicio" class="relative w-full min-h-[260vh]">
       
-      <!-- Container with Hero Video & Floating Card (Matches White Cards Width) -->
-      <div class="relative rounded-3xl overflow-hidden border border-white/10 bg-slate-900 min-h-[600px] lg:min-h-[720px] xl:min-h-[760px] flex items-center shadow-2xl">
+      <!-- Container Sticky 100% Width with Hero Video & Floating Card -->
+      <div id="heroStickyContainer" class="sticky w-full overflow-hidden border-y border-white/10 bg-slate-900 min-h-[580px] flex items-center shadow-2xl z-10">
         
-        <!-- Background Hero Video: 3D to Real Building (Plays only once) -->
+        <!-- Background Hero Video: Obra Gris to Completed Building (Scrubbed by Scroll) -->
         <div class="absolute inset-0 z-0 overflow-hidden">
-          <video id="heroBannerVideo" autoplay muted playsinline class="w-full h-full object-cover object-center" poster="../public/banner3_clean.png">
-            <source src="../public/banner_video.mp4" type="video/mp4">
-            <source src="../public/Video%20Project.mp4" type="video/mp4">
+          <video id="heroBannerVideo" muted playsinline preload="auto" class="w-full h-full object-cover object-center" poster="../public/videos/start_frame_obra_gris.png">
+            <source src="../public/videos/obra_gris_reversed_to_finished.mp4" type="video/mp4">
+            <source src="../public/videos/obra_gris_forward_clean.mp4" type="video/mp4">
             <!-- Fallback image -->
-            <img src="../public/banner3_clean.png" alt="Edificio corporativo CREAVID" class="w-full h-full object-cover">
+            <img src="../public/videos/end_frame_finished_16_9.png" alt="Edificio corporativo CREAVID" class="w-full h-full object-cover">
           </video>
           <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/20 lg:from-black/90 lg:via-black/50 lg:to-transparent pointer-events-none"></div>
         </div>
 
-        <!-- Replay Video Button -->
-        <button onclick="replayHeroVideo()" title="Volver a reproducir video 3D" class="absolute top-6 right-6 z-20 px-3.5 py-2 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white/90 hover:text-white text-xs font-bold border border-white/20 transition-all flex items-center gap-1.5 shadow-xl">
-          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5 text-emerald-400"></i>
-          <span class="hidden sm:inline">Repetir video 3D</span>
-        </button>
+        <!-- Indicador de Scroll interactivo Scroll-World -->
+        <div id="scrollWorldHint" class="absolute bottom-6 right-6 lg:right-12 z-20 hidden sm:flex items-center gap-2.5 px-4 py-2 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-white/80 text-xs font-semibold shadow-lg transition-opacity duration-300 pointer-events-none">
+          <i data-lucide="mouse-pointer-click" class="w-4 h-4 text-emerald-400 animate-bounce"></i>
+          <span>Desliza para construir la obra</span>
+        </div>
 
-        <!-- Floating Glass Card (Exact layout from the video) -->
-        <div class="relative z-10 p-6 sm:p-10 lg:p-16 max-w-xl lg:max-w-xl xl:max-w-2xl">
-          <div class="glass-card-dark rounded-3xl p-7 sm:p-9 shadow-2xl border border-white/15 blur-reveal">
-            
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.15]">
-              Obra terminada,<br>con cumplimiento.
-            </h1>
+        <!-- Content Container Aligned to max-w-7xl Grid -->
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-8 lg:px-12 flex items-center">
+          <!-- Floating Glass Card (Hidden on mobile, semi-transparent glass on desktop) -->
+          <div class="hidden sm:block max-w-xl lg:max-w-xl xl:max-w-2xl">
+            <div class="rounded-3xl p-7 sm:p-9 shadow-2xl border border-white/15 blur-reveal bg-slate-950/40 backdrop-blur-md">
+              
+              <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.15]">
+                Obra terminada,<br>con cumplimiento.
+              </h1>
 
-            <div class="mt-6">
-              <span class="inline-block text-[10px] font-black uppercase tracking-widest text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
-                CÓMO SE TRABAJA
-              </span>
+              <div class="mt-6">
+                <span class="inline-block text-[10px] font-black uppercase tracking-widest text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
+                  CÓMO SE TRABAJA
+                </span>
 
-              <div class="mt-4 space-y-3 text-xs sm:text-sm text-slate-300">
-                <div class="flex items-start gap-2.5">
-                  <span class="font-extrabold text-white shrink-0">01. Proforma.</span>
-                  <span class="text-slate-300">Con sus medidas y ubicación.</span>
-                </div>
-                <div class="flex items-start gap-2.5">
-                  <span class="font-extrabold text-white shrink-0">02. Muestra.</span>
-                  <span class="text-slate-300">Revise material y acabado.</span>
-                </div>
-                <div class="flex items-start gap-2.5">
-                  <span class="font-extrabold text-white shrink-0">03. Negociable.</span>
-                  <span class="text-slate-300">Ajustamos alcance y condiciones.</span>
-                </div>
-                <div class="flex items-start gap-2.5">
-                  <span class="font-extrabold text-white shrink-0">04. Cobro.</span>
-                  <span class="text-slate-300">Se formaliza y se coordina la instalación.</span>
+                <div class="mt-4 space-y-3 text-xs sm:text-sm text-slate-300">
+                  <div class="flex items-start gap-2.5">
+                    <span class="font-extrabold text-white shrink-0">01. Proforma.</span>
+                    <span class="text-slate-300">Con sus medidas y ubicación.</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="font-extrabold text-white shrink-0">02. Muestra.</span>
+                    <span class="text-slate-300">Revise material y acabado.</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="font-extrabold text-white shrink-0">03. Negociable.</span>
+                    <span class="text-slate-300">Ajustamos alcance y condiciones.</span>
+                  </div>
+                  <div class="flex items-start gap-2.5">
+                    <span class="font-extrabold text-white shrink-0">04. Cobro.</span>
+                    <span class="text-slate-300">Se formaliza y se coordina la instalación.</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <!-- Action Buttons -->
-            <div class="mt-8 flex flex-wrap items-center gap-3">
-              <a href="https://wa.me/593999999999?text=Hola,%20deseo%20una%20proforma%20para%20mi%20obra" target="_blank" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition-all shadow-lg whatsapp-glow">
-                <span>Cotizar por WhatsApp</span>
-                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-              </a>
-              <button onclick="switchSection('servicios')" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition-all border border-white/15 cursor-pointer">
-                <span>Ver servicios</span>
-                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
-              </button>
-            </div>
+              <!-- Action Buttons -->
+              <div class="mt-8 flex flex-wrap items-center gap-3">
+                <a href="https://wa.me/593999999999?text=Hola,%20deseo%20una%20proforma%20para%20mi%20obra" target="_blank" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition-all shadow-lg whatsapp-glow">
+                  <span>Cotizar por WhatsApp</span>
+                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                </a>
+                <button onclick="switchSection('servicios')" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition-all border border-white/15 cursor-pointer">
+                  <span>Ver servicios</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
 
+            </div>
           </div>
         </div>
 
         <!-- Scroll down indicator circle button -->
-        <a href="#antes-despues" class="hidden sm:flex absolute bottom-8 right-8 z-10 w-12 h-12 rounded-full glass-card-dark border border-white/20 items-center justify-center text-emerald-400 hover:text-white hover:border-emerald-400 transition-all shadow-xl group">
+        <a href="#antes-despues" class="hidden sm:flex absolute bottom-8 right-8 lg:right-12 z-10 w-12 h-12 rounded-full glass-card-dark border border-white/20 items-center justify-center text-emerald-400 hover:text-white hover:border-emerald-400 transition-all shadow-xl group">
           <i data-lucide="arrow-down" class="w-5 h-5 group-hover:translate-y-0.5 transition-transform"></i>
         </a>
 
@@ -1614,30 +1622,149 @@
       window.open(waUrl, '_blank');
     }
 
-    // 7. HERO BANNER VIDEO - PLAY ONLY ONCE CONTROLLER
+    // 7. HERO BANNER - SCROLL-WORLD SCRUB ENGINE CONTROLLER
+    const heroSection = document.getElementById('inicio');
     const heroVid = document.getElementById('heroBannerVideo');
-    if (heroVid) {
-      // Ensure playback starts
-      const playPromise = heroVid.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // In case of browser strict autoplay policy, start on first user interaction
-          window.addEventListener('click', () => { heroVid.play(); }, { once: true });
-        });
+    const scrollHint = document.getElementById('scrollWorldHint');
+
+    if (heroVid && heroSection) {
+      const isMobile = window.matchMedia('(hover: none) and (pointer: coarse)').matches || window.innerWidth <= 860;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let targetProgress = 0;
+      let currentProgress = 0;
+      let videoReady = false;
+      let userPrimed = false;
+
+      // Prime video playback for iOS/Safari gesture requirements
+      function primeHeroVideo() {
+        if (userPrimed || !heroVid) return;
+        userPrimed = true;
+        try {
+          const p = heroVid.play();
+          if (p && p.then) {
+            p.then(() => { heroVid.pause(); }).catch(() => {});
+          }
+        } catch (e) {}
+      }
+      window.addEventListener('pointerdown', primeHeroVideo, { once: true, passive: true });
+      window.addEventListener('touchstart', primeHeroVideo, { once: true, passive: true });
+      window.addEventListener('click', primeHeroVideo, { once: true, passive: true });
+
+      // Fetch video as Blob for instant, non-blocking seek scrubbing (Scroll-World standard)
+      const primarySource = heroVid.querySelector('source');
+      if (primarySource && primarySource.src && !reduceMotion) {
+        fetch(primarySource.src)
+          .then(res => res.ok ? res.blob() : Promise.reject())
+          .then(blob => {
+            const blobUrl = URL.createObjectURL(blob);
+            heroVid.src = blobUrl;
+            heroVid.load();
+          })
+          .catch(() => {});
       }
 
-      // Freeze explicitly on the last frame once completed (play only once)
-      heroVid.addEventListener('ended', () => {
-        heroVid.pause();
+      heroVid.addEventListener('loadedmetadata', () => {
+        videoReady = true;
+        updateScrollTarget();
       });
+
+      const stickyEl = document.getElementById('heroStickyContainer');
+
+      function syncStickyPosition() {
+        if (!stickyEl) return 100;
+        const navContainer = document.getElementById('floatingNavbarContainer');
+        const mobileNav = document.getElementById('mobileNavContainer');
+        
+        let bottom = 0;
+        if (window.innerWidth < 768 && mobileNav && mobileNav.offsetParent !== null) {
+          bottom = mobileNav.getBoundingClientRect().bottom;
+        } else if (navContainer) {
+          bottom = navContainer.getBoundingClientRect().bottom;
+        } else {
+          bottom = 60;
+        }
+
+        // Align the banner exactly at the bottom of the nav bar so it's already resting at its sticky point
+        const stickyTop = Math.max(Math.round(bottom + 2), 48);
+        stickyEl.style.top = stickyTop + 'px';
+        stickyEl.style.height = `calc(100vh - ${stickyTop + 14}px)`;
+        return stickyTop;
+      }
+
+      function updateScrollTarget() {
+        if (!heroSection || !stickyEl) return;
+        const rect = heroSection.getBoundingClientRect();
+        const stickyTop = syncStickyPosition();
+        const stickyHeight = stickyEl.offsetHeight || (window.innerHeight - stickyTop);
+        const totalScrollable = heroSection.offsetHeight - stickyHeight;
+        if (totalScrollable <= 0) return;
+        
+        // At scroll = 0, rect.top is equal to stickyTop, so scrolled is 0.
+        // As soon as user scrolls 1px, scrolled becomes positive and video immediately starts scrubbing!
+        const scrolled = stickyTop - rect.top;
+        targetProgress = Math.min(Math.max(scrolled / totalScrollable, 0), 0.999);
+
+        // Hide hint once scrolled past 5%
+        if (scrollHint) {
+          scrollHint.style.opacity = targetProgress > 0.05 ? '0' : '1';
+        }
+      }
+
+      syncStickyPosition();
+      window.addEventListener('scroll', updateScrollTarget, { passive: true });
+      window.addEventListener('resize', () => {
+        syncStickyPosition();
+        updateScrollTarget();
+      }, { passive: true });
+
+      // High-performance RAF lerp loop (Scroll-World engine algorithm)
+      const eps = isMobile ? 0.015 : 0.005;
+      function scrubLoop() {
+        if (videoReady && heroVid && heroVid.duration) {
+          // Never issue a seek while previous seek is pending (coalescing)
+          if (!heroVid.seeking) {
+            currentProgress += (targetProgress - currentProgress) * (reduceMotion ? 1 : 0.18);
+            const targetTime = currentProgress * heroVid.duration;
+            if (Math.abs(heroVid.currentTime - targetTime) > eps) {
+              try {
+                heroVid.currentTime = targetTime;
+              } catch (e) {}
+            }
+          }
+        }
+        requestAnimationFrame(scrubLoop);
+      }
+      requestAnimationFrame(scrubLoop);
     }
 
     function replayHeroVideo() {
-      const vid = document.getElementById('heroBannerVideo');
-      if (vid) {
-        vid.currentTime = 0;
-        vid.play();
+      if (heroSection) {
+        heroSection.scrollIntoView({ behavior: 'smooth' });
       }
+      if (heroVid) {
+        heroVid.currentTime = 0;
+        try {
+          heroVid.play().then(() => {
+            setTimeout(() => { heroVid.pause(); }, 4900);
+          }).catch(() => {});
+        } catch (e) {}
+      }
+    }
+
+    function closeTopDemoBanner() {
+      const banner = document.getElementById('topDemoBanner');
+      if (banner) {
+        banner.style.display = 'none';
+      }
+      const navContainer = document.getElementById('floatingNavbarContainer');
+      if (navContainer) {
+        navContainer.classList.remove('top-11');
+        navContainer.classList.add('top-2');
+      }
+      setTimeout(() => {
+        window.dispatchEvent(new Event('resize'));
+        window.dispatchEvent(new Event('scroll'));
+      }, 50);
     }
 
     // 8. SECTION SWITCHER (SEPARATED PAGES / STANDALONE VIEWS)
