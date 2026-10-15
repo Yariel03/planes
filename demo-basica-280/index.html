@@ -1,360 +1,1733 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Corporativo Innova | Plan Básico $280</title>
+  <title>CREAVID | Aluminio y Vidrio Arquitectónico — Plan Básico $280</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    .fade-view {
-      animation: fadeInView 0.25s ease-in-out forwards;
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
-    @keyframes fadeInView {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
+
+    /* === BLUR REVEAL ENGINE (Scroll & Appearance) === */
+    .blur-reveal {
+      opacity: 0;
+      filter: blur(20px);
+      transform: translateY(32px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, filter, transform;
+    }
+
+    .blur-reveal.revealed {
+      opacity: 1;
+      filter: blur(0px);
+      transform: translateY(0);
+    }
+
+    /* Staggered Delays */
+    .delay-100 { transition-delay: 100ms; }
+    .delay-200 { transition-delay: 200ms; }
+    .delay-300 { transition-delay: 300ms; }
+    .delay-400 { transition-delay: 400ms; }
+    .delay-500 { transition-delay: 500ms; }
+
+    /* Blur In Keyframes for dynamic tab & element switching */
+    @keyframes blurInStagger {
+      0% {
+        opacity: 0;
+        filter: blur(16px);
+        transform: translateY(16px) scale(0.97);
+      }
+      100% {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .animate-blur-in {
+      animation: blurInStagger 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes blurCrossFade {
+      0% {
+        opacity: 0.3;
+        filter: blur(14px);
+      }
+      100% {
+        opacity: 1;
+        filter: blur(0px);
+      }
+    }
+
+    .animate-blur-crossfade {
+      animation: blurCrossFade 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Continuous Infinite Client Logos Marquee Carousel */
+    @keyframes marqueeScroll {
+      0% {
+        transform: translate3d(0, 0, 0);
+      }
+      100% {
+        transform: translate3d(-50%, 0, 0);
+      }
+    }
+
+    .marquee-container {
+      overflow: hidden;
+      width: 100%;
+      position: relative;
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marqueeScroll 24s linear infinite;
+      will-change: transform;
+    }
+
+    .marquee-container:hover .marquee-track {
+      animation-play-state: paused;
+    }
+
+    /* Glassmorphic Cards & Headers */
+    .glass-card-dark {
+      background: rgba(15, 20, 27, 0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .glass-nav {
+      background: rgba(11, 15, 20, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* WhatsApp Button Pulsing Effect */
+    .whatsapp-glow {
+      box-shadow: 0 10px 25px -4px rgba(16, 185, 129, 0.45), 0 0 15px rgba(16, 185, 129, 0.25);
+    }
+
+    /* Before/After slider styling */
+    .slider-container {
+      position: relative;
+      overflow: hidden;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .slider-before-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .slider-handle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: #10b981;
+      transform: translateX(-50%);
+      cursor: ew-resize;
+      z-index: 20;
+    }
+
+    .slider-circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 44px;
+      height: 44px;
+      background: #ffffff;
+      border: 3px solid #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+      color: #0f172a;
+    }
+
+    /* Hide scrollbar for category pills */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-600 selection:text-white flex flex-col min-h-screen">
+<body class="bg-[#0b0e13] text-slate-100 antialiased selection:bg-emerald-500 selection:text-white flex flex-col min-h-screen">
 
-  <!-- Top Demo Switcher Banner -->
-  <div class="bg-slate-900 text-white text-xs py-2.5 px-4 sticky top-0 z-50 shadow-sm border-b border-slate-800">
+  <!-- ==================== TOP DEMO BANNER (COMPARISON SWITCHER) ==================== -->
+  <div class="bg-black/95 text-slate-300 text-xs py-2.5 px-4 sticky top-0 z-50 border-b border-white/10 backdrop-blur-md">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-3">
       <div class="flex items-center gap-2">
-        <span class="bg-blue-500 text-white font-extrabold px-2.5 py-0.5 rounded text-[10px] uppercase tracking-wider">Plan $280</span>
-        <span class="font-semibold text-slate-200">Así se vería esta opción: Página Corporativa de 4 Secciones</span>
+        <span class="bg-emerald-500 text-slate-950 font-black px-2.5 py-0.5 rounded text-[10px] uppercase tracking-wider">Plan $280</span>
+        <span class="font-medium text-slate-200">Así se vería esta opción: Estilo corporativo premium con animaciones blur</span>
       </div>
-      <a href="../index.html" class="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 font-bold underline text-xs">
+      <a href="../index.html" class="inline-flex items-center gap-1.5 text-emerald-400 hover:text-emerald-300 font-bold underline text-xs transition-colors">
         <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Volver a Comparativa
       </a>
     </div>
   </div>
 
-  <!-- Navigation Header with Tab Switcher -->
-  <header class="bg-white border-b border-slate-200 sticky top-9 z-40 shadow-xs">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+  <!-- ==================== FLOATING PILL NAVBAR (ANCHO AMPLIO ALINEADO CON BANNER Y CARDS) ==================== -->
+  <div class="sticky top-11 z-40 mx-2 sm:mx-6 pt-3 pb-1">
+    <header class="w-full glass-nav rounded-2xl sm:rounded-full px-5 sm:px-8 py-3 flex items-center justify-between shadow-2xl transition-all">
       
       <!-- Brand Logo -->
-      <button onclick="switchSection('inicio')" class="flex items-center gap-3 text-left">
-        <div class="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-600/30 font-black text-xl">
-          N
+      <button onclick="switchSection('inicio')" class="flex items-center gap-2.5 group text-left cursor-pointer">
+        <div class="w-9 h-9 rounded-xl bg-white p-1 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform overflow-hidden">
+          <img src="../public/log_n.jpg" alt="CREAVID Logo" class="w-full h-full object-contain">
         </div>
-        <div>
-          <span class="text-xl font-black tracking-tight text-slate-950">NOVA<span class="text-blue-600">CORP</span></span>
-          <span class="block text-[10px] text-slate-400 font-bold uppercase tracking-widest -mt-1">Soluciones Empresariales</span>
+        <div class="leading-none">
+          <span class="text-lg font-black tracking-tight text-white">CREA<span class="text-emerald-400">VID</span></span>
+          <span class="block text-[8px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">Aluminio y Vidrio</span>
         </div>
       </button>
 
-      <!-- Desktop Navigation Links (SPA Switcher) -->
-      <nav class="hidden md:flex items-center gap-1 text-xs sm:text-sm font-bold p-1 bg-slate-100 rounded-2xl border border-slate-200/80">
-        <button onclick="switchSection('inicio')" id="nav-inicio" class="nav-btn px-4 py-2 rounded-xl bg-white text-blue-600 shadow-xs transition-all font-black">
-          1. Inicio
+      <!-- Center Pill Navigation (Section Switcher) -->
+      <nav class="hidden md:flex items-center gap-1.5 bg-white/5 p-1 rounded-full border border-white/10 text-xs font-bold">
+        <button onclick="switchSection('inicio')" id="nav-btn-inicio" class="nav-btn px-5 py-2 rounded-full bg-white text-slate-950 font-black shadow-md transition-all cursor-pointer">
+          Inicio
         </button>
-        <button onclick="switchSection('nosotros')" id="nav-nosotros" class="nav-btn px-4 py-2 rounded-xl text-slate-600 hover:text-slate-900 transition-all font-bold">
-          2. Nosotros
+        <button onclick="switchSection('servicios')" id="nav-btn-servicios" class="nav-btn px-5 py-2 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition-all font-bold cursor-pointer">
+          Servicios
         </button>
-        <button onclick="switchSection('servicios')" id="nav-servicios" class="nav-btn px-4 py-2 rounded-xl text-slate-600 hover:text-slate-900 transition-all font-bold">
-          3. Servicios & Vitrina
+        <button onclick="switchSection('catalogo')" id="nav-btn-catalogo" class="nav-btn px-5 py-2 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition-all font-bold cursor-pointer">
+          Catálogo
         </button>
-        <button onclick="switchSection('contacto')" id="nav-contacto" class="nav-btn px-4 py-2 rounded-xl text-slate-600 hover:text-slate-900 transition-all font-bold">
-          4. Contacto
+        <button onclick="switchSection('contacto')" id="nav-btn-contacto" class="nav-btn px-5 py-2 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition-all font-bold cursor-pointer">
+          Contacto
         </button>
       </nav>
 
-      <!-- Contact CTA -->
-      <button onclick="switchSection('contacto')" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-all shadow-md shadow-blue-600/20">
-        <i data-lucide="mail" class="w-3.5 h-3.5"></i>
-        <span>Solicitar Cotización</span>
-      </button>
-    </div>
-  </header>
-
-  <!-- Mobile Quick Section Bar -->
-  <div class="md:hidden bg-white border-b border-slate-200 p-2 overflow-x-auto flex gap-1.5 justify-center text-xs font-bold">
-    <button onclick="switchSection('inicio')" class="mobile-nav-btn px-3 py-1.5 rounded-lg bg-blue-50 text-blue-600">Inicio</button>
-    <button onclick="switchSection('nosotros')" class="mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600">Nosotros</button>
-    <button onclick="switchSection('servicios')" class="mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600">Servicios</button>
-    <button onclick="switchSection('contacto')" class="mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600">Contacto</button>
+      <!-- Right Action CTA -->
+      <div class="flex items-center gap-3">
+        <a href="https://wa.me/593999999999?text=Hola%20CREAVID,%20deseo%20cotizar%20un%20proyecto" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-extrabold transition-all shadow-md whatsapp-glow">
+          <i data-lucide="message-circle" class="w-4 h-4 fill-slate-950"></i>
+          <span class="hidden sm:inline">Cotizar por WhatsApp</span>
+          <span class="sm:hidden">Cotizar</span>
+        </a>
+      </div>
+    </header>
   </div>
 
-  <!-- MAIN BODY CONTAINER (SEPARATED VIEWS) -->
-  <main class="flex-1 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-
-    <!-- ==================== SECCIÓN 1: INICIO ==================== -->
-    <div id="section-inicio" class="section-view fade-view space-y-12">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm">
-        <div class="lg:col-span-7">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-bold mb-6">
-            <i data-lucide="shield-check" class="w-4 h-4"></i> Presencia Digital Corporativa 2026
-          </div>
-          <h1 class="text-4xl sm:text-5xl font-black text-slate-950 tracking-tight leading-tight">
-            Impulsamos el valor y la imagen de tu empresa
-          </h1>
-          <p class="mt-6 text-base sm:text-lg text-slate-600 max-w-xl leading-relaxed">
-            Página corporativa moderna, ultrarrápida y optimizada para presentar tus servicios institucionales y catálogo inicial de hasta 20 productos destacados.
-          </p>
-          <div class="mt-8 flex flex-wrap gap-4">
-            <button onclick="switchSection('servicios')" class="px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm shadow-md shadow-blue-600/20 transition-all flex items-center gap-2">
-              <span>Ver Vitrina de Productos</span>
-              <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </button>
-            <button onclick="switchSection('nosotros')" class="px-6 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-sm transition-all border border-slate-200">
-              Conocer la Empresa
-            </button>
-          </div>
-        </div>
-        <div class="lg:col-span-5">
-          <div class="rounded-2xl overflow-hidden shadow-xl border border-slate-200">
-            <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80" alt="Oficinas Corporativas" class="w-full h-80 object-cover">
-          </div>
-        </div>
-      </div>
-
-      <!-- Métricas rápidas de la sección inicio -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs text-center">
-          <span class="text-3xl font-black text-blue-600">+10 Años</span>
-          <p class="text-xs font-bold text-slate-500 uppercase mt-1">Experiencia en el Rubro</p>
-        </div>
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs text-center">
-          <span class="text-3xl font-black text-blue-600">20 Ítems</span>
-          <p class="text-xs font-bold text-slate-500 uppercase mt-1">Vitrina Visual Incluida</p>
-        </div>
-        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs text-center">
-          <span class="text-3xl font-black text-blue-600">100% Responsivo</span>
-          <p class="text-xs font-bold text-slate-500 uppercase mt-1">Adaptable a Móvil y PC</p>
-        </div>
-      </div>
+  <!-- Mobile Section Switcher Bar -->
+  <div class="md:hidden sticky top-[76px] z-30 mx-2 pt-1 pb-2">
+    <div class="glass-nav rounded-2xl p-1 flex items-center justify-between gap-1 border border-white/10 text-xs shadow-lg">
+      <button onclick="switchSection('inicio')" id="mobile-btn-inicio" class="mobile-nav-btn flex-1 py-2 px-2 text-center rounded-xl bg-white text-slate-950 font-black transition-all shadow-sm">Inicio</button>
+      <button onclick="switchSection('servicios')" id="mobile-btn-servicios" class="mobile-nav-btn flex-1 py-2 px-2 text-center rounded-xl text-slate-300 font-bold transition-all">Servicios</button>
+      <button onclick="switchSection('catalogo')" id="mobile-btn-catalogo" class="mobile-nav-btn flex-1 py-2 px-2 text-center rounded-xl text-slate-300 font-bold transition-all">Catálogo</button>
+      <button onclick="switchSection('contacto')" id="mobile-btn-contacto" class="mobile-nav-btn flex-1 py-2 px-2 text-center rounded-xl text-slate-300 font-bold transition-all">Contacto</button>
     </div>
+  </div>
 
-    <!-- ==================== SECCIÓN 2: NOSOTROS ==================== -->
-    <div id="section-nosotros" class="section-view hidden fade-view space-y-12">
-      <div class="bg-white rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm">
-        <div class="max-w-3xl mb-10">
-          <span class="text-xs font-black uppercase tracking-wider text-blue-600">Nuestra Historia & Valores</span>
-          <h2 class="text-3xl sm:text-4xl font-black text-slate-950 mt-1">Compromiso con la Calidad y el Servicio</h2>
-          <p class="text-slate-600 mt-4 leading-relaxed">
-            Somos una compañía dedicada a brindar soluciones integrales con los más altos estándares. Nuestra filosofía de trabajo se basa en la transparencia, la puntualidad en entregas y la atención personalizada a cada cliente.
-          </p>
-        </div>
+  <!-- MAIN WRAPPER: 4 SECCIONES INDEPENDIENTES -->
+  <main class="flex-1 w-full pb-24 overflow-hidden pt-2">
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
-          <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200">
-            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-black mb-3">
-              <i data-lucide="target" class="w-5 h-5"></i>
-            </div>
-            <h3 class="font-bold text-slate-900 text-base mb-1">Misión</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">Proveer suministros y productos de alta durabilidad con asesoría técnica permanente.</p>
-          </div>
+    <!-- ==================== VISTA 1: INICIO ==================== -->
+    <div id="section-inicio" class="section-view space-y-24 sm:space-y-32">
 
-          <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200">
-            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-black mb-3">
-              <i data-lucide="eye" class="w-5 h-5"></i>
-            </div>
-            <h3 class="font-bold text-slate-900 text-base mb-1">Visión</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">Ser el socio estratégico de referencia para empresas e instituciones a nivel nacional.</p>
-          </div>
-
-          <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200">
-            <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center font-black mb-3">
-              <i data-lucide="award" class="w-5 h-5"></i>
-            </div>
-            <h3 class="font-bold text-slate-900 text-base mb-1">Garantía</h3>
-            <p class="text-xs text-slate-600 leading-relaxed">Todos nuestros productos cuentan con soporte y certificación oficial de fábrica.</p>
-          </div>
-        </div>
-
-        <!-- Equipo / Instalaciones -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-8 pt-8 border-t border-slate-100">
-          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80" class="rounded-2xl shadow-sm h-64 w-full object-cover" alt="Equipo">
-          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=600&q=80" class="rounded-2xl shadow-sm h-64 w-full object-cover" alt="Reunión">
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== SECCIÓN 3: SERVICIOS & VITRINA ==================== -->
-    <div id="section-servicios" class="section-view hidden fade-view space-y-8">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-8 rounded-3xl border border-slate-200 shadow-sm">
-        <div>
-          <span class="text-xs font-black uppercase tracking-wider text-blue-600">Catálogo Básico</span>
-          <h2 class="text-3xl font-black text-slate-950 mt-1">Vitrina de Productos Destacados</h2>
-          <p class="text-slate-500 text-xs sm:text-sm mt-1">Muestra organizada de hasta 20 referencias principales de tu empresa.</p>
-        </div>
-        <button onclick="switchSection('contacto')" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm shrink-0">
-          Solicitar Cotización General
-        </button>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- HERO BANNER -->
+      <section id="inicio" class="relative pt-2 sm:pt-4 mx-2 sm:mx-6">
+      
+      <!-- Container with Hero Video & Floating Card (Matches White Cards Width) -->
+      <div class="relative rounded-3xl overflow-hidden border border-white/10 bg-slate-900 min-h-[600px] lg:min-h-[720px] xl:min-h-[760px] flex items-center shadow-2xl">
         
-        <!-- Item 1 -->
-        <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
-          <div>
-            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80" class="w-full h-48 object-cover rounded-2xl mb-4" alt="Producto 1">
-            <span class="text-[11px] font-bold uppercase text-blue-600">Línea Premium</span>
-            <h3 class="font-bold text-slate-900 mt-1">Auriculares Pro Serie X</h3>
-            <p class="text-xs text-slate-500 mt-1 line-clamp-2">Cancelación de ruido activa, sonido de alta fidelidad y ergonomía superior.</p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-            <span class="font-black text-slate-900 text-sm">$189.00</span>
-            <button onclick="switchSection('contacto')" class="text-xs font-bold text-blue-600 hover:underline">Cotizar →</button>
+        <!-- Background Hero Video: 3D to Real Building (Plays only once) -->
+        <div class="absolute inset-0 z-0 overflow-hidden">
+          <video id="heroBannerVideo" autoplay muted playsinline class="w-full h-full object-cover object-center" poster="../public/banner3_clean.png">
+            <source src="../public/banner_video.mp4" type="video/mp4">
+            <source src="../public/Video%20Project.mp4" type="video/mp4">
+            <!-- Fallback image -->
+            <img src="../public/banner3_clean.png" alt="Edificio corporativo CREAVID" class="w-full h-full object-cover">
+          </video>
+          <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/20 lg:from-black/90 lg:via-black/50 lg:to-transparent pointer-events-none"></div>
+        </div>
+
+        <!-- Replay Video Button -->
+        <button onclick="replayHeroVideo()" title="Volver a reproducir video 3D" class="absolute top-6 right-6 z-20 px-3.5 py-2 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white/90 hover:text-white text-xs font-bold border border-white/20 transition-all flex items-center gap-1.5 shadow-xl">
+          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span class="hidden sm:inline">Repetir video 3D</span>
+        </button>
+
+        <!-- Floating Glass Card (Exact layout from the video) -->
+        <div class="relative z-10 p-6 sm:p-10 lg:p-16 max-w-xl lg:max-w-xl xl:max-w-2xl">
+          <div class="glass-card-dark rounded-3xl p-7 sm:p-9 shadow-2xl border border-white/15 blur-reveal">
+            
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.15]">
+              Obra terminada,<br>con cumplimiento.
+            </h1>
+
+            <div class="mt-6">
+              <span class="inline-block text-[10px] font-black uppercase tracking-widest text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20">
+                CÓMO SE TRABAJA
+              </span>
+
+              <div class="mt-4 space-y-3 text-xs sm:text-sm text-slate-300">
+                <div class="flex items-start gap-2.5">
+                  <span class="font-extrabold text-white shrink-0">01. Proforma.</span>
+                  <span class="text-slate-300">Con sus medidas y ubicación.</span>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <span class="font-extrabold text-white shrink-0">02. Muestra.</span>
+                  <span class="text-slate-300">Revise material y acabado.</span>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <span class="font-extrabold text-white shrink-0">03. Negociable.</span>
+                  <span class="text-slate-300">Ajustamos alcance y condiciones.</span>
+                </div>
+                <div class="flex items-start gap-2.5">
+                  <span class="font-extrabold text-white shrink-0">04. Cobro.</span>
+                  <span class="text-slate-300">Se formaliza y se coordina la instalación.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="mt-8 flex flex-wrap items-center gap-3">
+              <a href="https://wa.me/593999999999?text=Hola,%20deseo%20una%20proforma%20para%20mi%20obra" target="_blank" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition-all shadow-lg whatsapp-glow">
+                <span>Cotizar por WhatsApp</span>
+                <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+              </a>
+              <button onclick="switchSection('servicios')" class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs transition-all border border-white/15 cursor-pointer">
+                <span>Ver servicios</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+
           </div>
         </div>
 
-        <!-- Item 2 -->
-        <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
-          <div>
-            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=500&q=80" class="w-full h-48 object-cover rounded-2xl mb-4" alt="Producto 2">
-            <span class="text-[11px] font-bold uppercase text-blue-600">Accesorios</span>
-            <h3 class="font-bold text-slate-900 mt-1">Smartwatch Horizon 4</h3>
-            <p class="text-xs text-slate-500 mt-1 line-clamp-2">Monitoreo biométrico continuo, resistencia al agua y batería de 14 días.</p>
+        <!-- Scroll down indicator circle button -->
+        <a href="#antes-despues" class="hidden sm:flex absolute bottom-8 right-8 z-10 w-12 h-12 rounded-full glass-card-dark border border-white/20 items-center justify-center text-emerald-400 hover:text-white hover:border-emerald-400 transition-all shadow-xl group">
+          <i data-lucide="arrow-down" class="w-5 h-5 group-hover:translate-y-0.5 transition-transform"></i>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN 2: ANTES Y DESPUÉS (INTERACTIVE SLIDER) ==================== -->
+    <section id="antes-despues" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        
+        <!-- Left Column: Copy & Details -->
+        <div class="lg:col-span-5 blur-reveal">
+          <span class="inline-block text-[11px] font-black uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 mb-3">
+            ANTES Y DESPUÉS
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+            De obra gris<br>a obra entregada.
+          </h2>
+
+          <div class="mt-8 space-y-6">
+            <div class="flex items-start gap-4">
+              <div class="text-sm font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20 shrink-0">
+                01
+              </div>
+              <div>
+                <h3 class="text-base font-bold text-white">Proforma con sus medidas</h3>
+                <p class="text-xs sm:text-sm text-slate-400 mt-0.5">Valor claro, sin vueltas ni sorpresas.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="text-sm font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20 shrink-0">
+                02
+              </div>
+              <div>
+                <h3 class="text-base font-bold text-white">Muestra antes de decidir</h3>
+                <p class="text-xs sm:text-sm text-slate-400 mt-0.5">Material y acabado en mano para validar calidad.</p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div class="text-sm font-black text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20 shrink-0">
+                03
+              </div>
+              <div>
+                <h3 class="text-base font-bold text-white">Plazos que se cumplen</h3>
+                <p class="text-xs sm:text-sm text-slate-400 mt-0.5">Para arquitectos, ingenieros y constructores.</p>
+              </div>
+            </div>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-            <span class="font-black text-slate-900 text-sm">$220.00</span>
-            <button onclick="switchSection('contacto')" class="text-xs font-bold text-blue-600 hover:underline">Cotizar →</button>
+
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <a href="https://wa.me/593999999999?text=Hola,%20quisiera%20cotizar%20con%20fotos%20de%20mi%20obra" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition-all shadow-md">
+              <span>Cotizar por WhatsApp</span>
+              <i data-lucide="message-circle" class="w-3.5 h-3.5 fill-slate-950"></i>
+            </a>
+            <button onclick="switchSection('servicios')" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-200 text-xs font-bold border border-white/10 transition-all cursor-pointer">
+              <span>Ver servicios</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+            </button>
           </div>
         </div>
 
-        <!-- Item 3 -->
-        <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
-          <div>
-            <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=500&q=80" class="w-full h-48 object-cover rounded-2xl mb-4" alt="Producto 3">
-            <span class="text-[11px] font-bold uppercase text-blue-600">Oficina</span>
-            <h3 class="font-bold text-slate-900 mt-1">Smart Track Ultra</h3>
-            <p class="text-xs text-slate-500 mt-1 line-clamp-2">Sensor de alta precisión para gestión y control operativo industrial.</p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-            <span class="font-black text-slate-900 text-sm">$145.00</span>
-            <button onclick="switchSection('contacto')" class="text-xs font-bold text-blue-600 hover:underline">Cotizar →</button>
-          </div>
-        </div>
+        <!-- Right Column: Interactive Before / After Comparison Slider -->
+        <div class="lg:col-span-7 blur-reveal delay-200">
+          <div class="relative bg-slate-900 rounded-3xl p-2.5 sm:p-3 border border-white/10 shadow-2xl">
+            
+            <!-- Comparison Container -->
+            <div id="beforeAfterSlider" class="slider-container relative rounded-2xl h-[380px] sm:h-[480px] w-full overflow-hidden cursor-ew-resize">
+              
+              <!-- After Image (Background) -->
+              <img src="../public/banner3_clean.png" alt="Después: Edificio corporativo con fachada terminada en alucubón y vidrio" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
+              
+              <!-- Badge "Después" -->
+              <span class="absolute bottom-4 right-4 z-10 px-3 py-1 rounded-md bg-emerald-500 text-slate-950 font-black text-[11px] uppercase tracking-wider shadow-md pointer-events-none">
+                Después
+              </span>
 
-        <!-- Item 4 -->
-        <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between">
-          <div>
-            <img src="https://images.unsplash.com/photo-1585338107529-13afc5f02586?auto=format&fit=crop&w=500&q=80" class="w-full h-48 object-cover rounded-2xl mb-4" alt="Producto 4">
-            <span class="text-[11px] font-bold uppercase text-blue-600">Ergonomía</span>
-            <h3 class="font-bold text-slate-900 mt-1">Silla Ejecutiva Ergo</h3>
-            <p class="text-xs text-slate-500 mt-1 line-clamp-2">Soporte lumbar dinámico y materiales transpirables de alto rendimiento.</p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-            <span class="font-black text-slate-900 text-sm">$310.00</span>
-            <button onclick="switchSection('contacto')" class="text-xs font-bold text-blue-600 hover:underline">Cotizar →</button>
+              <!-- Before Image (Overlay with dynamic clip width) -->
+              <div id="sliderBeforeWrapper" class="slider-before-image" style="width: 50%;">
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80" alt="Antes: Obra gris en estructura de concreto y ladrillo" class="absolute inset-0 w-full h-full object-cover pointer-events-none" style="width: 100%; min-width: 100%;">
+                <!-- Badge "Antes" -->
+                <span class="absolute bottom-4 left-4 z-10 px-3 py-1 rounded-md bg-slate-950/80 backdrop-blur-md text-white font-black text-[11px] uppercase tracking-wider border border-white/20 shadow-md pointer-events-none">
+                  Antes
+                </span>
+              </div>
+
+              <!-- Draggable Divider Line and Circle -->
+              <div id="sliderHandle" class="slider-handle" style="left: 50%;">
+                <div class="slider-circle">
+                  <i data-lucide="chevrons-left-right" class="w-4 h-4 text-emerald-600"></i>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Hint below slider -->
+            <div class="mt-3 text-center">
+              <span class="text-xs text-slate-400 font-medium inline-flex items-center gap-1.5">
+                <i data-lucide="move-horizontal" class="w-3.5 h-3.5 text-emerald-400"></i>
+                Arrastre el cursor o deslice el dedo para comparar
+              </span>
+            </div>
+
           </div>
         </div>
 
       </div>
-    </div>
+    </section>
 
-    <!-- ==================== SECCIÓN 4: CONTACTO ==================== -->
-    <div id="section-contacto" class="section-view hidden fade-view space-y-8">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 bg-white p-8 sm:p-12 rounded-3xl border border-slate-200 shadow-sm">
-        <div>
-          <span class="text-xs font-black uppercase tracking-wider text-blue-600">Comunícate con Nosotros</span>
-          <h2 class="text-3xl font-black text-slate-950 mt-1 mb-4">¿Listo para cotizar tus productos?</h2>
-          <p class="text-slate-600 text-sm mb-8 leading-relaxed">
-            Completa el formulario y un asesor comercial se pondrá en contacto contigo en menos de 24 horas laborables.
+    <!-- ==================== SECCIÓN 3: QUÉ FABRICAMOS (LIGHT CONTAINER INTERACTIVO) ==================== -->
+    <section class="bg-white text-slate-900 py-16 sm:py-24 rounded-3xl mx-2 sm:mx-6 shadow-2xl border border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Header -->
+        <div class="max-w-3xl mb-12 blur-reveal">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight">
+            Qué fabricamos
+          </h2>
+          <p class="mt-3 text-slate-600 text-sm sm:text-base leading-relaxed">
+            Ocho líneas de trabajo. Elija una para ver materiales y qué datos enviar para su cotización.
           </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          
+          <!-- Left Column: Interactive List (8 Lines) -->
+          <div class="lg:col-span-6 space-y-2 blur-reveal">
+            
+            <!-- Item 1: Fachadas y estructuras -->
+            <div onclick="selectFabLine(0)" class="fab-item group p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-slate-400 transition-all cursor-pointer flex items-center justify-between bg-slate-50 hover:bg-slate-100" data-index="0">
+              <div class="flex items-center gap-4">
+                <span class="text-xs font-black text-slate-400 group-hover:text-emerald-600">01</span>
+                <div>
+                  <h3 class="font-black text-slate-900 text-sm sm:text-base">Fachadas y estructuras</h3>
+                  <p class="text-xs text-slate-500">Alucubón, vidrio y aluminio</p>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-slate-900 group-hover:border-slate-900 transition-all">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+            <!-- Item 2: Alucubón -->
+            <div onclick="selectFabLine(1)" class="fab-item group p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-slate-400 transition-all cursor-pointer flex items-center justify-between bg-slate-50 hover:bg-slate-100" data-index="1">
+              <div class="flex items-center gap-4">
+                <span class="text-xs font-black text-slate-400 group-hover:text-emerald-600">02</span>
+                <div>
+                  <h3 class="font-black text-slate-900 text-sm sm:text-base">Alucubón</h3>
+                  <p class="text-xs text-slate-500">Revestimiento de fachada arquitectónico</p>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-slate-900 group-hover:border-slate-900 transition-all">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+            <!-- Item 3: Vidrio -->
+            <div onclick="selectFabLine(2)" class="fab-item group p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-slate-400 transition-all cursor-pointer flex items-center justify-between bg-slate-50 hover:bg-slate-100" data-index="2">
+              <div class="flex items-center gap-4">
+                <span class="text-xs font-black text-slate-400 group-hover:text-emerald-600">03</span>
+                <div>
+                  <h3 class="font-black text-slate-900 text-sm sm:text-base">Vidrio</h3>
+                  <p class="text-xs text-slate-500">Fachadas, vitrinas y divisiones</p>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-slate-900 group-hover:border-slate-900 transition-all">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+            <!-- Item 4: Ventanas -->
+            <div onclick="selectFabLine(3)" class="fab-item group p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-slate-400 transition-all cursor-pointer flex items-center justify-between bg-slate-50 hover:bg-slate-100" data-index="3">
+              <div class="flex items-center gap-4">
+                <span class="text-xs font-black text-slate-400 group-hover:text-emerald-600">04</span>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h3 class="font-black text-slate-900 text-sm sm:text-base">Ventanas</h3>
+                    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black">Desde $60</span>
+                  </div>
+                  <p class="text-xs text-slate-500">Aluminio y vidrio a medida del vano</p>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-slate-900 group-hover:border-slate-900 transition-all">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+            <!-- Item 5: Puertas -->
+            <div onclick="selectFabLine(4)" class="fab-item group p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-slate-400 transition-all cursor-pointer flex items-center justify-between bg-slate-50 hover:bg-slate-100" data-index="4">
+              <div class="flex items-center gap-4">
+                <span class="text-xs font-black text-slate-400 group-hover:text-emerald-600">05</span>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h3 class="font-black text-slate-900 text-sm sm:text-base">Puertas</h3>
+                    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black">Desde $120</span>
+                  </div>
+                  <p class="text-xs text-slate-500">Aluminio y vidrio de alta seguridad</p>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-slate-900 group-hover:border-slate-900 transition-all">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+            <!-- Item 6: Pasamanos -->
+            <div onclick="selectFabLine(5)" class="fab-item group p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-slate-400 transition-all cursor-pointer flex items-center justify-between bg-slate-50 hover:bg-slate-100" data-index="5">
+              <div class="flex items-center gap-4">
+                <span class="text-xs font-black text-slate-400 group-hover:text-emerald-600">06</span>
+                <div>
+                  <h3 class="font-black text-slate-900 text-sm sm:text-base">Pasamanos</h3>
+                  <p class="text-xs text-slate-500">Vidrio templado y acero inoxidable</p>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-slate-900 group-hover:border-slate-900 transition-all">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+            <!-- Item 7: Acero inoxidable -->
+            <div onclick="selectFabLine(6)" class="fab-item group p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-slate-400 transition-all cursor-pointer flex items-center justify-between bg-slate-50 hover:bg-slate-100" data-index="6">
+              <div class="flex items-center gap-4">
+                <span class="text-xs font-black text-slate-400 group-hover:text-emerald-600">07</span>
+                <div>
+                  <h3 class="font-black text-slate-900 text-sm sm:text-base">Acero inoxidable</h3>
+                  <p class="text-xs text-slate-500">Estructuras y acabado negro disponible</p>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-slate-900 group-hover:border-slate-900 transition-all">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+            <!-- Item 8: Cortinas de baño -->
+            <div onclick="selectFabLine(7)" class="fab-item group p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-slate-400 transition-all cursor-pointer flex items-center justify-between bg-slate-50 hover:bg-slate-100" data-index="7">
+              <div class="flex items-center gap-4">
+                <span class="text-xs font-black text-slate-400 group-hover:text-emerald-600">08</span>
+                <div>
+                  <h3 class="font-black text-slate-900 text-sm sm:text-base">Cortinas de baño</h3>
+                  <p class="text-xs text-slate-500">Vidrio templado ajustado al espacio</p>
+                </div>
+              </div>
+              <div class="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:text-slate-900 group-hover:border-slate-900 transition-all">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Dynamic Preview Card with Blur Transition -->
+          <div class="lg:col-span-6 sticky top-28 blur-reveal delay-200">
+            <div id="fabPreviewCard" class="relative bg-slate-950 text-white rounded-3xl overflow-hidden shadow-2xl border border-slate-800 transition-all">
+              
+              <div class="relative h-72 sm:h-96 overflow-hidden">
+                <img id="fabPreviewImg" src="https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1000&q=85" alt="Vista previa de producto" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+                <div class="absolute top-4 left-4">
+                  <span id="fabPreviewNumber" class="text-3xl font-black text-white/40 tracking-wider">01</span>
+                </div>
+              </div>
+
+              <div class="p-6 sm:p-8">
+                <div class="flex items-center justify-between gap-4">
+                  <div>
+                    <span id="fabPreviewCategory" class="text-[11px] font-black uppercase tracking-wider text-emerald-400">FACHADAS Y ESTRUCTURAS</span>
+                    <h3 id="fabPreviewTitle" class="text-2xl font-black text-white mt-1">Revestimiento en Alucubón y Vidrio</h3>
+                    <p id="fabPreviewDesc" class="text-xs sm:text-sm text-slate-400 mt-2 leading-relaxed">
+                      Solución integral con subestructura metálica sismorresistente, panel de aluminio compuesto de 4mm y ventanería con control solar.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="mt-6 pt-5 border-t border-slate-800 flex items-center justify-between">
+                  <span id="fabPreviewPrice" class="text-xs font-bold text-slate-300">Cotización según medidas</span>
+                  <a id="fabPreviewCta" href="https://wa.me/593999999999?text=Hola,%20solicito%20cotizaci%C3%B3n%20para%20Fachadas%20y%20estructuras" target="_blank" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition-all shadow-md">
+                    <span>Cotizar esta línea</span>
+                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== SECCIÓN 4: CLIENTES / CONFIANZA ==================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-white/5 border border-white/10 rounded-3xl p-8 sm:p-12 overflow-hidden">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-8 border-b border-white/10 blur-reveal">
+          <div>
+            <span class="inline-block text-[11px] font-black uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 mb-2">
+              CLIENTES
+            </span>
+            <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              Negocios que confían en nosotros
+            </h2>
+          </div>
+          <div class="flex items-baseline gap-2">
+            <span class="text-5xl sm:text-6xl font-black text-white/30 tracking-tight">10+</span>
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Años de experiencia<br>y respaldo</span>
+          </div>
+        </div>
+
+        <!-- Trust Logos Carousel (Infinite Continuous Marquee) -->
+        <div class="marquee-container blur-reveal delay-200 py-3">
+          <div class="marquee-track items-center gap-6 sm:gap-8 pr-6 sm:pr-8">
+            
+            <!-- Set 1 -->
+            <div class="h-14 px-6 flex items-center justify-center font-black text-slate-200 text-lg hover:text-white bg-white/[0.04] border border-white/10 rounded-2xl shrink-0 transition-all hover:border-emerald-500/40 hover:bg-white/[0.08]">
+              <span class="border-b-2 border-emerald-400 pb-0.5">UTA</span>
+            </div>
+            <div class="h-14 px-6 flex items-center justify-center font-black text-emerald-400 text-lg tracking-tight bg-white/[0.04] border border-white/10 rounded-2xl shrink-0 transition-all hover:scale-105 hover:border-emerald-500/40 hover:bg-white/[0.08]">
+              Medicity<span class="text-white text-xs align-super">+</span>
+            </div>
+            <div class="h-14 px-6 flex items-center gap-2.5 font-bold text-slate-300 text-xs uppercase tracking-wider bg-white/[0.04] border border-white/10 rounded-2xl shrink-0 transition-all hover:text-white hover:border-emerald-500/40 hover:bg-white/[0.08]">
+              <i data-lucide="landmark" class="w-4 h-4 text-emerald-400"></i>
+              <span>GAD Ambato</span>
+            </div>
+            <div class="h-14 px-6 flex items-center justify-center bg-white/[0.04] border border-white/10 rounded-2xl shrink-0 transition-all hover:border-emerald-500/40 hover:bg-white/[0.08]">
+              <span class="font-black text-white text-sm tracking-widest bg-red-700/80 px-3 py-1 rounded-md">SANFRA</span>
+            </div>
+            <div class="h-14 px-6 flex items-center gap-2.5 bg-white/[0.04] border border-white/10 rounded-2xl shrink-0 transition-all hover:border-emerald-500/40 hover:bg-white/[0.08]">
+              <i data-lucide="cross" class="w-3.5 h-3.5 text-blue-400"></i>
+              <div class="leading-none text-left">
+                <span class="block font-black text-blue-400 text-[10px] tracking-tight">HOSPITAL</span>
+                <span class="font-black text-white text-xs">AMFAMED</span>
+              </div>
+            </div>
+            <div class="h-14 px-6 flex items-center justify-center font-black text-slate-300 text-base tracking-widest bg-white/[0.04] border border-white/10 rounded-2xl shrink-0 transition-all hover:text-white hover:border-emerald-500/40 hover:bg-white/[0.08]">
+              CIVALO
+            </div>
+            <div class="h-14 px-6 flex items-center gap-2.5 font-bold text-slate-300 text-xs uppercase tracking-wider bg-white/[0.04] border border-white/10 rounded-2xl shrink-0 transition-all hover:text-white hover:border-emerald-500/40 hover:bg-white/[0.08]">
+              <i data-lucide="building" class="w-4 h-4 text-emerald-400"></i>
+              <span>Condominio El Rosal</span>
+            </div>
+            <div class="h-14 px-6 flex items-center gap-2.5 font-bold text-slate-300 text-xs uppercase tracking-wider bg-white/[0.04] border border-white/10 rounded-2xl shrink-0 transition-all hover:text-white hover:border-emerald-500/40 hover:bg-white/[0.08]">
+              <i data-lucide="store" class="w-4 h-4 text-amber-400"></i>
+              <span>Plaza Mayor</span>
+            </div>
+
+            <!-- Set 2 (Identical for seamless infinite loop) -->
+            <div aria-hidden="true" class="h-14 px-6 flex items-center justify-center font-black text-slate-200 text-lg hover:text-white bg-white/[0.04] border border-white/10 rounded-2xl shrink-0 transition-all hover:border-emerald-500/40 hover:bg-white/[0.08]">
+              <span class="border-b-2 border-emerald-400 pb-0.5">UTA</span>
+            </div>
+            <div aria-hidden="true" class="h-14 px-6 flex items-center justify-center font-black text-emerald-400 text-lg tracking-tight bg-white/[0.04] border border-white/10 rounded-2xl shrink-0 transition-all hover:scale-105 hover:border-emerald-500/40 hover:bg-white/[0.08]">
+              Medicity<span class="text-white text-xs align-super">+</span>
+            </div>
+            <div aria-hidden="true" class="h-14 px-6 flex items-center gap-2.5 font-bold text-slate-300 text-xs uppercase tracking-wider bg-white/[0.04] border border-white/10 rounded-2xl shrink-0 transition-all hover:text-white hover:border-emerald-500/40 hover:bg-white/[0.08]">
+              <i data-lucide="landmark" class="w-4 h-4 text-emerald-400"></i>
+              <span>GAD Ambato</span>
+            </div>
+            <div aria-hidden="true" class="h-14 px-6 flex items-center justify-center bg-white/[0.04] border border-white/10 rounded-2xl shrink-0 transition-all hover:border-emerald-500/40 hover:bg-white/[0.08]">
+              <span class="font-black text-white text-sm tracking-widest bg-red-700/80 px-3 py-1 rounded-md">SANFRA</span>
+            </div>
+            <div aria-hidden="true" class="h-14 px-6 flex items-center gap-2.5 bg-white/[0.04] border border-white/10 rounded-2xl shrink-0 transition-all hover:border-emerald-500/40 hover:bg-white/[0.08]">
+              <i data-lucide="cross" class="w-3.5 h-3.5 text-blue-400"></i>
+              <div class="leading-none text-left">
+                <span class="block font-black text-blue-400 text-[10px] tracking-tight">HOSPITAL</span>
+                <span class="font-black text-white text-xs">AMFAMED</span>
+              </div>
+            </div>
+            <div aria-hidden="true" class="h-14 px-6 flex items-center justify-center font-black text-slate-300 text-base tracking-widest bg-white/[0.04] border border-white/10 rounded-2xl shrink-0 transition-all hover:text-white hover:border-emerald-500/40 hover:bg-white/[0.08]">
+              CIVALO
+            </div>
+            <div aria-hidden="true" class="h-14 px-6 flex items-center gap-2.5 font-bold text-slate-300 text-xs uppercase tracking-wider bg-white/[0.04] border border-white/10 rounded-2xl shrink-0 transition-all hover:text-white hover:border-emerald-500/40 hover:bg-white/[0.08]">
+              <i data-lucide="building" class="w-4 h-4 text-emerald-400"></i>
+              <span>Condominio El Rosal</span>
+            </div>
+            <div aria-hidden="true" class="h-14 px-6 flex items-center gap-2.5 font-bold text-slate-300 text-xs uppercase tracking-wider bg-white/[0.04] border border-white/10 rounded-2xl shrink-0 transition-all hover:text-white hover:border-emerald-500/40 hover:bg-white/[0.08]">
+              <i data-lucide="store" class="w-4 h-4 text-amber-400"></i>
+              <span>Plaza Mayor</span>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== BANNER PRE-COTIZACIÓN ==================== -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="bg-black border border-white/15 rounded-3xl p-8 sm:p-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center shadow-2xl blur-reveal">
+        
+        <div class="lg:col-span-8">
+          <h2 class="text-2xl sm:text-4xl font-black text-white tracking-tight leading-snug">
+            Envíenos medidas y ubicación.<br>Le respondemos con la proforma.
+          </h2>
+          <p class="text-slate-400 text-xs sm:text-sm mt-3 max-w-xl">
+            Atención directa para cotizaciones de ventanería, pasamanos de vidrio templado y fachadas en aluminio compuesto.
+          </p>
+          <div class="mt-6">
+            <a href="https://wa.me/593999999999?text=Hola,%20deseo%20enviar%20medidas%20y%20ubicaci%C3%B3n%20para%20proforma" target="_blank" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs sm:text-sm transition-all shadow-lg whatsapp-glow">
+              <i data-lucide="message-circle" class="w-4 h-4 fill-slate-950"></i>
+              <span>Cotizar por WhatsApp</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4">
+          <div class="rounded-2xl overflow-hidden border border-white/10 shadow-lg">
+            <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80" alt="Taller CREAVID de corte y ensamble de aluminio" class="w-full h-44 object-cover">
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    </div> <!-- /section-inicio -->
+
+    <!-- ==================== VISTA 2: SERVICIOS ==================== -->
+    <div id="section-servicios" class="section-view hidden space-y-16 sm:space-y-24">
+
+      <!-- SERVICIOS Y VITRINA TÉCNICA -->
+      <section id="servicios" class="bg-white text-slate-900 py-16 sm:py-24 rounded-3xl mx-2 sm:mx-6 shadow-2xl border border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        
+        <div class="max-w-3xl blur-reveal">
+          <span class="inline-block text-[11px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full mb-3">
+            SERVICIOS
+          </span>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-slate-950 tracking-tight">
+            Lo que su obra necesita,<br>fabricado a medida.
+          </h2>
+          <p class="mt-3 text-slate-600 text-sm sm:text-base">
+            Elija una línea y envíe sus medidas para proforma inmediata.
+          </p>
+        </div>
+
+        <!-- Services Cards Showcase -->
+        <div class="space-y-12">
+          
+          <!-- Servicio 1: Ventanas -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-8 rounded-3xl bg-slate-50 border border-slate-200 blur-reveal">
+            <div class="lg:col-span-5 order-2 lg:order-1">
+              <span class="text-xs font-black text-emerald-600 uppercase tracking-widest">01 // ALUMINIO Y VIDRIO</span>
+              <h3 class="text-2xl sm:text-3xl font-black text-slate-950 mt-1">Ventanas</h3>
+              <p class="text-xs sm:text-sm text-slate-600 mt-2">
+                Aluminio y vidrio a la medida del vano. Sistemas corredizos, proyectantes y batientes con empaques herméticos.
+              </p>
+              
+              <div class="mt-4 flex flex-wrap gap-2 text-[11px] font-bold text-slate-700">
+                <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200">Perfilería de aluminio pesada</span>
+                <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200">Vidrio según uso (claro, bronce, reflectivo)</span>
+              </div>
+
+              <div class="mt-4 text-xs text-slate-500 font-medium">
+                <strong>ENVÍE:</strong> Medidas · Ubicación · Fotos del espacio
+              </div>
+
+              <div class="mt-6 flex items-center gap-3">
+                <span class="px-3 py-1.5 rounded-xl bg-emerald-100 text-emerald-900 font-black text-xs">Desde $60</span>
+                <a href="https://wa.me/593999999999?text=Hola,%20deseo%20cotizar%20Ventanas%20en%20aluminio" target="_blank" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs transition-all">
+                  <span>Cotizar por WhatsApp</span>
+                  <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="lg:col-span-7 order-1 lg:order-2">
+              <div class="rounded-2xl overflow-hidden shadow-lg h-64 sm:h-80">
+                <img src="https://images.unsplash.com/photo-1509644851169-2acc08aa25b5?auto=format&fit=crop&w=1000&q=80" alt="Ventanería de aluminio moderno" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 2: Puertas -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-8 rounded-3xl bg-slate-50 border border-slate-200 blur-reveal">
+            <div class="lg:col-span-7">
+              <div class="rounded-2xl overflow-hidden shadow-lg h-64 sm:h-80">
+                <img src="https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1000&q=80" alt="Puertas de aluminio y vidrio templado" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+              </div>
+            </div>
+
+            <div class="lg:col-span-5">
+              <span class="text-xs font-black text-emerald-600 uppercase tracking-widest">02 // ACCESOS RESIDENCIALES & COMERCIALES</span>
+              <h3 class="text-2xl sm:text-3xl font-black text-slate-950 mt-1">Puertas</h3>
+              <p class="text-xs sm:text-sm text-slate-600 mt-2">
+                Para obra nueva y remodelación. Diseños pivotantes modernos, batientes y corredizas con cerraduras de alta seguridad.
+              </p>
+              
+              <div class="mt-4 flex flex-wrap gap-2 text-[11px] font-bold text-slate-700">
+                <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200">Perfilería reforzada</span>
+                <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200">Vidrio templado 8mm - 10mm</span>
+              </div>
+
+              <div class="mt-4 text-xs text-slate-500 font-medium">
+                <strong>ENVÍE:</strong> Medidas · Ubicación · Fotos del espacio
+              </div>
+
+              <div class="mt-6 flex items-center gap-3">
+                <span class="px-3 py-1.5 rounded-xl bg-emerald-100 text-emerald-900 font-black text-xs">Desde $120</span>
+                <a href="https://wa.me/593999999999?text=Hola,%20deseo%20cotizar%20Puertas%20de%20aluminio" target="_blank" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs transition-all">
+                  <span>Cotizar por WhatsApp</span>
+                  <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Servicio 3: Pasamanos y Balcones -->
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-6 sm:p-8 rounded-3xl bg-slate-50 border border-slate-200 blur-reveal">
+            <div class="lg:col-span-5 order-2 lg:order-1">
+              <span class="text-xs font-black text-emerald-600 uppercase tracking-widest">03 // SEGURIDAD & DISEÑO</span>
+              <h3 class="text-2xl sm:text-3xl font-black text-slate-950 mt-1">Pasamanos</h3>
+              <p class="text-xs sm:text-sm text-slate-600 mt-2">
+                Vidrio y acero inoxidable para escaleras, balcones y terrazas. Sistemas embutidos o con botones y postes de anclaje.
+              </p>
+              
+              <div class="mt-4 flex flex-wrap gap-2 text-[11px] font-bold text-slate-700">
+                <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200">Acero inoxidable 304</span>
+                <span class="px-2.5 py-1 rounded-md bg-white border border-slate-200">Vidrio templado laminado</span>
+              </div>
+
+              <div class="mt-4 text-xs text-slate-500 font-medium">
+                <strong>ENVÍE:</strong> Largo y altura · Anclaje · Fotos
+              </div>
+
+              <div class="mt-6 flex items-center gap-3">
+                <span class="px-3 py-1.5 rounded-xl bg-slate-200 text-slate-900 font-black text-xs">Cotización por caso</span>
+                <a href="https://wa.me/593999999999?text=Hola,%20deseo%20cotizar%20Pasamanos%20de%20vidrio%20y%20acero" target="_blank" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-slate-950 hover:bg-slate-800 text-white font-bold text-xs transition-all">
+                  <span>Cotizar por WhatsApp</span>
+                  <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                </a>
+              </div>
+            </div>
+
+            <div class="lg:col-span-7 order-1 lg:order-2">
+              <div class="rounded-2xl overflow-hidden shadow-lg h-64 sm:h-80">
+                <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1000&q=80" alt="Pasamanos de acero inoxidable y cristal templado" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Vea el acabado antes de decidir (Card oscura dentro de servicios) -->
+        <div class="bg-slate-950 text-white rounded-3xl p-8 sm:p-12 border border-slate-800 blur-reveal">
+          <div class="max-w-2xl mb-8">
+            <h3 class="text-2xl sm:text-3xl font-black text-white">Vea el acabado antes de decidir</h3>
+            <p class="text-slate-400 text-xs sm:text-sm mt-2">
+              La muestra es parte de nuestro proceso. Revise material, color y terminación con una pieza real antes de la negociación final.
+            </p>
+            <div class="mt-4">
+              <a href="https://wa.me/593999999999?text=Hola,%20quisiera%20solicitar%20una%20muestra%20de%20material" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition-all">
+                <span>Pedir una muestra por WhatsApp</span>
+                <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div class="relative rounded-2xl overflow-hidden border border-white/10 group">
+              <img src="https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=600&q=80" alt="Vidrio espejo y alucubón rojo muestra" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-700">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+              <span class="absolute bottom-4 left-4 text-xs font-black uppercase tracking-wider text-emerald-400">
+                VIDRIO ESPEJO Y ALUCUBÓN ROJO
+              </span>
+            </div>
+
+            <div class="relative rounded-2xl overflow-hidden border border-white/10 group">
+              <img src="https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=600&q=80" alt="Revestimiento en alucubón plateado muestra" class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-700">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+              <span class="absolute bottom-4 left-4 text-xs font-black uppercase tracking-wider text-emerald-400">
+                REVESTIMIENTO EN ALUCUBÓN
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PREGUNTAS FRECUENTES (FAQ DENTRO DE SERVICIOS) -->
+    <section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16">
+      <div class="text-center mb-10 blur-reveal">
+        <h2 class="text-2xl sm:text-3xl font-black text-white tracking-tight">
+          Preguntas sobre precio y materiales
+        </h2>
+      </div>
+
+      <div class="space-y-4 blur-reveal delay-200">
+        
+        <!-- FAQ 1 -->
+        <div class="bg-slate-900 border border-white/10 rounded-2xl p-5 cursor-pointer" onclick="toggleFaq(1)">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-white text-sm sm:text-base">¿Cómo se cotiza?</h3>
+            <i id="faq-icon-1" data-lucide="plus" class="w-4 h-4 text-emerald-400 transition-transform"></i>
+          </div>
+          <div id="faq-ans-1" class="hidden mt-3 pt-3 border-t border-white/10 text-xs sm:text-sm text-slate-400 leading-relaxed">
+            Solo necesita enviarnos las medidas aproximadas (ancho y alto), la ubicación de la obra y si tiene fotos o planos del espacio. Le enviamos una proforma detallada en el mismo día.
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="bg-slate-900 border border-white/10 rounded-2xl p-5 cursor-pointer" onclick="toggleFaq(2)">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-white text-sm sm:text-base">¿Cuánto cuestan las ventanas y las puertas?</h3>
+            <i id="faq-icon-2" data-lucide="plus" class="w-4 h-4 text-emerald-400 transition-transform"></i>
+          </div>
+          <div id="faq-ans-2" class="hidden mt-3 pt-3 border-t border-white/10 text-xs sm:text-sm text-slate-400 leading-relaxed">
+            Las ventanas estándar inician desde $60 por metro cuadrado según la serie de aluminio y tipo de cristal, y las puertas desde $120. En proyectos integrales ofrecemos precios preferenciales por volumen.
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="bg-slate-900 border border-white/10 rounded-2xl p-5 cursor-pointer" onclick="toggleFaq(3)">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-white text-sm sm:text-base">¿Qué materiales usan?</h3>
+            <i id="faq-icon-3" data-lucide="plus" class="w-4 h-4 text-emerald-400 transition-transform"></i>
+          </div>
+          <div id="faq-ans-3" class="hidden mt-3 pt-3 border-t border-white/10 text-xs sm:text-sm text-slate-400 leading-relaxed">
+            Utilizamos perfiles de aluminio extruido certificado, paneles de aluminio compuesto (alucubón de 4mm con garantía), vidrio templado y laminado de seguridad, y herrajes de acero inoxidable 304.
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="bg-slate-900 border border-white/10 rounded-2xl p-5 cursor-pointer" onclick="toggleFaq(4)">
+          <div class="flex items-center justify-between">
+            <h3 class="font-bold text-white text-sm sm:text-base">¿Puedo ver una muestra antes de decidir?</h3>
+            <i id="faq-icon-4" data-lucide="plus" class="w-4 h-4 text-emerald-400 transition-transform"></i>
+          </div>
+          <div id="faq-ans-4" class="hidden mt-3 pt-3 border-t border-white/10 text-xs sm:text-sm text-slate-400 leading-relaxed">
+            Sí, absolutamente. Podemos llevarle muestras físicas a su obra o recibirle en nuestro taller en Ambato para que revise texturas, colores de alucubón y perfiles antes de firmar la proforma.
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    </div> <!-- /section-servicios -->
+
+    <!-- ==================== VISTA 3: CATÁLOGO ==================== -->
+    <div id="section-catalogo" class="section-view hidden space-y-12">
+
+      <!-- CATÁLOGO CON FILTRO Y BLUR ANIMATION -->
+      <section id="catalogo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Catalog Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 blur-reveal">
+        <div>
+          <span class="inline-block text-[11px] font-black uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 mb-2">
+            CATÁLOGO
+          </span>
+          <h2 class="text-3xl sm:text-4xl font-black text-white tracking-tight">
+            Elija el modelo.<br><span class="text-emerald-400">Cotice en un toque.</span>
+          </h2>
+          <p class="text-slate-400 text-xs sm:text-sm mt-2">
+            Cada botón abre WhatsApp con el modelo y especificaciones listas.
+          </p>
+        </div>
+
+        <!-- Filter Tabs with Smooth Blur Trigger -->
+        <div class="flex items-center gap-1.5 p-1.5 rounded-full bg-slate-900 border border-white/10 overflow-x-auto no-scrollbar">
+          <button onclick="filterCatalog('todos')" class="cat-filter-btn px-4 py-1.5 rounded-full text-xs font-black bg-emerald-500 text-slate-950 transition-all shadow-sm" data-category="todos">
+            Todos
+          </button>
+          <button onclick="filterCatalog('ventanas')" class="cat-filter-btn px-4 py-1.5 rounded-full text-xs font-bold text-slate-400 hover:text-white transition-all" data-category="ventanas">
+            Ventanas
+          </button>
+          <button onclick="filterCatalog('puertas')" class="cat-filter-btn px-4 py-1.5 rounded-full text-xs font-bold text-slate-400 hover:text-white transition-all" data-category="puertas">
+            Puertas
+          </button>
+          <button onclick="filterCatalog('pasamanos')" class="cat-filter-btn px-4 py-1.5 rounded-full text-xs font-bold text-slate-400 hover:text-white transition-all" data-category="pasamanos">
+            Pasamanos
+          </button>
+          <button onclick="filterCatalog('fachadas')" class="cat-filter-btn px-4 py-1.5 rounded-full text-xs font-bold text-slate-400 hover:text-white transition-all" data-category="fachadas">
+            Fachadas
+          </button>
+          <button onclick="filterCatalog('bano')" class="cat-filter-btn px-4 py-1.5 rounded-full text-xs font-bold text-slate-400 hover:text-white transition-all" data-category="bano">
+            Baño
+          </button>
+        </div>
+      </div>
+
+      <!-- Catalog Dynamic Grid (Elements transition with BLUR) -->
+      <div id="catalogGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-300">
+        
+        <!-- Card 1: Fachada 1 -->
+        <div class="catalog-card blur-reveal group bg-slate-900 border border-white/10 rounded-3xl p-4 flex flex-col justify-between hover:border-emerald-500/50 transition-all duration-300 shadow-xl" data-category="fachadas">
+          <div>
+            <div class="relative rounded-2xl overflow-hidden h-56 mb-4">
+              <img src="../public/banner3_clean.png" alt="Fachada en alucubón y vidrio" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-wider border border-white/20">
+                Fachada
+              </span>
+            </div>
+            <h3 class="text-lg font-black text-white">Fachada en alucubón y vidrio</h3>
+            <p class="text-xs text-slate-400 mt-1 line-clamp-2">Revestimiento integral con panel compuesto sismorresistente.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-400">Cotización por caso</span>
+            <a href="https://wa.me/593999999999?text=Hola,%20deseo%20cotizar%20la%20Fachada%20en%20alucub%C3%B3n%20y%20vidrio" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition-all">
+              <span>Cotizar</span>
+              <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 2: Fachada comercial -->
+        <div class="catalog-card blur-reveal delay-100 group bg-slate-900 border border-white/10 rounded-3xl p-4 flex flex-col justify-between hover:border-emerald-500/50 transition-all duration-300 shadow-xl" data-category="fachadas">
+          <div>
+            <div class="relative rounded-2xl overflow-hidden h-56 mb-4">
+              <img src="https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=600&q=80" alt="Fachada comercial en vidrio templado" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-wider border border-white/20">
+                Fachada
+              </span>
+            </div>
+            <h3 class="text-lg font-black text-white">Fachada comercial en vidrio</h3>
+            <p class="text-xs text-slate-400 mt-1 line-clamp-2">Vitrinas templadas para locales comerciales y centros médicos.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-400">Cotización por caso</span>
+            <a href="https://wa.me/593999999999?text=Hola,%20deseo%20cotizar%20la%20Fachada%20comercial%20en%20vidrio" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition-all">
+              <span>Cotizar</span>
+              <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 3: Ventana corrediza -->
+        <div class="catalog-card blur-reveal delay-200 group bg-slate-900 border border-white/10 rounded-3xl p-4 flex flex-col justify-between hover:border-emerald-500/50 transition-all duration-300 shadow-xl" data-category="ventanas">
+          <div>
+            <div class="relative rounded-2xl overflow-hidden h-56 mb-4">
+              <img src="https://images.unsplash.com/photo-1509644851169-2acc08aa25b5?auto=format&fit=crop&w=600&q=80" alt="Ventana corrediza serie 80" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-emerald-500 text-slate-950 text-[10px] font-black uppercase tracking-wider">
+                Ventana
+              </span>
+            </div>
+            <h3 class="text-lg font-black text-white">Ventana corrediza serie 80</h3>
+            <p class="text-xs text-slate-400 mt-1 line-clamp-2">Aluminio pesado con rodamientos reforzados y cierre central.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+            <span class="text-xs font-black text-emerald-400">Desde $60 / m²</span>
+            <a href="https://wa.me/593999999999?text=Hola,%20deseo%20cotizar%20la%20Ventana%20corrediza%20serie%2080" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition-all">
+              <span>Cotizar</span>
+              <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 4: Ventana proyectante -->
+        <div class="catalog-card blur-reveal group bg-slate-900 border border-white/10 rounded-3xl p-4 flex flex-col justify-between hover:border-emerald-500/50 transition-all duration-300 shadow-xl" data-category="ventanas">
+          <div>
+            <div class="relative rounded-2xl overflow-hidden h-56 mb-4">
+              <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" alt="Ventana proyectante hermética" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-emerald-500 text-slate-950 text-[10px] font-black uppercase tracking-wider">
+                Ventana
+              </span>
+            </div>
+            <h3 class="text-lg font-black text-white">Ventana proyectante</h3>
+            <p class="text-xs text-slate-400 mt-1 line-clamp-2">Brazos de fricción de acero y sellado perimetral contra viento.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+            <span class="text-xs font-black text-emerald-400">Desde $75 / m²</span>
+            <a href="https://wa.me/593999999999?text=Hola,%20deseo%20cotizar%20la%20Ventana%20proyectante" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition-all">
+              <span>Cotizar</span>
+              <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 5: Puerta batiente o pivotante -->
+        <div class="catalog-card blur-reveal delay-100 group bg-slate-900 border border-white/10 rounded-3xl p-4 flex flex-col justify-between hover:border-emerald-500/50 transition-all duration-300 shadow-xl" data-category="puertas">
+          <div>
+            <div class="relative rounded-2xl overflow-hidden h-56 mb-4">
+              <img src="https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=600&q=80" alt="Puerta batiente de aluminio negro" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-wider border border-white/20">
+                Puerta
+              </span>
+            </div>
+            <h3 class="text-lg font-black text-white">Puerta batiente en aluminio negro</h3>
+            <p class="text-xs text-slate-400 mt-1 line-clamp-2">Manijón de acero y vidrio templado opalizado o transparente.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+            <span class="text-xs font-black text-emerald-400">Desde $120</span>
+            <a href="https://wa.me/593999999999?text=Hola,%20deseo%20cotizar%20la%20Puerta%20batiente%20en%20aluminio" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition-all">
+              <span>Cotizar</span>
+              <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 6: Pasamanos de vidrio templado -->
+        <div class="catalog-card blur-reveal delay-200 group bg-slate-900 border border-white/10 rounded-3xl p-4 flex flex-col justify-between hover:border-emerald-500/50 transition-all duration-300 shadow-xl" data-category="pasamanos">
+          <div>
+            <div class="relative rounded-2xl overflow-hidden h-56 mb-4">
+              <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=600&q=80" alt="Pasamanos en vidrio templado" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-black/70 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-wider border border-white/20">
+                Pasamanos
+              </span>
+            </div>
+            <h3 class="text-lg font-black text-white">Pasamanos en vidrio templado</h3>
+            <p class="text-xs text-slate-400 mt-1 line-clamp-2">Herrajes de acero quirúrgico para gradas y volados exteriores.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-400">Cotización por caso</span>
+            <a href="https://wa.me/593999999999?text=Hola,%20deseo%20cotizar%20Pasamanos%20en%20vidrio%20templado" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition-all">
+              <span>Cotizar</span>
+              <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 7: Cortina de baño templada -->
+        <div class="catalog-card blur-reveal group bg-slate-900 border border-white/10 rounded-3xl p-4 flex flex-col justify-between hover:border-emerald-500/50 transition-all duration-300 shadow-xl" data-category="bano">
+          <div>
+            <div class="relative rounded-2xl overflow-hidden h-56 mb-4">
+              <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=600&q=80" alt="Cortina de baño en vidrio templado" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-emerald-500 text-slate-950 text-[10px] font-black uppercase tracking-wider">
+                Baño
+              </span>
+            </div>
+            <h3 class="text-lg font-black text-white">Cortina de baño corrediza</h3>
+            <p class="text-xs text-slate-400 mt-1 line-clamp-2">Vidrio templado 8mm con herrajes de acero y sellos magnéticos.</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-400">Cotización por caso</span>
+            <a href="https://wa.me/593999999999?text=Hola,%20deseo%20cotizar%20la%20Cortina%20de%20ba%C3%B1o%20en%20vidrio" target="_blank" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition-all">
+              <span>Cotizar</span>
+              <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mt-8 text-center text-xs text-slate-500">
+        Precios referenciales. La proforma confirma el valor final según medidas exactas y acabado solicitado.
+      </div>
+
+    </section>
+
+    </div> <!-- /section-catalogo -->
+
+    <!-- ==================== VISTA 4: CONTACTO ==================== -->
+    <div id="section-contacto" class="section-view hidden space-y-12">
+
+      <!-- CONTACTO Y FORMULARIO -->
+      <section id="contacto" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Contact Header -->
+      <div class="mb-10 blur-reveal">
+        <span class="inline-block text-[11px] font-black uppercase tracking-wider text-emerald-400 bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 mb-3">
+          CONTACTO
+        </span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight">
+          Cuéntenos su obra.
+        </h2>
+        <p class="text-slate-400 text-sm mt-1">
+          Respondemos el mismo día laborable.
+        </p>
+
+        <!-- Fast WhatsApp Advisors -->
+        <div class="mt-6 flex flex-wrap gap-3">
+          <a href="https://wa.me/593999999991?text=Hola%20Asesor%201,%20deseo%20cotizar%20un%20proyecto" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition-all shadow-md">
+            <i data-lucide="message-circle" class="w-3.5 h-3.5 fill-slate-950"></i>
+            <span>Asesor 1 por WhatsApp</span>
+          </a>
+          <a href="https://wa.me/593999999992?text=Hola%20Asesor%202,%20deseo%20cotizar%20un%20proyecto" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold text-xs border border-white/15 transition-all">
+            <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+            <span>Asesor 2 por WhatsApp</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Main Form Card (Dark Glass Container) -->
+      <div class="glass-card-dark rounded-3xl p-8 sm:p-12 border border-white/15 shadow-2xl grid grid-cols-1 lg:grid-cols-12 gap-10 blur-reveal delay-200">
+        
+        <!-- Left Column: Guidelines & Process -->
+        <div class="lg:col-span-5 space-y-8">
+          <div>
+            <h3 class="text-2xl font-black text-white">Una solicitud,<br>una proforma.</h3>
+            <p class="text-slate-400 text-xs sm:text-sm mt-2">
+              Con estos datos le respondemos sin volver a preguntar.
+            </p>
+          </div>
 
           <div class="space-y-4">
-            <div class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200">
-              <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
-                <i data-lucide="phone" class="w-5 h-5"></i>
-              </div>
-              <div>
-                <p class="text-xs text-slate-400 font-bold uppercase">Línea Telefónica</p>
-                <p class="text-sm font-bold text-slate-900">+51 987 654 321</p>
-              </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300">
+              <span class="w-6 h-6 rounded-full bg-emerald-500 text-slate-950 font-black flex items-center justify-center text-[10px]">01</span>
+              <span>Usted envía medidas y ubicación</span>
             </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300">
+              <span class="w-6 h-6 rounded-full bg-emerald-500 text-slate-950 font-black flex items-center justify-center text-[10px]">02</span>
+              <span>Le llega la proforma con desglose</span>
+            </div>
+            <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 text-xs text-slate-300">
+              <span class="w-6 h-6 rounded-full bg-emerald-500 text-slate-950 font-black flex items-center justify-center text-[10px]">03</span>
+              <span>Revisa la muestra y decide</span>
+            </div>
+          </div>
 
-            <div class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200">
-              <div class="w-10 h-10 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center">
-                <i data-lucide="mail" class="w-5 h-5"></i>
-              </div>
-              <div>
-                <p class="text-xs text-slate-400 font-bold uppercase">Correo Corporativo</p>
-                <p class="text-sm font-bold text-slate-900">ventas@novacorp-demo.com</p>
-              </div>
+          <div class="pt-6 border-t border-white/10">
+            <h4 class="text-xs font-black uppercase tracking-wider text-slate-400 mb-2">Dónde estamos</h4>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              Taller en Ambato, Ecuador. Puede visitarnos para ver muestras de material y acabado antes de decidir.
+            </p>
+            <div class="mt-4 flex gap-2">
+              <a href="https://maps.google.com" target="_blank" class="px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all border border-white/15 inline-flex items-center gap-1.5">
+                <i data-lucide="map-pin" class="w-3 h-3 text-emerald-400"></i> Abrir en Google Maps
+              </a>
             </div>
           </div>
         </div>
 
-        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 sm:p-8">
-          <form onsubmit="alert('¡Mensaje enviado con éxito a la bandeja comercial!'); return false;" class="space-y-4 text-xs">
+        <!-- Right Column: Interactive Form -->
+        <div class="lg:col-span-7 bg-black/40 p-6 sm:p-8 rounded-2xl border border-white/10">
+          <h4 class="text-base font-black text-white mb-6">Solicitud de cotización</h4>
+
+          <form onsubmit="handleQuoteSubmit(event)" class="space-y-4 text-xs">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block font-bold text-slate-300 uppercase mb-1">Nombre *</label>
+                <input id="formNombre" type="text" required placeholder="Ej. Carlos Morales" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/15 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 transition-colors">
+              </div>
+              <div>
+                <label class="block font-bold text-slate-300 uppercase mb-1">WhatsApp *</label>
+                <input id="formWhatsapp" type="tel" required placeholder="0999999999" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/15 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 transition-colors">
+              </div>
+            </div>
+
             <div>
-              <label class="block font-bold text-slate-700 uppercase mb-1">Nombre Completo *</label>
-              <input type="text" required placeholder="Ej. Juan Pérez" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-blue-600">
+              <label class="block font-bold text-slate-300 uppercase mb-1">Qué necesita</label>
+              <select id="formServicio" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/15 text-white focus:outline-none focus:border-emerald-400 transition-colors">
+                <option value="Fachadas y Alucubón">Fachadas y Alucubón</option>
+                <option value="Ventanas en aluminio">Ventanas en aluminio</option>
+                <option value="Puertas de aluminio">Puertas de aluminio</option>
+                <option value="Pasamanos de vidrio">Pasamanos de vidrio y acero</option>
+                <option value="Cortinas de baño">Cortinas de baño en vidrio templado</option>
+                <option value="Otro trabajo arquitectónico">Otro trabajo arquitectónico</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-300 uppercase mb-1">Medidas o detalle</label>
+              <textarea id="formDetalle" rows="2" placeholder="Ejemplo: 3 ventanas de 1,20 x 1,40 m, vidrio templado reflectivo" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/15 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 transition-colors"></textarea>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block font-bold text-slate-700 uppercase mb-1">Correo Electrónico *</label>
-                <input type="email" required placeholder="correo@empresa.com" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-blue-600">
+                <label class="block font-bold text-slate-300 uppercase mb-1">Ubicación de la obra</label>
+                <input id="formUbicacion" type="text" placeholder="Ciudad y sector" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/15 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400 transition-colors">
               </div>
               <div>
-                <label class="block font-bold text-slate-700 uppercase mb-1">Teléfono / WhatsApp</label>
-                <input type="tel" placeholder="+51 999 999 999" class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-blue-600">
+                <label class="block font-bold text-slate-300 uppercase mb-1">Cuándo lo necesita</label>
+                <select id="formTiempo" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-white/15 text-white focus:outline-none focus:border-emerald-400 transition-colors">
+                  <option value="Esta semana">Esta semana</option>
+                  <option value="Este mes">Este mes</option>
+                  <option value="En 2 o más meses">En 2 o más meses</option>
+                </select>
               </div>
             </div>
 
-            <div>
-              <label class="block font-bold text-slate-700 uppercase mb-1">Mensaje o Producto de Interés</label>
-              <textarea rows="3" placeholder="Indícanos los productos que deseas cotizar..." class="w-full px-4 py-2.5 rounded-xl border border-slate-300 bg-white text-xs focus:outline-none focus:ring-2 focus:ring-blue-600"></textarea>
-            </div>
-
-            <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs transition-all shadow-md">
-              Enviar Mensaje
+            <button type="submit" class="w-full py-3.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black rounded-xl text-xs transition-all shadow-lg whatsapp-glow flex items-center justify-center gap-2 mt-4">
+              <span>Enviar solicitud</span>
+              <i data-lucide="send" class="w-3.5 h-3.5"></i>
             </button>
+
+            <p class="text-[11px] text-slate-500 text-center mt-2">
+              Las fotos del espacio las puede enviar después por WhatsApp.
+            </p>
           </form>
+
         </div>
+
       </div>
-    </div>
+
+    </section>
+
+    </div> <!-- /section-contacto -->
 
   </main>
 
-  <!-- Footer -->
-  <footer class="bg-white border-t border-slate-200 py-8 text-center text-xs text-slate-500">
-    <div class="max-w-7xl mx-auto px-4">
-      <p>© 2026 NovaCorp. Modelo Web Corporativa Independiente ($280) - Todos los derechos reservados.</p>
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-black border-t border-white/10 py-14 text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
+        
+        <!-- Col 1: Brand Info -->
+        <div class="md:col-span-5">
+          <div class="flex items-center gap-2.5 mb-3">
+            <div class="w-8 h-8 rounded-xl bg-white p-0.5 flex items-center justify-center overflow-hidden shadow-sm">
+              <img src="../public/log_n.jpg" alt="CREAVID Logo" class="w-full h-full object-contain">
+            </div>
+            <span class="text-xl font-black text-white tracking-tight">CREA<span class="text-emerald-400">VID</span></span>
+          </div>
+          <p class="text-slate-400 text-xs max-w-sm leading-relaxed">
+            Construcción e instalación de estructuras en aluminio, vidrio, acero inoxidable, pasamanos y revestimiento de fachadas en alucubón. Ambato, Ecuador.
+          </p>
+        </div>
+
+        <!-- Col 2: Páginas -->
+        <div class="md:col-span-2">
+          <span class="block text-[10px] font-black uppercase tracking-widest text-white mb-3">PÁGINAS</span>
+          <ul class="space-y-2">
+            <li><button onclick="switchSection('inicio')" class="hover:text-emerald-400 transition-colors cursor-pointer text-left">Inicio</button></li>
+            <li><button onclick="switchSection('servicios')" class="hover:text-emerald-400 transition-colors cursor-pointer text-left">Servicios</button></li>
+            <li><button onclick="switchSection('catalogo')" class="hover:text-emerald-400 transition-colors cursor-pointer text-left">Catálogo</button></li>
+            <li><button onclick="switchSection('contacto')" class="hover:text-emerald-400 transition-colors cursor-pointer text-left">Contacto</button></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Cotizar -->
+        <div class="md:col-span-3">
+          <span class="block text-[10px] font-black uppercase tracking-widest text-white mb-3">COTIZAR</span>
+          <ul class="space-y-2">
+            <li><a href="https://wa.me/593999999991" class="hover:text-emerald-400 transition-colors">Asesor 1 por WhatsApp</a></li>
+            <li><a href="https://wa.me/593999999992" class="hover:text-emerald-400 transition-colors">Asesor 2 por WhatsApp</a></li>
+            <li><span class="text-slate-500">Horario: Lun - Sáb, 8am a 6pm</span></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Redes -->
+        <div class="md:col-span-2">
+          <span class="block text-[10px] font-black uppercase tracking-widest text-white mb-3">REDES</span>
+          <ul class="space-y-2">
+            <li><a href="#" class="hover:text-emerald-400 transition-colors">Instagram</a></li>
+            <li><a href="#" class="hover:text-emerald-400 transition-colors">TikTok & Facebook</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+        <p>© 2026 CREAVID. Completa seriedad y cumplimiento.</p>
+        <p>Demo creada para Plan Corporativo ($280) — Con soporte para animaciones blur fluidas.</p>
+      </div>
     </div>
   </footer>
 
+  <!-- ==================== FLOATING WHATSAPP PILL BUTTON ==================== -->
+  <aside aria-label="Contacto directo" class="fixed bottom-6 right-6 z-50">
+    <a href="https://wa.me/593999999999?text=Hola%20CREAVID,%20deseo%20cotizar%20un%20proyecto" target="_blank" class="flex items-center gap-2.5 px-4 sm:px-5 py-3 rounded-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition-all shadow-2xl whatsapp-glow group hover:scale-105">
+      <i data-lucide="message-circle" class="w-4 h-4 fill-slate-950"></i>
+      <span class="tracking-wide">Cotizar por WhatsApp</span>
+    </a>
+  </aside>
+
+  <!-- ==================== JAVASCRIPT LOGIC & BLUR REVEAL ==================== -->
   <script>
+    // 1. BLUR REVEAL ON SCROLL (IntersectionObserver)
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px 0px -40px 0px',
+      threshold: 0.05
+    };
+
+    const blurObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    function setupBlurObserver(container) {
+      if (!container) return;
+      const elements = container.querySelectorAll('.blur-reveal');
+      elements.forEach(el => {
+        blurObserver.unobserve(el);
+        const rect = el.getBoundingClientRect();
+        // If element is already in the viewport near the top of the screen
+        const isInViewport = (rect.top < window.innerHeight - 30) && (rect.bottom > 0);
+        if (isInViewport) {
+          el.classList.remove('revealed');
+          setTimeout(() => {
+            el.classList.add('revealed');
+          }, 50);
+        } else {
+          // If below viewport, prepare it to blur-in on scroll
+          el.classList.remove('revealed');
+          blurObserver.observe(el);
+        }
+      });
+    }
+
+    // 2. BEFORE / AFTER COMPARISON SLIDER DRAGGING
+    const sliderContainer = document.getElementById('beforeAfterSlider');
+    const sliderBeforeWrapper = document.getElementById('sliderBeforeWrapper');
+    const sliderHandle = document.getElementById('sliderHandle');
+    let isSliding = false;
+
+    function updateSliderPosition(clientX) {
+      if (!sliderContainer) return;
+      const rect = sliderContainer.getBoundingClientRect();
+      let position = ((clientX - rect.left) / rect.width) * 100;
+      if (position < 0) position = 0;
+      if (position > 100) position = 100;
+
+      sliderBeforeWrapper.style.width = `${position}%`;
+      sliderHandle.style.left = `${position}%`;
+    }
+
+    if (sliderContainer) {
+      sliderContainer.addEventListener('mousedown', (e) => {
+        isSliding = true;
+        updateSliderPosition(e.clientX);
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (!isSliding) return;
+        updateSliderPosition(e.clientX);
+      });
+
+      window.addEventListener('mouseup', () => {
+        isSliding = false;
+      });
+
+      // Touch events for mobile
+      sliderContainer.addEventListener('touchstart', (e) => {
+        isSliding = true;
+        if (e.touches[0]) updateSliderPosition(e.touches[0].clientX);
+      }, { passive: true });
+
+      window.addEventListener('touchmove', (e) => {
+        if (!isSliding) return;
+        if (e.touches[0]) updateSliderPosition(e.touches[0].clientX);
+      }, { passive: true });
+
+      window.addEventListener('touchend', () => {
+        isSliding = false;
+      });
+    }
+
+    // 3. QUÉ FABRICAMOS - DATA & DYNAMIC BLUR SWITCHER
+    const fabData = [
+      {
+        num: "01",
+        cat: "FACHADAS Y ESTRUCTURAS",
+        title: "Revestimiento en Alucubón y Vidrio",
+        desc: "Solución integral con subestructura metálica sismorresistente, panel de aluminio compuesto de 4mm y ventanería con control solar.",
+        img: "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1000&q=85",
+        price: "Cotización según medidas"
+      },
+      {
+        num: "02",
+        cat: "ALUCUBÓN ARQUITECTÓNICO",
+        title: "Panel de Aluminio Compuesto",
+        desc: "Transformación total de fachadas viejas a edificaciones modernas. Variedad de tonos metalizados, maderas y colores sólidos.",
+        img: "https://images.unsplash.com/photo-1541888946425-d0fbb186c5f7?auto=format&fit=crop&w=1000&q=85",
+        price: "Desde $85 / m² instalado"
+      },
+      {
+        num: "03",
+        cat: "VIDRIO TEMPLADO & LAMINADO",
+        title: "Vitrinas y Fachadas Comerciales",
+        desc: "Sistemas suspendidos spider o con perfilería perimetral oculta para máxima visibilidad y luminosidad.",
+        img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=85",
+        price: "Cotización por caso"
+      },
+      {
+        num: "04",
+        cat: "VENTANAS ARQUITECTÓNICAS",
+        title: "Ventanas Corredizas y Proyectantes",
+        desc: "Aluminio serie europea y americana con sellos de felpa de alta densidad y rodamientos de acero inoxidable.",
+        img: "https://images.unsplash.com/photo-1509644851169-2acc08aa25b5?auto=format&fit=crop&w=1000&q=85",
+        price: "Desde $60 / m²"
+      },
+      {
+        num: "05",
+        cat: "PUERTAS DE ALTA GAMA",
+        title: "Puertas Pivotantes y Batientes",
+        desc: "Cerraduras multipunto, manijones de acero y pivotes hidráulicos de piso para pasos de alto tráfico.",
+        img: "https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1000&q=85",
+        price: "Desde $120"
+      },
+      {
+        num: "06",
+        cat: "PASAMANOS DE SEGURIDAD",
+        title: "Pasamanos en Cristal y Acero",
+        desc: "Cumplimiento de normas de resistencia y seguridad para balcones, gradas y áreas públicas.",
+        img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1000&q=85",
+        price: "Cotización por caso"
+      },
+      {
+        num: "07",
+        cat: "ACERO INOXIDABLE",
+        title: "Estructuras y Acabados de Acero",
+        desc: "Soldaduras TIG pulidas a espejo o satinadas, con opción de pintura electrostática negra mate.",
+        img: "https://images.unsplash.com/photo-1504917599217-d4dc5ebe6122?auto=format&fit=crop&w=1000&q=85",
+        price: "Cotización por caso"
+      },
+      {
+        num: "08",
+        cat: "CORTINAS DE BAÑO",
+        title: "Mamparas en Vidrio Templado",
+        desc: "Vidrio de 8mm a medida exacta con tratamiento antical y rodamientos superiores suaves de acero.",
+        img: "https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1000&q=85",
+        price: "Cotización por caso"
+      }
+    ];
+
+    function selectFabLine(index) {
+      const item = fabData[index];
+      if (!item) return;
+
+      // Update active list styling
+      document.querySelectorAll('.fab-item').forEach((el, i) => {
+        if (i === index) {
+          el.className = "fab-item group p-4 sm:p-5 rounded-2xl border-2 border-emerald-500 transition-all cursor-pointer flex items-center justify-between bg-emerald-50/50 shadow-sm";
+        } else {
+          el.className = "fab-item group p-4 sm:p-5 rounded-2xl border border-slate-200 hover:border-slate-400 transition-all cursor-pointer flex items-center justify-between bg-slate-50 hover:bg-slate-100";
+        }
+      });
+
+      // BLUR ANIMATION ON RIGHT PREVIEW CARD
+      const card = document.getElementById('fabPreviewCard');
+      card.classList.remove('animate-blur-crossfade');
+      // Trigger reflow
+      void card.offsetWidth;
+      card.classList.add('animate-blur-crossfade');
+
+      // Update contents
+      document.getElementById('fabPreviewImg').src = item.img;
+      document.getElementById('fabPreviewNumber').innerText = item.num;
+      document.getElementById('fabPreviewCategory').innerText = item.cat;
+      document.getElementById('fabPreviewTitle').innerText = item.title;
+      document.getElementById('fabPreviewDesc').innerText = item.desc;
+      document.getElementById('fabPreviewPrice').innerText = item.price;
+      document.getElementById('fabPreviewCta').href = `https://wa.me/593999999999?text=Hola,%20solicito%20cotizaci%C3%B3n%20para%20${encodeURIComponent(item.title)}`;
+    }
+
+    // 4. CATÁLOGO FILTERS WITH BLUR TRANSITION
+    function filterCatalog(category) {
+      // Update Filter buttons
+      document.querySelectorAll('.cat-filter-btn').forEach(btn => {
+        if (btn.getAttribute('data-category') === category) {
+          btn.className = "cat-filter-btn px-4 py-1.5 rounded-full text-xs font-black bg-emerald-500 text-slate-950 transition-all shadow-sm";
+        } else {
+          btn.className = "cat-filter-btn px-4 py-1.5 rounded-full text-xs font-bold text-slate-400 hover:text-white transition-all";
+        }
+      });
+
+      const cards = document.querySelectorAll('.catalog-card');
+      
+      cards.forEach((card, i) => {
+        const cardCat = card.getAttribute('data-category');
+        const matches = (category === 'todos' || cardCat === category);
+
+        if (matches) {
+          card.classList.remove('hidden');
+          card.classList.add('revealed');
+          // Re-trigger blur animation with slight stagger
+          card.classList.remove('animate-blur-in');
+          void card.offsetWidth;
+          card.style.animationDelay = `${(i % 3) * 70}ms`;
+          card.classList.add('animate-blur-in');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    }
+
+    // 5. FAQ ACCORDION TOGGLE
+    function toggleFaq(id) {
+      const ans = document.getElementById(`faq-ans-${id}`);
+      const icon = document.getElementById(`faq-icon-${id}`);
+      if (!ans) return;
+
+      if (ans.classList.contains('hidden')) {
+        ans.classList.remove('hidden');
+        icon.setAttribute('data-lucide', 'minus');
+        icon.classList.add('rotate-180');
+      } else {
+        ans.classList.add('hidden');
+        icon.setAttribute('data-lucide', 'plus');
+        icon.classList.remove('rotate-180');
+      }
+      lucide.createIcons();
+    }
+
+    // 6. CONTACT FORM SUBMISSION
+    function handleQuoteSubmit(e) {
+      e.preventDefault();
+      const nombre = document.getElementById('formNombre').value;
+      const tel = document.getElementById('formWhatsapp').value;
+      const servicio = document.getElementById('formServicio').value;
+      const detalle = document.getElementById('formDetalle').value;
+      const ubicacion = document.getElementById('formUbicacion').value;
+      const tiempo = document.getElementById('formTiempo').value;
+
+      const message = `Hola CREAVID, mi nombre es ${nombre}. Deseo cotizar:\n- Servicio: ${servicio}\n- Medidas/Detalle: ${detalle || 'Por definir'}\n- Ubicación: ${ubicacion || 'Por confirmar'}\n- Para: ${tiempo}\nMi WhatsApp: ${tel}`;
+
+      const waUrl = `https://wa.me/593999999999?text=${encodeURIComponent(message)}`;
+      window.open(waUrl, '_blank');
+    }
+
+    // 7. HERO BANNER VIDEO - PLAY ONLY ONCE CONTROLLER
+    const heroVid = document.getElementById('heroBannerVideo');
+    if (heroVid) {
+      // Ensure playback starts
+      const playPromise = heroVid.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // In case of browser strict autoplay policy, start on first user interaction
+          window.addEventListener('click', () => { heroVid.play(); }, { once: true });
+        });
+      }
+
+      // Freeze explicitly on the last frame once completed (play only once)
+      heroVid.addEventListener('ended', () => {
+        heroVid.pause();
+      });
+    }
+
+    function replayHeroVideo() {
+      const vid = document.getElementById('heroBannerVideo');
+      if (vid) {
+        vid.currentTime = 0;
+        vid.play();
+      }
+    }
+
+    // 8. SECTION SWITCHER (SEPARATED PAGES / STANDALONE VIEWS)
+    const DESKTOP_ACTIVE = "nav-btn px-5 py-2 rounded-full bg-white text-slate-950 font-black shadow-md transition-all cursor-pointer";
+    const DESKTOP_INACTIVE = "nav-btn px-5 py-2 rounded-full text-slate-300 hover:text-white hover:bg-white/10 transition-all font-bold cursor-pointer";
+    const MOBILE_ACTIVE = "mobile-nav-btn flex-1 py-2 px-2 text-center rounded-xl bg-white text-slate-950 font-black transition-all shadow-sm";
+    const MOBILE_INACTIVE = "mobile-nav-btn flex-1 py-2 px-2 text-center rounded-xl text-slate-300 font-bold transition-all";
+
+    const VALID_SECTIONS = ['inicio', 'servicios', 'catalogo', 'contacto'];
+
     function switchSection(sectionId) {
-      // Hide all views
+      if (!VALID_SECTIONS.includes(sectionId)) sectionId = 'inicio';
+
+      // 1. Hide all sections
       document.querySelectorAll('.section-view').forEach(view => {
         view.classList.add('hidden');
       });
 
-      // Show selected section
+      // 2. Show target section and setup on-scroll blur observer
       const target = document.getElementById(`section-${sectionId}`);
       if (target) {
         target.classList.remove('hidden');
+        // Reset scroll position to top of page immediately
+        window.scrollTo(0, 0);
+
+        // Setup scroll-triggered blur observation:
+        // Top elements in view blur-in smoothly; below-the-fold elements will blur-in dynamically as user scrolls down!
+        setupBlurObserver(target);
       }
 
-      // Update Nav Buttons
-      document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.className = "nav-btn px-4 py-2 rounded-xl text-slate-600 hover:text-slate-900 transition-all font-bold";
+      // 3. Update desktop and mobile menu active states
+      VALID_SECTIONS.forEach(id => {
+        const deskBtn = document.getElementById(`nav-btn-${id}`);
+        if (deskBtn) {
+          deskBtn.className = (id === sectionId) ? DESKTOP_ACTIVE : DESKTOP_INACTIVE;
+        }
+
+        const mobBtn = document.getElementById(`mobile-btn-${id}`);
+        if (mobBtn) {
+          mobBtn.className = (id === sectionId) ? MOBILE_ACTIVE : MOBILE_INACTIVE;
+        }
       });
-      const activeBtn = document.getElementById(`nav-${sectionId}`);
-      if (activeBtn) {
-        activeBtn.className = "nav-btn px-4 py-2 rounded-xl bg-white text-blue-600 shadow-xs transition-all font-black";
+
+      // 4. Update URL hash without reload
+      if (history.replaceState) {
+        history.replaceState(null, null, '#' + sectionId);
       }
 
-      // Update Mobile Nav
-      document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
-        btn.className = "mobile-nav-btn px-3 py-1.5 rounded-lg text-slate-600";
-      });
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // 5. Refresh lucide icons in the revealed view
       lucide.createIcons();
+
+      // 6. Replay 3D video from start whenever 'inicio' is visited
+      if (sectionId === 'inicio') {
+        const vid = document.getElementById('heroBannerVideo');
+        if (vid) {
+          try {
+            vid.currentTime = 0;
+            const playPromise = vid.play();
+            if (playPromise !== undefined) {
+              playPromise.catch(() => {});
+            }
+          } catch (e) {}
+        }
+      }
     }
 
+    // Initialize from URL hash or default to 'inicio'
+    const initialHash = window.location.hash.replace('#', '');
+    switchSection(VALID_SECTIONS.includes(initialHash) ? initialHash : 'inicio');
+
+    window.addEventListener('popstate', () => {
+      const h = window.location.hash.replace('#', '');
+      switchSection(VALID_SECTIONS.includes(h) ? h : 'inicio');
+    });
+
+    // Re-arm on-scroll blur reveal if user scrolls all the way back to the top
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        if (window.scrollY === 0) {
+          const activeSec = document.querySelector('.section-view:not(.hidden)');
+          if (activeSec) {
+            setupBlurObserver(activeSec);
+          }
+        }
+      }, 150);
+    }, { passive: true });
+
+    // 9. INITIALIZE ICONS
     lucide.createIcons();
   </script>
 </body>
